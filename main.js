@@ -105,6 +105,9 @@ async function getContent(linkList, iList, params) {
                         newLinkArray.push(link);
                     }
                 }
+            } else {
+                console.log("Error: something unexpected happened when collecting new urls.");
+                exit(84);
             }
             var linkResultArray = [linkList, newLinkArray];
             return linkResultArray;
@@ -120,6 +123,9 @@ async function getContent(linkList, iList, params) {
                 for (var i = 0; i < metaArray.length; i++) {
                     metaArray[i] = [metaArray[i], metaArray[i].length];
                 }
+            } else {
+                console.log("Error: something unexpected happened when getting the <meta> selectors.")
+                exit(84);
             }
             return metaArray;
         }
@@ -132,6 +138,9 @@ async function getContent(linkList, iList, params) {
             });
             if (titleArray !== null && titleArray !== undefined) {
                 titleArray = [titleArray[0], titleArray[0].length];
+            } else {
+                console.log("Error: something unexpected happened when getting the <title> selector.")
+                exit(84);
             }
             return titleArray;
         }
@@ -149,6 +158,9 @@ async function getContent(linkList, iList, params) {
                         hreflangArray.push(getHreflangArray[i]);
                     }
                 }
+            } else {
+                console.log("Error: something unexpected happened when getting the hreflang attribute.")
+                exit(84);
             }
             return hreflangArray;
         }
@@ -189,7 +201,7 @@ async function getContent(linkList, iList, params) {
     time = Date.now() - time;
 
     if (returnArray === null || returnArray === undefined) {
-        return;
+        return returnArray;
     }
 
     returnArray = returnArray.concat(response.status());
@@ -483,6 +495,7 @@ var linkList = [["/", 0, 1]];
 
 var returnArray = getContent(linkList, iList, params);
 
-if (returnArray === null || returnArray === undefined || returnArray === false)
+if (returnArray === null || returnArray === undefined || returnArray === false) {
     console.log("Error: an error has occured and the program closed unexpectedly.");
     return 84;
+}
