@@ -482,3 +482,7 @@ let iList = 0;
 var linkList = [["/", 0, 1]];
 
 var returnArray = getContent(linkList, iList, params);
+
+if (returnArray === null || returnArray === undefined || returnArray === false)
+    console.log("Error: an error has occured and the program closed unexpectedly.");
+    return 84;
