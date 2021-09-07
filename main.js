@@ -201,6 +201,7 @@ async function getContent(linkList, iList, params) {
     time = Date.now() - time;
 
     if (returnArray === null || returnArray === undefined) {
+        console.log("Error: something unexpected happened when collecting all the data from the website.");
         return returnArray;
     }
 
@@ -213,6 +214,7 @@ async function getContent(linkList, iList, params) {
     iList = skipUndesiredLinks(iList, linkList, params['notEnterLinksWith'], params['onlyEnterLinksWith']);
 
     if (linkList[iList] === undefined || linkList[iList] === null) {
+        console.log("Info: the program has sucessfully obtained all the links it could!");
         return returnArray;
     }
 
@@ -322,7 +324,7 @@ function configHelp(args) {
         -x: allows you to decide which urls the bot should not enter. The argument after the flag will contain\n
             the keywords that could be found in the urls you want to skip. View example below:\n
             [...] -x "blog item beach"\n
-            The bot save every link, but will not enter in any link containing the words 'blog', 'item', or 'beach'.\n\n\n
+            The bot will    save every link, but will not enter in any link containing the words 'blog', 'item', or 'beach'.\n\n\n
         -i: opposite of the '-x' flag. The '-i' flag will ignore all links that do NOT contain any of the specified keywords.\n
             View example below:\n
             [...] -i "blog item beach"\n
