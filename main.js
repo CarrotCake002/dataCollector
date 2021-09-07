@@ -171,7 +171,7 @@ async function getContent(linkList, iList, params) {
             if (params['getAllSelectors'] === true) {
                 for (var i = 3; i < params['querySelector'].length; i++) {
                     var html = Array.from(document.querySelectorAll(params['querySelector'][i]));
-                    htmlList = htmlList.push(html.map(element => {
+                    htmlList.push(html.map(element => {
                         return element.outerHTML;
                     }));
                 }
