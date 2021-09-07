@@ -193,7 +193,7 @@ async function getContent(linkList, iList, params) {
     }
 
     returnArray = returnArray.concat(response.status());
-    eventEmitter.emit('scream', returnArray, iList, time);
+    eventEmitter.emit('saveData', returnArray, iList, time);
 
     var linkList = returnArray[0];
 
@@ -239,19 +239,15 @@ function saveFormData(resultArray, iteration, time) {
             meta: resultArray[3],
             hreflang: resultArray[5],
             userSelected: resultArray[1],
-            metaCount: resultArray[3].length,
-            hreflangCount: resultArray[5].length,
-            userSelectedCount: resultArray[1].length,
+            metaCount: metaCount,
+            hreflangCount: hreflangCount,
+            userSelectedCount: userSelectedCount,
         },
-        linksCount: resultArray[2].length,
+        linksCount: linksCount,
         links: resultArray[2],
     };
 
-    if (defaultParams['formattedSavefile'] === true) {
-        jsonObj = JSON.stringify(jsonObj, null, 4);
-    } else {
-        jsonObj = JSON.stringify(jsonObj);
-    }
+    defaultParams['formattedSavefile'] ? jsonObj = JSON.stringify(jsonObj, null, 4) : jsonObj = JSON.stringify(jsonObj);
 
     fs.writeFile(defaultParams['savefile'] + '.json', jsonObj + ",\n", { flag: 'a+' }, (err) => {
         if (err) {
@@ -274,21 +270,17 @@ function saveBrute(array) {
     });
 }
 
-function saveAllData(resultArray, iteration, time) {
-    saveBrute(resultArray);
-    saveFormData(resultArray, iteration, time);
-}
-
 // handle save execution then all content is gathered
 var events = require('events');
 const { exit } = require('process');
 var eventEmitter = new events.EventEmitter();
 
-var myEventHandler = function (returnArray, iterations, time) {
-    saveAllData(returnArray, iterations, time);
+var dataHandler = function (returnArray, iteration, time) {
+    saveBrute(returnArray);
+    saveFormData(returnArray, iteration, time);
 }
-eventEmitter.on('scream', myEventHandler);
 
+eventEmitter.on('saveData', dataHandler);
 
 // display the help message and close the program
 function configHelp(args) {
@@ -296,7 +288,7 @@ function configHelp(args) {
         return false;
     }
     console.log(
-        `\n
+    `\n
     Welcome to DataCollector!\n
     This program was made by Pol Siles\n
     You can check me up on GitHub: https://github.com/CarrotCake002\n
