@@ -106,7 +106,7 @@ async function getContent(linkList, iList, params) {
                     }
                 }
             } else {
-                console.log("Error: something unexpected happened when collecting new urls.");
+                console.log("Error: something unexpected happened when collecting new urls from '" + params['domain'] + "'.");
             }
             var linkResultArray = [linkList, newLinkArray];
             return linkResultArray;
@@ -125,7 +125,7 @@ async function getContent(linkList, iList, params) {
                     }
                 }
             } else {
-                console.log("Error: something unexpected happened when getting the <meta> selectors.")
+                console.log("Error: something unexpected happened when getting the <meta> selectors from '" + params['domain'] + "'.")
             }
             return metaArray;
         }
@@ -141,7 +141,7 @@ async function getContent(linkList, iList, params) {
                     titleArray = [titleArray[0], titleArray[0].length];
                 }
             } else {
-                console.log("Error: something unexpected happened when getting the <title> selector.")
+                console.log("Error: something unexpected happened when getting the <title> selector from '" + params['domain'] + "'.")
             }
             return titleArray;
         }
@@ -162,7 +162,7 @@ async function getContent(linkList, iList, params) {
                     }
                 }
             } else {
-                console.log("Error: something unexpected happened when getting the hreflang attribute.")
+                console.log("Error: something unexpected happened when getting the hreflang attribute from '" + params['domain'] + "'.")
             }
             return hreflangArray;
         }
@@ -203,11 +203,17 @@ async function getContent(linkList, iList, params) {
     time = Date.now() - time;
 
     if (returnArray === null || returnArray === undefined) {
-        console.log("Error: something unexpected happened when collecting all the data from the website.");
+        console.log("Error: something unexpected happened when collecting all the data from the website '" + params['domain'] + "'.");
         return returnArray;
     }
 
-    returnArray = returnArray.concat(response.status());
+    var siteStatus = response.status();
+    if (siteStatus === null) {
+        console.log("Error: the current url '" + params['domain'] + "' cannot be scraped. Please add the corresponding filters.");
+    } else {
+        returnArray = returnArray.concat(response.status());
+    }
+
     eventEmitter.emit('saveData', returnArray, iList, time);
 
     var linkList = returnArray[0];
