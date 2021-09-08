@@ -107,7 +107,6 @@ async function getContent(linkList, iList, params) {
                 }
             } else {
                 console.log("Error: something unexpected happened when collecting new urls.");
-                exit(84);
             }
             var linkResultArray = [linkList, newLinkArray];
             return linkResultArray;
@@ -120,12 +119,13 @@ async function getContent(linkList, iList, params) {
                 return element.outerHTML;
             });
             if (metaArray !== null && metaArray !== undefined) {
-                for (var i = 0; i < metaArray.length; i++) {
-                    metaArray[i] = [metaArray[i], metaArray[i].length];
+                if (metaArray[0] !== undefined) {
+                    for (var i = 0; i < metaArray.length; i++) {
+                        metaArray[i] = [metaArray[i], metaArray[i].length];
+                    }
                 }
             } else {
                 console.log("Error: something unexpected happened when getting the <meta> selectors.")
-                exit(84);
             }
             return metaArray;
         }
@@ -137,10 +137,11 @@ async function getContent(linkList, iList, params) {
                 return element.innerHTML;
             });
             if (titleArray !== null && titleArray !== undefined) {
-                titleArray = [titleArray[0], titleArray[0].length];
+                if (titleArray[0] !== undefined) {
+                    titleArray = [titleArray[0], titleArray[0].length];
+                }
             } else {
                 console.log("Error: something unexpected happened when getting the <title> selector.")
-                exit(84);
             }
             return titleArray;
         }
@@ -153,14 +154,15 @@ async function getContent(linkList, iList, params) {
                 return element.outerHTML;
             });
             if (getHreflangArray !== null && getHreflangArray !== undefined) {
-                for (var i = 0; i < getHreflangArray.length; i++) {
-                    if (getHreflangArray[i].includes("hreflang")) {
-                        hreflangArray.push(getHreflangArray[i]);
+                if (getHreflangArray[0] !== undefined) {
+                    for (var i = 0; i < getHreflangArray.length; i++) {
+                        if (getHreflangArray[i].includes("hreflang")) {
+                            hreflangArray.push(getHreflangArray[i]);
+                        }
                     }
                 }
             } else {
                 console.log("Error: something unexpected happened when getting the hreflang attribute.")
-                exit(84);
             }
             return hreflangArray;
         }
