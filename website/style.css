@@ -65,16 +65,19 @@ div {
 
 input {
     display: block;
-    margin: 20px auto;
+    margin: 10px auto;
+    margin-bottom: 25px;
     text-align: center;
     box-shadow: 0 0 10px #666;
     width: 240px;
     height: 30px;
     background-color: #f2f2f2;
+    word-spacing: 4px;
+    border-radius: 5px;
 }
 
 button {
-    width: 240px;
+    width: 120px;
     height: 60px;
     background-color: #000000;
     color: #ffffff;
