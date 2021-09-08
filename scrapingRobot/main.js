@@ -171,14 +171,14 @@ async function getContent(linkList, iList, params) {
         function getHtmlList() {
             var htmlList = [];
             if (params['getAllSelectors'] === true) {
-                for (var i = 3; i < params['querySelector'].length; i++) {
+                for (var i = params['getAllSelectors'].length + 1; i < params['querySelector'].length; i++) {
                     var html = Array.from(document.querySelectorAll(params['querySelector'][i]));
                     htmlList.push(html.map(element => {
                         return element.outerHTML;
                     }));
                 }
             } else {
-                for (var i = 3; i < params['querySelector'].length; i++) {
+                for (var i = params['getAllSelectors'].length + 1; i < params['querySelector'].length; i++) {
                     htmlList = htmlList.concat(document.querySelector(params['querySelector'][i]).outerHTML);
                 }
             }
@@ -478,7 +478,7 @@ function configParams(args, defParams) {
 var defaultParams = {
     help: false,
     domain: null,
-    notEnterLinksWith: ["mailto:", "javascript:", "tel:", "#", "excel", "word", "pdf"],
+    notEnterLinksWith: ["mailto:", "javascript:", "tel:", "steam:", "#", "excel", "word", "pdf"],
     onlyEnterLinksWith: null,
     savefile: "default",
     querySelector: ['meta', 'title', 'link'],
