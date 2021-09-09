@@ -1,11 +1,12 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 
-async function getContent(linkList, iList, params) {
+async function getContent(linkList, iList, params, linkEnteredCount) {
 
     console.log("Iteration " + iList);
     var formattedLink = formatEnteringLink(linkList[iList][0], params['domain']);
     console.log(formattedLink + "\n");
+    linkEnteredCount++;
 
     // open a new browser and page with the new url
     var time = Date.now();
@@ -228,7 +229,7 @@ async function getContent(linkList, iList, params) {
         return returnArray;
     }
 
-    returnArray = getContent(linkList, iList, params);
+    returnArray = getContent(linkList, iList, params, linkEnteredCount);
     return returnArray;
 }
 
@@ -507,11 +508,12 @@ if (!params) {
 
 // initialize starting arguments
 let iList = 0;
+let linkEnteredCount = 0;
 var linkList = [["/", 0, 1]];
 
 writeInFile('{\n\t');
 
-var returnArray = getContent(linkList, iList, params);
+var returnArray = getContent(linkList, iList, params, linkEnteredCount);
 
 programEnd();
 
