@@ -1,4 +1,9 @@
-*.json
-!package.json
-!package-lock.json
+# ignore savefiles
+savefiles/*.json
+
+# ignore node and puppeteer packages
 node_modules
+
+# keep the configuration .json files
+!package-lock.json
+!package.json
