@@ -81,6 +81,7 @@ button {
     height: 60px;
     background-color: #000000;
     color: #ffffff;
+    position: relative;
 }
 
 .profile {

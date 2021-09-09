@@ -4,26 +4,31 @@
     </div>
     <div>
         <form action="/website/robot/launchRobot.php" method="post">
-            <div>
                 Domain
                 <input type="text" name="domain" placeholder="https://example.com">
-            </div>
-            <div>
                 Save file name
                 <input type="text" name="savefile" placeholder="saveFile">
-            </div>
-            <div>
                 Words to include
                 <input type="text" name="include" placeholder="home .com http:// /rental">
-            </div>
-            <div>
                 Words to exclude
                 <input type="text" name="exclude" placeholder="blog store https:// .fr">
-            </div>
-            <div>
                 Custom Selectors
                 <input type="text" name="userSelectors" placeholder="h1 h2 .class #id">
-            </div>
+                Get all selectors (default: only the first)
+                <label class="switch" name="allSelectors">
+                    <input type="checkbox">
+                    <div class="slider round"></div>
+                </label>
+                Headless browser
+                <label class="switch" name="headless">
+                    <input type="checkbox">
+                    <div class="slider round"></div>
+                </label>
+                Formatted savefile
+                <label class="switch" name="formSavefile">
+                    <input type="checkbox">
+                    <div class="slider round"></div>
+                </label>
             <button type="submit">Submit</button>
         </form>
     </div>
