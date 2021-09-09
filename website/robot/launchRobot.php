@@ -18,7 +18,6 @@ echo $query;
 
 $res = exec($query);
 
-
 echo "<br><br><br><br><br>" . $res;
 
 require_once '../views/footer.php';

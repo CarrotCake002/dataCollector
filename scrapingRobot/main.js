@@ -271,7 +271,7 @@ function saveFormData(resultArray, iteration, time) {
 
     defaultParams['formattedSavefile'] ? jsonObj = JSON.stringify(jsonObj, null, 4) : jsonObj = JSON.stringify(jsonObj);
 
-    fs.writeFile(defaultParams['savefile'] + '.json', jsonObj + ",\n", { flag: 'a+' }, (err) => {
+    fs.writeFile(defaultParams['args'][1] + "/../../savefiles/" + defaultParams['savefile'] + '.json', jsonObj + ",\n", { flag: 'a+' }, (err) => {
         if (err) {
             throw err;
         }
@@ -285,7 +285,7 @@ function saveBrute(array) {
 
     jsonObj = JSON.stringify(array, null, 4);
 
-    fs.writeFile(defaultParams['savefile'] + 'BruteData.json', jsonObj, (err) => {
+    fs.writeFile(defaultParams['args'][1] + "/../../savefiles/" + defaultParams['savefile'] + 'BruteData.json', jsonObj, (err) => {
         if (err) {
             throw err;
         }
@@ -474,6 +474,7 @@ function configParams(args, defParams) {
 }
 
 
+
 // set the default values of the parameters
 var defaultParams = {
     help: false,
@@ -485,19 +486,17 @@ var defaultParams = {
     getAllSelectors: false,
     formattedSavefile: false,
     headlessBrowser: false,
-    siteName: null
+    siteName: null,
+    args: process.argv
 }
 
+// get the program execution arguments
 const args = process.argv.slice(2);
 const params = configParams(args, defaultParams);
-
 if (!params) {
     console.log("Execute with --help to view all valid options.");
     return 84;
 }
-
-console.log(params);
-//return 0;
 
 // initialize starting arguments
 let iList = 0;
