@@ -275,7 +275,6 @@ function saveFormData(resultArray, iteration, time) {
         if (err) {
             throw err;
         }
-        console.log("JSON data is saved.");
     });
 }
 

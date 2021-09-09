@@ -15,18 +15,18 @@
                 Custom Selectors
                 <input type="text" name="userSelectors" placeholder="h1 h2 .class #id">
                 Get all selectors (default: only the first)
-                <label class="switch" name="allSelectors">
-                    <input type="checkbox">
+                <label class="switch">
+                    <input type="checkbox" name="allSelectors">
                     <div class="slider round"></div>
                 </label>
                 Headless browser
-                <label class="switch" name="headless">
-                    <input type="checkbox">
+                <label class="switch">
+                    <input type="checkbox" name="headless">
                     <div class="slider round"></div>
                 </label>
                 Formatted savefile
-                <label class="switch" name="formSavefile">
-                    <input type="checkbox">
+                <label class="switch">
+                    <input type="checkbox" name="formSavefile">
                     <div class="slider round"></div>
                 </label>
             <button type="submit">Submit</button>

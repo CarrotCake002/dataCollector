@@ -3,21 +3,29 @@ require_once '../views/header.php';
 
 set_time_limit(0);
 
-$query = 'node ../../scrapingRobot/main.js -D "' . $_POST['domain'] . '" -a -f ';
+if (isset($_POST)) {
+    $query = 'node ../../scrapingRobot/main.js -D "' . $_POST['domain'] . '" ';
 
-if (isset($_POST['savefile']) && $_POST['savefile'] !== '')
-    $query = $query . ' -S "' . $_POST['savefile'] . '" ';
-if (isset($_POST['include']) && $_POST['include'] !== '')
-    $query = $query . ' -i "' . $_POST['include'] . '" ';
-if (isset($_POST['exclude']) && $_POST['exclude'] !== '')
-    $query = $query . ' -x "' . $_POST['exclude'] . '" ';
-if (isset($_POST['userSelectors']) && $_POST['userSelectors'] !== '')
-    $query = $query . ' -s "' . $_POST['userSelectors'] . '" ';
+    if (isset($_POST['savefile']) && $_POST['savefile'] !== '')
+        $query = $query . ' -S "' . $_POST['savefile'] . '" ';
+    if (isset($_POST['include']) && $_POST['include'] !== '')
+        $query = $query . ' -i "' . $_POST['include'] . '" ';
+    if (isset($_POST['exclude']) && $_POST['exclude'] !== '')
+        $query = $query . ' -x "' . $_POST['exclude'] . '" ';
+    if (isset($_POST['userSelectors']) && $_POST['userSelectors'] !== '')
+        $query = $query . ' -s "' . $_POST['userSelectors'] . '" ';
+    if (isset($_POST['allSelectors']) && $_POST['allSelectors'] === 'on')
+        $query = $query . ' -a ';
+    if (isset($_POST['formSavefile']) && $_POST['formSavefile'] === 'on')
+        $query = $query . ' -f ';
+    if (isset($_POST['headless']) && $_POST['headless'] === 'on')
+        $query = $query . ' -H ';
 
-echo $query;
+    $res = exec($query);
+    echo '<br><br><br>' . $res;
 
-$res = exec($query);
-
-echo '<br><br><br><br><br>' . $res;
+} else {
+    echo "An unknown error has occured. Please, try again and if the problem persists contact support.";
+}
 
 require_once '../views/footer.php';
