@@ -185,15 +185,17 @@ async function getContent(linkList, iList, params) {
             return htmlList;
         }
 
+        if (iList != 0) {
+            writeInFile(',\n\t');
+        }
+
         var linkResultArray = getNewLinks(linkList);
         linkList = linkResultArray[0];
         var newLinkArray = linkResultArray[1];
         var htmlList = getHtmlList();
-
         var metaArray = getMetaArray();
         var titleArray = getTitleArray();
         var hreflangArray = getHreflangArray();
-
         
         var returnArray = [linkList, htmlList, newLinkArray, metaArray, titleArray, hreflangArray];
         return returnArray;
@@ -230,6 +232,14 @@ async function getContent(linkList, iList, params) {
     return returnArray;
 }
 
+function writeInFile(string) {
+    fs.writeFile(defaultParams['args'][1] + "/../../savefiles/" + defaultParams['savefile'] + '.json', string, { flag: 'a+' }, (err) => {
+        if (err) {
+            throw err;
+        }
+    });
+}
+
 // save data that will be removed from the PC's RAM while the program runs
 function saveFormData(resultArray, iteration, time) {
     var url = resultArray[0][iteration][0];
@@ -250,32 +260,28 @@ function saveFormData(resultArray, iteration, time) {
         linksCount = resultArray[2].length;
     }
     var jsonObj = {
-        Iteration: iteration,
-        url: url,
-        status: resultArray[6],
-        urlDepth: resultArray[0][iteration][1],
-        time: time/1000 + 's',
-        html: {
-            title: resultArray[4][0],
-            titleSize: resultArray[4][1],
-            meta: resultArray[3],
-            hreflang: resultArray[5],
-            userSelected: resultArray[1],
-            metaCount: metaCount,
-            hreflangCount: hreflangCount,
-            userSelectedCount: userSelectedCount,
+        "Iteration": iteration,
+        "url": url,
+        "status": resultArray[6],
+        "urlDepth": resultArray[0][iteration][1],
+        "time": time/1000 + 's',
+        "html": {
+            "title": resultArray[4][0],
+            "titleSize": resultArray[4][1],
+            "meta": resultArray[3],
+            "hreflang": resultArray[5],
+            "userSelected": resultArray[1],
+            "metaCount": metaCount,
+            "hreflangCount": hreflangCount,
+            "userSelectedCount": userSelectedCount,
         },
-        linksCount: linksCount,
-        links: resultArray[2],
+        "linksCount": linksCount,
+        "links": resultArray[2],
     };
 
     defaultParams['formattedSavefile'] ? jsonObj = JSON.stringify(jsonObj, null, 4) : jsonObj = JSON.stringify(jsonObj);
 
-    fs.writeFile(defaultParams['args'][1] + "/../../savefiles/" + defaultParams['savefile'] + '.json', jsonObj + ",\n", { flag: 'a+' }, (err) => {
-        if (err) {
-            throw err;
-        }
-    });
+    writeInFile('"Object": ' + jsonObj);
 }
 
 // save data that needs to evolve while the program runs
@@ -472,7 +478,9 @@ function configParams(args, defParams) {
     return defParams;
 }
 
-
+async function programEnd() {
+    writeInFile('\n}');
+}
 
 // set the default values of the parameters
 var defaultParams = {
@@ -501,7 +509,11 @@ if (!params) {
 let iList = 0;
 var linkList = [["/", 0, 1]];
 
+writeInFile('{\n\t');
+
 var returnArray = getContent(linkList, iList, params);
+
+programEnd();
 
 if (returnArray === null || returnArray === undefined || returnArray === false) {
     console.log("Error: an error has occured and the program closed unexpectedly.");
