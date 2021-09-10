@@ -186,10 +186,6 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             return htmlList;
         }
 
-        if (iList != 0) {
-            writeInFile(',\n\t');
-        }
-
         var linkResultArray = getNewLinks(linkList);
         linkList = linkResultArray[0];
         var newLinkArray = linkResultArray[1];
@@ -217,7 +213,10 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         returnArray = returnArray.concat(response.status());
     }
 
-    eventEmitter.emit('saveData', returnArray, iList, time);
+    if (iList != 0) {
+        writeInFile(',\n\t');
+    }
+    eventEmitter.emit('saveData', returnArray, iList, time, linkEnteredCount);
 
     var linkList = returnArray[0];
 
@@ -242,7 +241,7 @@ function writeInFile(string) {
 }
 
 // save data that will be removed from the PC's RAM while the program runs
-function saveFormData(resultArray, iteration, time) {
+function saveFormData(resultArray, iteration, time, linkEnteredCount) {
     var url = resultArray[0][iteration][0];
     var metaCount = 0;
     var linksCount = 0;
@@ -260,29 +259,30 @@ function saveFormData(resultArray, iteration, time) {
     } if (resultArray[2] !== null && resultArray[2] !== undefined) {
         linksCount = resultArray[2].length;
     }
-    var jsonObj = {
-        "Iteration": iteration,
-        "url": url,
-        "status": resultArray[6],
-        "urlDepth": resultArray[0][iteration][1],
-        "time": time/1000 + 's',
-        "html": {
-            "title": resultArray[4][0],
-            "titleSize": resultArray[4][1],
-            "meta": resultArray[3],
-            "hreflang": resultArray[5],
-            "userSelected": resultArray[1],
-            "metaCount": metaCount,
-            "hreflangCount": hreflangCount,
-            "userSelectedCount": userSelectedCount,
-        },
-        "linksCount": linksCount,
-        "links": resultArray[2],
-    };
+    var jsonObj =
+        {
+            "Iteration": iteration,
+            "url": url,
+            "status": resultArray[6],
+            "urlDepth": resultArray[0][iteration][1],
+            "time": time/1000 + 's',
+            "html": {
+                "title": resultArray[4][0],
+                "titleSize": resultArray[4][1],
+                "meta": resultArray[3],
+                "hreflang": resultArray[5],
+                "userSelected": resultArray[1],
+                "metaCount": metaCount,
+                "hreflangCount": hreflangCount,
+                "userSelectedCount": userSelectedCount,
+            },
+            "linksCount": linksCount,
+            "links": resultArray[2],
+        };
 
     defaultParams['formattedSavefile'] ? jsonObj = JSON.stringify(jsonObj, null, 4) : jsonObj = JSON.stringify(jsonObj);
 
-    writeInFile('"Object": ' + jsonObj);
+    writeInFile('"Object ' + linkEnteredCount + '": ' + jsonObj);
 }
 
 // save data that needs to evolve while the program runs
@@ -303,9 +303,9 @@ var events = require('events');
 const { exit } = require('process');
 var eventEmitter = new events.EventEmitter();
 
-var dataHandler = function (returnArray, iteration, time) {
+var dataHandler = function (returnArray, iteration, time, linkEnteredCount) {
     saveBrute(returnArray);
-    saveFormData(returnArray, iteration, time);
+    saveFormData(returnArray, iteration, time, linkEnteredCount);
 }
 
 eventEmitter.on('saveData', dataHandler);
@@ -515,7 +515,7 @@ writeInFile('{\n\t');
 
 var returnArray = getContent(linkList, iList, params, linkEnteredCount);
 
-programEnd();
+//programEnd();
 
 if (returnArray === null || returnArray === undefined || returnArray === false) {
     console.log("Error: an error has occured and the program closed unexpectedly.");
