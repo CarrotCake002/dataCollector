@@ -204,9 +204,6 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         returnArray = returnArray.concat(response.status());
     }
 
-    if (iList != 0) {
-        writeInFile(',\n\t');
-    }
     eventEmitter.emit('saveData', returnArray, iList, time, linkEnteredCount);
 
     var linkList = returnArray[0];
@@ -263,6 +260,9 @@ function saveFormData(resultArray, iteration, time, linkEnteredCount) {
 
     defaultParams['formattedSavefile'] ? jsonObj = JSON.stringify(jsonObj, null, 4) : jsonObj = JSON.stringify(jsonObj);
 
+    if (iList != 0) {
+        writeInFile(',\n\t');
+    }
     writeInFile('"Object ' + linkEnteredCount + '": ' + jsonObj);
 }
 
