@@ -213,7 +213,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
     returnArray = returnArray.push(linkEnteredCount);
 
-    if (linkList[iList] === undefined || linkList[iList] === null || iList > 50) {
+    if (linkList[iList] === undefined || linkList[iList] === null || iList > 5) {
         console.log("Info: the program has sucessfully obtained all the links it could!");
         return returnArray;
     }
@@ -236,7 +236,7 @@ function writeInFile(string) {
 }
 
 // save data that will be removed from the PC's RAM while the program runs
-function saveFormData(resultArray, iteration, time, linkEnteredCount) {
+async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
     var url = resultArray[0][iteration][0];
 
     if (resultArray[0][iteration][0].includes('http://') === false && resultArray[0][iteration][0].includes('https://') === false) {
@@ -257,13 +257,13 @@ function saveFormData(resultArray, iteration, time, linkEnteredCount) {
         },
         "links": resultArray[2],
     };
+    
+    if (linkEnteredCount != 1) {
+        await writeInFile(',\n\t');
+    }
 
     defaultParams['formattedSavefile'] ? jsonObj = JSON.stringify(jsonObj, null, 4) : jsonObj = JSON.stringify(jsonObj);
-
-    if (iList != 0) {
-        writeInFile(',\n\t');
-    }
-    writeInFile('"Object ' + linkEnteredCount + '": ' + jsonObj);
+    await writeInFile('"Object ' + linkEnteredCount + '": ' + jsonObj);
 }
 
 // save data that needs to evolve while the program runs
@@ -284,9 +284,9 @@ var events = require('events');
 const { exit } = require('process');
 var eventEmitter = new events.EventEmitter();
 
-var dataHandler = function (returnArray, iteration, time, linkEnteredCount) {
+var dataHandler = async function (returnArray, iteration, time, linkEnteredCount) {
     saveBrute(returnArray);
-    saveFormData(returnArray, iteration, time, linkEnteredCount);
+    await saveFormData(returnArray, iteration, time, linkEnteredCount);
 }
 
 eventEmitter.on('saveData', dataHandler);

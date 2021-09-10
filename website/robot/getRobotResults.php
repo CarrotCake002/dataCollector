@@ -21,29 +21,35 @@ if (isset($_POST)) {
     $openFile = new OpenFileController($json_data);
 
     ?>
-    <table>
-    <tr>
-        <th>Iteration</th>
-        <th>URL</th>
-        <th>Depth</th>
-        <th>Status</th>
-        <th>Nb links found</th>
-        <th>More details</th>
-    </tr>
+    <div id="tableBlock">
+        <table>
+            <tr>
+                <th>Iteration</th>
+                <th>URL</th>
+                <th>Depth</th>
+                <th>Status</th>
+                <th>Nb links found</th>
+                <th>More details</th>
+            </tr>
 
-    <?php for ($i = 1; $i < $openFile->getObjectCount() + 1; $i++): ?>
+            <?php for ($i = 1; $i < $openFile->getObjectCount() + 1; $i++): ?>
 
-    <tr>
-        <td><?=$openFile->getIteration($i)?></td>
-        <td><a href="<?=$openFile->getURl($i)?>"><?=$openFile->getUrl($i)?></a></td>
-        <td><?=$openFile->getUrlDepth($i)?></td>
-        <td><?=$openFile->getStatus($i)?></td>
-        <td><?=$openFile->getAllLinksSize($i)?></td>
-        <td><!--<a href=" /* More detail link by passing arguments into it (php) */ ">-->Click for more details</a></td>
-    </tr>
-
+            <tr>
+                <td><?=$openFile->getIteration($i)?></td>
+                <td><a href="<?=$openFile->getURl($i)?>"><?=$openFile->getUrl($i)?></a></td>
+                <td><?=$openFile->getUrlDepth($i)?></td>
+                <td><?=$openFile->getStatus($i)?></td>
+                <td><?=$openFile->getAllLinksSize($i)?></td>
+                <td><!--<a href=" /* More detail link by passing arguments into it (php) */ ">-->Click for more details</a></td>
+            </tr>
+            <?php
+                endfor;
+            ?>
+        </table>
+    </div>
+    <div id="footer_space"></div>
 <?php
-    endfor;
 }
+
 
 require_once __DIR__ . '/../views/footer.php';
