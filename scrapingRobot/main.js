@@ -10,7 +10,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
     // open a new browser and page with the new url
     var time = Date.now();
-    const browser = await puppeteer.launch({ headless: params['headlessBrowser'], args: [ '--ignore-certificate-errors' ]});
+    const browser = await puppeteer.launch({ headless: params['headlessBrowser'], args: ['--ignore-certificate-errors'] });
     const page = await browser.newPage();
     await page.setViewport({ width: 1000, height: 926 });
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
@@ -93,14 +93,14 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         function getNewLinks(linkList) {
             var general = document.querySelectorAll('a');
             var newLinkArray = [];
-            
+
             if (general !== null && general !== undefined) {
                 for (var i = 0; i < general.length; i++) {
                     var link = general[i].getAttribute('href');
                     var checkLinkSaved = checkLinkIsSaved(linkList, link);
                     var isSaved = checkLinkSaved[0];
                     linkList = checkLinkSaved[1];
-                    
+
                     if (link != null && !isSaved && isNeededLink(link)) {
                         linkList.push([link, linkList[iList][1] + 1, 0]);
                         newLinkArray.push(link);
@@ -119,13 +119,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             metaArray = metaArray.map(element => {
                 return element.outerHTML;
             });
-            if (metaArray !== null && metaArray !== undefined) {
-                if (metaArray[0] !== undefined) {
-                    for (var i = 0; i < metaArray.length; i++) {
-                        metaArray[i] = [metaArray[i], metaArray[i].length];
-                    }
-                }
-            } else {
+            if (metaArray === null || metaArray === undefined) {
                 console.log("Error: something unexpected happened when getting the <meta> selectors from '" + params['domain'] + "'.")
             }
             return metaArray;
@@ -137,11 +131,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             titleArray = titleArray.map(element => {
                 return element.innerHTML;
             });
-            if (titleArray !== null && titleArray !== undefined) {
-                if (titleArray[0] !== undefined) {
-                    titleArray = [titleArray[0], titleArray[0].length];
-                }
-            } else {
+            if (titleArray === null || titleArray === undefined) {
                 console.log("Error: something unexpected happened when getting the <title> selector from '" + params['domain'] + "'.")
             }
             return titleArray;
@@ -193,7 +183,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         var metaArray = getMetaArray();
         var titleArray = getTitleArray();
         var hreflangArray = getHreflangArray();
-        
+
         var returnArray = [linkList, htmlList, newLinkArray, metaArray, titleArray, hreflangArray];
         return returnArray;
     }, linkList, params, iList);
@@ -209,6 +199,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     var siteStatus = response.status();
     if (siteStatus === null) {
         console.log("Error: the current url '" + params['domain'] + "' cannot be scraped. Please add the corresponding filters.");
+        return null;
     } else {
         returnArray = returnArray.concat(response.status());
     }
@@ -223,12 +214,19 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     iList++;
     iList = skipUndesiredLinks(iList, linkList, params['notEnterLinksWith'], params['onlyEnterLinksWith']);
 
-    if (linkList[iList] === undefined || linkList[iList] === null) {
+    returnArray = returnArray.push(linkEnteredCount);
+
+    if (linkList[iList] === undefined || linkList[iList] === null || iList > 10) {
         console.log("Info: the program has sucessfully obtained all the links it could!");
         return returnArray;
     }
-
-    returnArray = getContent(linkList, iList, params, linkEnteredCount);
+    console.log(linkEnteredCount);
+    returnArray = await getContent(linkList, iList, params, linkEnteredCount);
+    linkEnteredCount--;
+    console.log(linkEnteredCount);
+    if (linkEnteredCount === 0) {
+        writeInFile('\n}');
+    }
     return returnArray;
 }
 
@@ -243,42 +241,25 @@ function writeInFile(string) {
 // save data that will be removed from the PC's RAM while the program runs
 function saveFormData(resultArray, iteration, time, linkEnteredCount) {
     var url = resultArray[0][iteration][0];
-    var metaCount = 0;
-    var linksCount = 0;
-    var hreflangCount = 0;
-    var userSelectedCount = 0;
 
     if (resultArray[0][iteration][0].includes('http://') === false && resultArray[0][iteration][0].includes('https://') === false) {
         url = params['domain'] + url;
-    } if (resultArray[3] !== null && resultArray[3] !== undefined) {
-        metaCount = resultArray[3].length;
-    } if (resultArray[5] !== null && resultArray[5] !== undefined) {
-        hreflangCount = resultArray[5].length;
-    } if (resultArray[1] !== null && resultArray[1] !== undefined) {
-        userSelectedCount = resultArray[1].length;
-    } if (resultArray[2] !== null && resultArray[2] !== undefined) {
-        linksCount = resultArray[2].length;
     }
     var jsonObj =
-        {
-            "Iteration": iteration,
-            "url": url,
-            "status": resultArray[6],
-            "urlDepth": resultArray[0][iteration][1],
-            "time": time/1000 + 's',
-            "html": {
-                "title": resultArray[4][0],
-                "titleSize": resultArray[4][1],
-                "meta": resultArray[3],
-                "hreflang": resultArray[5],
-                "userSelected": resultArray[1],
-                "metaCount": metaCount,
-                "hreflangCount": hreflangCount,
-                "userSelectedCount": userSelectedCount,
-            },
-            "linksCount": linksCount,
-            "links": resultArray[2],
-        };
+    {
+        "Iteration": iteration,
+        "url": url,
+        "status": resultArray[6],
+        "urlDepth": resultArray[0][iteration][1],
+        "time": time / 1000 + 's',
+        "html": {
+            "title": resultArray[4],
+            "meta": resultArray[3],
+            "hreflang": resultArray[5],
+            "userSelected": resultArray[1],
+        },
+        "links": resultArray[2],
+    };
 
     defaultParams['formattedSavefile'] ? jsonObj = JSON.stringify(jsonObj, null, 4) : jsonObj = JSON.stringify(jsonObj);
 
@@ -316,7 +297,7 @@ function configHelp(args) {
         return false;
     }
     console.log(
-    `\n
+        `\n
     Welcome to DataCollector!\n
     This program was made by Pol Siles\n
     You can check me up on GitHub: https://github.com/CarrotCake002\n

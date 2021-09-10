@@ -7,11 +7,10 @@ if (isset($_POST)) {
             echo "The file you sent doesn't exist";
             return;
         }
-        /*$json_data = json_decode($json, true);
+        $json_data = json_decode($json, true);
         if ($json_data === null) {
-            echo "An unknown error happened while reading the file.";
+            echo "The save file format is not correct. Make sure there are no errors in the syntax.";
             return;
-        }*/
-        echo $json;
+        }
     }
 }
