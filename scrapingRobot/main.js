@@ -216,7 +216,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
     returnArray = returnArray.push(linkEnteredCount);
 
-    if (linkList[iList] === undefined || linkList[iList] === null || iList > 10) {
+    if (linkList[iList] === undefined || linkList[iList] === null || iList > 50) {
         console.log("Info: the program has sucessfully obtained all the links it could!");
         return returnArray;
     }
