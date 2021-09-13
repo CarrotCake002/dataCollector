@@ -28,13 +28,16 @@
 
         public function getUrlPredecessor($ObjectNb) {
             $current_url = $this->getUrl($ObjectNb);
+            if ($this->getIteration($ObjectNb) == 0)
+                return '-';
             for ($obj = 1; $obj <= $this->getObjectCount(); $obj++) {
                 for ($link = 0; $link < $this->getAllLinksSize($obj); $link++) {
+                    //echo $this->getSingleLink($obj, $link) . '<br>';
                     if ($this->getSingleLink($obj, $link) === $current_url)
                         return $this->getUrl($obj);
                 }
             }
-            return "-";
+            return 'Error: no predecessor found';
         }
 
         public function getIteration($ObjectNb) {

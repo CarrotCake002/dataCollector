@@ -70,6 +70,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         // avoid saving the same link multiple times and get better optimization
         function checkLinkIsSaved(linkList, newLink) {
             var result = [];
+
             for (var i = 0; i < linkList.length; i++) {
                 if (newLink === linkList[i][0]) {
                     linkList[i][2]++;
@@ -97,6 +98,10 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             if (general !== null && general !== undefined) {
                 for (var i = 0; i < general.length; i++) {
                     var link = general[i].getAttribute('href');
+                    console.log(link);
+                    if (link !== null && link.charAt(0) === '/') {
+                        link = params['domain'] + link;
+                    }
                     var checkLinkSaved = checkLinkIsSaved(linkList, link);
                     var isSaved = checkLinkSaved[0];
                     linkList = checkLinkSaved[1];
@@ -213,7 +218,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
     returnArray = returnArray.push(linkEnteredCount);
 
-    if (linkList[iList] === undefined || linkList[iList] === null || iList > 50) {
+    if (linkList[iList] === undefined || linkList[iList] === null) {
         console.log("Info: the program has sucessfully obtained all the links it could!");
         return returnArray;
     }
@@ -490,7 +495,7 @@ if (!params) {
 // initialize starting arguments
 let iList = 0;
 let linkEnteredCount = 0;
-var linkList = [["/", 0, 1]];
+var linkList = [[params['domain'] + '/', 0, 1]];
 
 writeInFile('{\n\t');
 
