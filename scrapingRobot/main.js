@@ -167,14 +167,14 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         function getHtmlList() {
             var htmlList = [];
             if (params['getOneSelector'] === false) {
-                for (var i = params['getOneSelector'].length + 1; i < params['querySelector'].length; i++) {
+                for (var i = 3; i < params['querySelector'].length; i++) {
                     var html = Array.from(document.querySelectorAll(params['querySelector'][i]));
-                    htmlList.push(html.map(element => {
+                    htmlList = htmlList.push(html.map(element => {
                         return element.outerHTML;
                     }));
                 }
             } else {
-                for (var i = params['getOneSelector'].length + 1; i < params['querySelector'].length; i++) {
+                for (var i = 3; i < params['querySelector'].length; i++) {
                     htmlList = htmlList.concat(document.querySelector(params['querySelector'][i]).outerHTML);
                 }
             }
@@ -185,9 +185,9 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         linkList = linkResultArray[0];
         var newLinkArray = linkResultArray[1];
         var htmlList = getHtmlList();
+        var hreflangArray = getHreflangArray();
         var metaArray = getMetaArray();
         var title = getTitle();
-        var hreflangArray = getHreflangArray();
 
         var returnArray = [linkList, htmlList, newLinkArray, metaArray, title, hreflangArray];
         return returnArray;
