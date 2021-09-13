@@ -9,17 +9,25 @@
         public function __construct($jsonData) {
             $this->jsonData = $jsonData;
         }
-        
+
         public function getObjectCount() {
             return (count($this->jsonData));
         }
 
-        public function getIteration($ObjectNb) {
-            return ($this->jsonData["Object " . $ObjectNb]['Iteration']);
+        public function getObjectFromUrl($url) {
+            for ($ObjectNb = 1; $ObjectNb <= $this->getObjectCount(); $ObjectNb++) {
+                if ($this->jsonData[$ObjectNb]['url'] === $url)
+                    return $ObjectNb;
+            }
+            return null;
         }
-        
+
+        public function getIteration($ObjectNb) {
+            return ($this->jsonData[$ObjectNb]['Iteration']);
+        }
+
         public function getUrl($ObjectNb) {
-            return ($this->jsonData["Object " . $ObjectNb]['url']);
+            return ($this->jsonData[$ObjectNb]['url']);
         }
 
         public function getUrlCharSize($ObjectNb) {
@@ -27,19 +35,19 @@
         }
 
         public function getStatus($ObjectNb) {
-            return ($this->jsonData["Object " . $ObjectNb]['status']);
+            return ($this->jsonData[$ObjectNb]['status']);
         }
 
         public function getUrlDepth($ObjectNb) {
-            return ($this->jsonData["Object " . $ObjectNb]['urlDepth']);
+            return ($this->jsonData[$ObjectNb]['urlDepth']);
         }
 
         public function getResponseTime($ObjectNb) {
-            return ($this->jsonData["Object " . $ObjectNb]['time']);
+            return ($this->jsonData[$ObjectNb]['time']);
         }
 
         public function getAllHtml($ObjectNb) {
-            return ($this->jsonData["Object " . $ObjectNb]['html']);
+            return ($this->jsonData[$ObjectNb]['html']);
         }
 
         public function getAllHtmlSize($ObjectNb) {
@@ -49,7 +57,7 @@
         public function getTitle($ObjectNb) {
             return ($this->getAllHtml($ObjectNb)['title']);
         }
-        
+
         public function getTitleSize($ObjectNb) {
             return (count($this->getTitle($ObjectNb)));
         }
@@ -103,7 +111,7 @@
         }
 
         public function getAllLinks($ObjectNb) {
-            return ($this->jsonData["Object " . $ObjectNb]['links']);
+            return ($this->jsonData[$ObjectNb]['links']);
         }
 
         public function getAllLinksSize($ObjectNb) {
@@ -111,7 +119,7 @@
         }
 
         public function getSingleLink($ObjectNb, $LinkNb) {
-            return ($this->jsonData["Object " . $ObjectNb]['links'][$LinkNb]);
+            return ($this->jsonData[$ObjectNb]['links'][$LinkNb]);
         }
 
         public function getSingleLinkCharSize($ObjectNb, $LinkNb) {

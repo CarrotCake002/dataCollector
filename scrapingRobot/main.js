@@ -213,7 +213,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
     returnArray = returnArray.push(linkEnteredCount);
 
-    if (linkList[iList] === undefined || linkList[iList] === null || iList > 5) {
+    if (linkList[iList] === undefined || linkList[iList] === null || iList > 50) {
         console.log("Info: the program has sucessfully obtained all the links it could!");
         return returnArray;
     }
@@ -263,7 +263,7 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
     }
 
     defaultParams['formattedSavefile'] ? jsonObj = JSON.stringify(jsonObj, null, 4) : jsonObj = JSON.stringify(jsonObj);
-    await writeInFile('"Object ' + linkEnteredCount + '": ' + jsonObj);
+    await writeInFile('"' + linkEnteredCount + '": ' + jsonObj);
 }
 
 // save data that needs to evolve while the program runs
