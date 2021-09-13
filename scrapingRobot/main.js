@@ -126,7 +126,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         }
 
         // get the title of the website
-        function getTitleArray() {
+        function getTitle() {
             var titleArray = Array.from(document.querySelectorAll(params['querySelector'][1]));
             titleArray = titleArray.map(element => {
                 return element.innerHTML;
@@ -134,7 +134,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             if (titleArray === null || titleArray === undefined) {
                 console.log("Error: something unexpected happened when getting the <title> selector from '" + params['domain'] + "'.")
             }
-            return titleArray;
+            return titleArray[0];
         }
 
         // get the <link> selectors with an hreflang attribute
@@ -161,15 +161,15 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         // get all the html the user asked for
         function getHtmlList() {
             var htmlList = [];
-            if (params['getAllSelectors'] === true) {
-                for (var i = params['getAllSelectors'].length + 1; i < params['querySelector'].length; i++) {
+            if (params['getOneSelector'] === false) {
+                for (var i = params['getOneSelector'].length + 1; i < params['querySelector'].length; i++) {
                     var html = Array.from(document.querySelectorAll(params['querySelector'][i]));
                     htmlList.push(html.map(element => {
                         return element.outerHTML;
                     }));
                 }
             } else {
-                for (var i = params['getAllSelectors'].length + 1; i < params['querySelector'].length; i++) {
+                for (var i = params['getOneSelector'].length + 1; i < params['querySelector'].length; i++) {
                     htmlList = htmlList.concat(document.querySelector(params['querySelector'][i]).outerHTML);
                 }
             }
@@ -181,10 +181,10 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         var newLinkArray = linkResultArray[1];
         var htmlList = getHtmlList();
         var metaArray = getMetaArray();
-        var titleArray = getTitleArray();
+        var title = getTitle();
         var hreflangArray = getHreflangArray();
 
-        var returnArray = [linkList, htmlList, newLinkArray, metaArray, titleArray, hreflangArray];
+        var returnArray = [linkList, htmlList, newLinkArray, metaArray, title, hreflangArray];
         return returnArray;
     }, linkList, params, iList);
 
@@ -435,7 +435,7 @@ function configHeadBrowser(args) {
 }
 
 function configGetAllHtml(args) {
-    return args.includes("-a") ? true : false;
+    return args.includes("-o") ? true : false;
 }
 
 // check if correct params are input and return their values to the program
@@ -454,7 +454,7 @@ function configParams(args, defParams) {
     } if (defParams = configStrLinkInclude(args, defParams), defParams === false) {
         return false;
     }
-    defParams['getAllSelectors'] = configGetAllHtml(args);
+    defParams['getOneSelector'] = configGetAllHtml(args);
     defParams['headlessBrowser'] = configHeadBrowser(args);
     defParams['formattedSavefile'] = configSaveFormat(args);
     return defParams;
@@ -472,7 +472,7 @@ var defaultParams = {
     onlyEnterLinksWith: null,
     savefile: "default",
     querySelector: ['meta', 'title', 'link'],
-    getAllSelectors: false,
+    getOneSelector: false,
     formattedSavefile: false,
     headlessBrowser: false,
     siteName: null,

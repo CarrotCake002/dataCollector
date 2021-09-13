@@ -8,12 +8,13 @@
     <link rel="stylesheet" type="text/css" href="/website/views/switch.css">
 </head>
 <body>
-<header>
-    <nav>
-        <ul>
-            <li><a href="/website/index.php">Home</a></li>
-            <li><a href="/website/views/openFile.php">Open</a></li>
-            <li><a href="/website/views/links.php">Links</a></li>
-        </ul>
-    </nav>
-</header>
+    <div id="header_space"><br></div>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/website/index.php">Home</a></li>
+                <li><a href="/website/views/openFile.php">Open</a></li>
+                <li><a href="/website/views/links.php">Links</a></li>
+            </ul>
+        </nav>
+    </header>

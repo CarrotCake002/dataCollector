@@ -5,13 +5,74 @@
 
     use classes\OpenFileController;
 
-    if (isset($_GET) && isset($_POST)) {
-        /*new OpenFileController();*/
-        echo 'hello';
-    } else {
+    if (isset($_GET)):
+        if (isset($_GET['object'])) {
+            $objectNb = $_GET['object'];
+        } else {
+            echo "There has been an error obtaining the necessary data.
+                Make sure the url syntax is correct and the url exists";
+        }
+        if (isset($_GET['filename'])) {
+            @$json = file_get_contents('../../savefiles/' . $_GET['filename']);
+            if ($json === false) {
+                echo "The file you sent doesn't exist";
+                return;
+            }
+            $json_data = json_decode($json, true);
+            if ($json_data === null) {
+                echo "The savefile format is not correct. Make sure there are no errors in the syntax.";
+                return;
+            }
+            $openFile = new OpenFileController($json_data);
+        } else {
+            echo "The program encountered an error while opening the data file. Make sure you didn't delete the saved data file.";
+        }
+?>
+
+        <table>
+            <tr>
+                <th>Iteration</th>
+                <th>URL</th>
+                <th>Depth</th>
+                <th>Predecessor</th>
+                <th>Status</th>
+                <th>Load time</th>
+                <th>Title</th>
+                <th>Title Size</th>
+                <th>Nb Meta description</th>
+                <th>Meta description(size)</th>
+                <th>Nb hreflang</th>
+                <th>hreflang(size)</th>
+                <th>Nb links</th>
+                <th>Links(size)</th>
+                <th>Nb custom selectors</th>
+                <th>Custom Selectors(size)</th>
+            </tr>
+            <tr>
+                <td><?= $openFile->getIteration($objectNb) ?></td>
+                <td><a href="<?= $openFile->getUrl($objectNb) ?>"><?= $openFile->getUrl($objectNb) ?></a></td>
+                <td><?= $openFile->getUrlDepth($objectNb) ?></td>
+                <td>Predecessor</td>
+                <td><?= $openFile->getStatus($objectNb) ?></td>
+                <td><?= $openFile->getResponseTime($objectNb) ?></td>
+                <td><?= $openFile->getTitle($objectNb) ?></td>
+                <td><?= $openFile->getTitleSize($objectNb) ?></td>
+                <td><?= $openFile->getAllMetaSize($objectNb) ?></td>
+                <td><?= $openFile->displayAllMeta($objectNb) ?> </td>
+                <td><?= $openFile->getAllHreflangSize($objectNb) ?></td>
+                <td><?= $openFile->displayAllHreflang($objectNb) ?></td>
+                <td><?= $openFile->getAllLinksSize($objectNb) ?></td>
+                <td><?= $openFile->displayAllLinks($objectNb) ?></td>
+                <td><?= $openFile->getAllUserSelectorCount($objectNb) ?></td>
+                <td><?= $openFile->displayAllUserSelector($objectNb) ?></td>
+            </tr>
+        </table>
+
+<?php
+    else:
         echo "There has been an error while processing your request.
-        Please try again and if the problem presists, contact support.";
+                Please try again and if the problem presists, contact the creator.";
         return;
-    }
+    endif;
 
     require_once __DIR__ . '/footer.php';

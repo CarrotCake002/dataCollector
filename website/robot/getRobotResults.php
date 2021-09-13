@@ -40,16 +40,14 @@ if (isset($_POST)) {
                 <td><?=$openFile->getUrlDepth($i)?></td>
                 <td><?=$openFile->getStatus($i)?></td>
                 <td><?=$openFile->getAllLinksSize($i)?></td>
-                <td><a href="<?= '/website/views/getLinkDetails.php/?object=' . $i?>">Click for more details</a></td>
+                <td><a href="<?='/website/views/getLinkDetails.php/?object=' . $i . '&filename=' . $_POST['openFile'] ?>">Click for more details</a></td>
             </tr>
             <?php
                 endfor;
             ?>
         </table>
     </div>
-    <div id="footer_space"><br></div>
 <?php
 }
-
 
 require_once __DIR__ . '/../views/footer.php';

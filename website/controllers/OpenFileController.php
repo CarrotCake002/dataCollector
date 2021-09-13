@@ -10,6 +10,10 @@
             $this->jsonData = $jsonData;
         }
 
+        public function getObjectFromId($ObjectNb) {
+            return ($this->jsonData[$ObjectNb]);
+        }
+
         public function getObjectCount() {
             return (count($this->jsonData));
         }
@@ -75,7 +79,14 @@
         }
 
         public function getSingleMetaCharSize($ObjectNb, $MetaNb) {
-            return (count($this->getAllHtml($ObjectNb)['meta'][$MetaNb]));
+            return (strlen($this->getAllHtml($ObjectNb)['meta'][$MetaNb]));
+        }
+
+        public function displayAllMeta($ObjectNb) {
+            $metaSize = $this->getAllMetaSize($ObjectNb);
+            for ($i = 0; $i < $metaSize; $i++) {
+                echo $this->getSingleMetaTag($ObjectNb, $i) . '(' . $this->getSingleMetaCharSize($ObjectNb, $i) . ')<br>';
+            }
         }
 
         public function getAllHreflang($ObjectNb) {
@@ -91,7 +102,14 @@
         }
 
         public function getSingleHreflangCharSize($ObjectNb, $hreflangNb) {
-            return (count($this->getSingleHreflang($ObjectNb, $hreflangNb)));
+            return (strlen($this->getSingleHreflang($ObjectNb, $hreflangNb)));
+        }
+
+        public function displayAllHreflang($ObjectNb) {
+            $hreflang_size = $this->getAllHreflangSize($ObjectNb);
+            for ($i = 0; $i < $hreflang_size; $i++) {
+                echo $this->getSingleHreflang($ObjectNb, $i) . '(' . $this->getSingleHreflangCharSize($ObjectNb, $i) . ')<br>';
+            }
         }
 
         public function getAllUserSelector($ObjectNb) {
@@ -107,7 +125,14 @@
         }
 
         public function getSingleUserSelectorCharSize($ObjectNb, $SelectorNb) {
-            return (count($this->getSingleUserSelector($ObjectNb, $SelectorNb)));
+            return (strlen($this->getSingleUserSelector($ObjectNb, $SelectorNb)));
+        }
+
+        public function displayAllUserSelector($ObjectNb) {
+            $selector_size = $this->getAllUserSelectorCount($ObjectNb);
+            for ($i = 0; $i < $selector_size; $i++) {
+                echo $this->getSingleUserSelector($ObjectNb, $i) . '(' . $this->getSingleUserSelectorCharSize($ObjectNb, $i) . ')<br>';
+            }
         }
 
         public function getAllLinks($ObjectNb) {
@@ -123,6 +148,13 @@
         }
 
         public function getSingleLinkCharSize($ObjectNb, $LinkNb) {
-            return (count($this->getSingleLink($ObjectNb, $LinkNb)));
+            return (strlen($this->getSingleLink($ObjectNb, $LinkNb)));
+        }
+
+        public function displayAllLinks($ObjectNb) {
+            $link_size = $this->getAllLinksSize($ObjectNb);
+            for ($i = 0; $i < $link_size; $i++) {
+                echo $this->getSingleLink($ObjectNb, $i) . '<br>';
+            }
         }
     }

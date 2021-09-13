@@ -14,18 +14,18 @@ if (isset($_POST)) {
         $query = $query . ' -x "' . $_POST['exclude'] . '" ';
     if (isset($_POST['userSelectors']) && $_POST['userSelectors'] !== '')
         $query = $query . ' -s "' . $_POST['userSelectors'] . '" ';
-    if (isset($_POST['allSelectors']) && $_POST['allSelectors'] === 'on')
-        $query = $query . ' -a ';
     if (isset($_POST['formSavefile']) && $_POST['formSavefile'] === 'on')
         $query = $query . ' -f ';
     if (isset($_POST['headless']) && $_POST['headless'] === 'on')
         $query = $query . ' -H ';
+    if (!isset($_POST['allSelectors']) || !$_POST['allSelectors'] === 'on')
+        $query = $query . ' -o ';
 
     $res = exec($query);
-    echo '<br><br><br>' . $res;
+    echo '<br><br><br>The robot worked perfectly and the savefile has been downloaded!';
 
 } else {
-    echo "An unknown error has occured. Please, try again and if the problem persists contact support.";
+    echo "An unknown error has occured. Please, try again and if the problem persists contact the creator.";
 }
 
 require_once '../views/footer.php';

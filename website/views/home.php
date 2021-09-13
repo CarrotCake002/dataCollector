@@ -14,7 +14,7 @@
                 <input type="text" name="exclude" placeholder="blog store https:// .fr">
                 Custom Selectors
                 <input type="text" name="userSelectors" placeholder="h1 h2 .class #id">
-                Get all selectors (default: only the first)
+                Get one selector (default: all selectors)
                 <label class="switch">
                     <input type="checkbox" name="allSelectors">
                     <div class="slider round"></div>
