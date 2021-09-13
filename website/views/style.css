@@ -114,6 +114,11 @@ th, td {
     padding-right: 10px;
 }
 
+.links_display {
+    text-align: left;
+    line-height: 140%;
+}
+
 #header_space {
     top: 0;
     margin-bottom: 70px;

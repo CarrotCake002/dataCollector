@@ -62,7 +62,7 @@
                 <td><?= $openFile->getAllHreflangSize($objectNb) ?></td>
                 <td><?= $openFile->displayAllHreflang($objectNb) ?></td>
                 <td><?= $openFile->getAllLinksSize($objectNb) ?></td>
-                <td><?= $openFile->displayAllLinks($objectNb) ?></td>
+                <td class="links_display"><?= $openFile->displayAllLinks($objectNb) ?></td>
                 <td><?= $openFile->getAllUserSelectorCount($objectNb) ?></td>
                 <td><?= $openFile->displayAllUserSelector($objectNb) ?></td>
             </tr>

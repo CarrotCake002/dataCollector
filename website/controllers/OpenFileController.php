@@ -154,7 +154,7 @@
         public function displayAllLinks($ObjectNb) {
             $link_size = $this->getAllLinksSize($ObjectNb);
             for ($i = 0; $i < $link_size; $i++) {
-                echo $this->getSingleLink($ObjectNb, $i) . '<br>';
+                echo '"' . $this->getSingleLink($ObjectNb, $i) . '",<br>';
             }
         }
     }
