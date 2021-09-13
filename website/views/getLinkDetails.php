@@ -52,19 +52,19 @@
                 <td><?= $openFile->getIteration($objectNb) ?></td>
                 <td><a href="<?= $openFile->getUrl($objectNb) ?>"><?= $openFile->getUrl($objectNb) ?></a></td>
                 <td><?= $openFile->getUrlDepth($objectNb) ?></td>
-                <td>Predecessor</td>
+                <td><?= $openFile->getUrlPredecessor($objectNb) ?></td>
                 <td><?= $openFile->getStatus($objectNb) ?></td>
                 <td><?= $openFile->getResponseTime($objectNb) ?></td>
                 <td><?= $openFile->getTitle($objectNb) ?></td>
                 <td><?= $openFile->getTitleSize($objectNb) ?></td>
                 <td><?= $openFile->getAllMetaSize($objectNb) ?></td>
-                <td><?= $openFile->displayAllMeta($objectNb) ?> </td>
+                <td class="array_display"><?= $openFile->displayAllMeta($objectNb) ?> </td>
                 <td><?= $openFile->getAllHreflangSize($objectNb) ?></td>
-                <td><?= $openFile->displayAllHreflang($objectNb) ?></td>
+                <td class="array_display"><?= $openFile->displayAllHreflang($objectNb) ?></td>
                 <td><?= $openFile->getAllLinksSize($objectNb) ?></td>
-                <td class="links_display"><?= $openFile->displayAllLinks($objectNb) ?></td>
+                <td class="array_display"><?= $openFile->displayAllLinks($objectNb) ?></td>
                 <td><?= $openFile->getAllUserSelectorCount($objectNb) ?></td>
-                <td><?= $openFile->displayAllUserSelector($objectNb) ?></td>
+                <td class="array_display"><?= $openFile->displayAllUserSelector($objectNb) ?></td>
             </tr>
         </table>
 

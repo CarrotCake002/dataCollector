@@ -26,6 +26,17 @@
             return null;
         }
 
+        public function getUrlPredecessor($ObjectNb) {
+            $current_url = $this->getUrl($ObjectNb);
+            for ($obj = 1; $obj <= $this->getObjectCount(); $obj++) {
+                for ($link = 0; $link < $this->getAllLinksSize($obj); $link++) {
+                    if ($this->getSingleLink($obj, $link) === $current_url)
+                        return $this->getUrl($obj);
+                }
+            }
+            return "-";
+        }
+
         public function getIteration($ObjectNb) {
             return ($this->jsonData[$ObjectNb]['Iteration']);
         }
@@ -85,7 +96,7 @@
         public function displayAllMeta($ObjectNb) {
             $metaSize = $this->getAllMetaSize($ObjectNb);
             for ($i = 0; $i < $metaSize; $i++) {
-                echo $this->getSingleMetaTag($ObjectNb, $i) . '(' . $this->getSingleMetaCharSize($ObjectNb, $i) . ')<br>';
+                echo '"' . $this->getSingleMetaTag($ObjectNb, $i) . '"(' . $this->getSingleMetaCharSize($ObjectNb, $i) . ')<br>';
             }
         }
 
@@ -108,7 +119,7 @@
         public function displayAllHreflang($ObjectNb) {
             $hreflang_size = $this->getAllHreflangSize($ObjectNb);
             for ($i = 0; $i < $hreflang_size; $i++) {
-                echo $this->getSingleHreflang($ObjectNb, $i) . '(' . $this->getSingleHreflangCharSize($ObjectNb, $i) . ')<br>';
+                echo '"' . $this->getSingleHreflang($ObjectNb, $i) . '"(' . $this->getSingleHreflangCharSize($ObjectNb, $i) . ')<br>';
             }
         }
 
@@ -131,7 +142,7 @@
         public function displayAllUserSelector($ObjectNb) {
             $selector_size = $this->getAllUserSelectorCount($ObjectNb);
             for ($i = 0; $i < $selector_size; $i++) {
-                echo $this->getSingleUserSelector($ObjectNb, $i) . '(' . $this->getSingleUserSelectorCharSize($ObjectNb, $i) . ')<br>';
+                echo '"' . $this->getSingleUserSelector($ObjectNb, $i) . '"(' . $this->getSingleUserSelectorCharSize($ObjectNb, $i) . '),<br>';
             }
         }
 
