@@ -47,7 +47,7 @@ if (isset($_POST)) {
             ?>
         </table>
     </div>
-    <div id="footer_space">hola</div>
+    <div id="footer_space"><br></div>
 <?php
 }
 
