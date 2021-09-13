@@ -52,7 +52,10 @@
                 <td><?= $openFile->getIteration($objectNb) ?></td>
                 <td><a href="<?= $openFile->getUrl($objectNb) ?>"><?= $openFile->getUrl($objectNb) ?></a></td>
                 <td><?= $openFile->getUrlDepth($objectNb) ?></td>
-                <td><?= $openFile->getUrlPredecessor($objectNb) ?></td>
+                <td>
+                    <a href="<?= $openFile->getUrlPredecessor($objectNb)?>"><?= $openFile->getUrlPredecessor($objectNb)?></a><br>
+                    (<a href="<?= '/website/views/getLinkDetails.php/?object=' . $openFile->getObjectFromUrl($openFile->getUrlPredecessor($objectNb)) . '&filename=' . $_GET['filename']?>">details</a>)
+                </td>
                 <td><?= $openFile->getStatus($objectNb) ?></td>
                 <td><?= $openFile->getResponseTime($objectNb) ?></td>
                 <td><?= $openFile->getTitle($objectNb) ?></td>

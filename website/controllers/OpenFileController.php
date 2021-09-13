@@ -3,9 +3,9 @@
     namespace classes;
 
     class OpenFileController {
-        
+
         public $jsonData;
-        
+
         public function __construct($jsonData) {
             $this->jsonData = $jsonData;
         }
@@ -23,7 +23,7 @@
                 if ($this->jsonData[$ObjectNb]['url'] === $url)
                     return $ObjectNb;
             }
-            return null;
+            return -1;
         }
 
         public function getUrlPredecessor($ObjectNb) {
@@ -32,7 +32,6 @@
                 return '-';
             for ($obj = 1; $obj <= $this->getObjectCount(); $obj++) {
                 for ($link = 0; $link < $this->getAllLinksSize($obj); $link++) {
-                    //echo $this->getSingleLink($obj, $link) . '<br>';
                     if ($this->getSingleLink($obj, $link) === $current_url)
                         return $this->getUrl($obj);
                 }
@@ -168,7 +167,7 @@
         public function displayAllLinks($ObjectNb) {
             $link_size = $this->getAllLinksSize($ObjectNb);
             for ($i = 0; $i < $link_size; $i++) {
-                echo '"' . $this->getSingleLink($ObjectNb, $i) . '",<br>';
+                echo '"<a href="' . $this->getSingleLink($ObjectNb, $i) . '">' . $this->getSingleLink($ObjectNb, $i) . '</a>",<br>';
             }
         }
     }

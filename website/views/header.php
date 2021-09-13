@@ -14,7 +14,6 @@
             <ul>
                 <li><a href="/website/index.php">Home</a></li>
                 <li><a href="/website/views/openFile.php">Open</a></li>
-                <li><a href="/website/views/links.php">Links</a></li>
             </ul>
         </nav>
     </header>
