@@ -501,8 +501,6 @@ writeInFile('{\n\t');
 
 var returnArray = getContent(linkList, iList, params, linkEnteredCount);
 
-//programEnd();
-
 if (returnArray === null || returnArray === undefined || returnArray === false) {
     console.log("Error: an error has occured and the program closed unexpectedly.");
     return 84;
