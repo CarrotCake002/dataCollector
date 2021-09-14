@@ -98,7 +98,14 @@
         public function displayAllMeta($ObjectNb) {
             $metaSize = $this->getAllMetaSize($ObjectNb);
             for ($i = 0; $i < $metaSize; $i++) {
-                echo '"' . $this->getSingleMetaTag($ObjectNb, $i) . '"(' . $this->getSingleMetaCharSize($ObjectNb, $i) . ')<br>';
+                echo $i . '. ' . htmlentities($this->getSingleMetaTag($ObjectNb, $i)) . '<br>';
+            }
+        }
+
+        public function displayAllMetaCharSizes($ObjectNb) {
+            $metaSize = $this->getAllMetaSize($ObjectNb);
+            for ($i = 0; $i < $metaSize; $i++) {
+                echo $i . '. ' . $this->getSingleMetaCharSize($ObjectNb, $i) . "<br>";
             }
         }
 

@@ -129,3 +129,11 @@ th, td {
     bottom: 0;
     margin-top: 70px;
 }
+
+.home_inputs {
+    word-spacing: 10px;
+}
+
+.home_p {
+    word-spacing: 5px;
+}

@@ -73,7 +73,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
             for (var i = 0; i < linkList.length; i++) {
                 if (newLink === linkList[i][0]) {
-                    linkList[i][2]++;
+                    linkList[i][1]++;
                     result = [true, linkList];
                     return result;
                 }
@@ -107,7 +107,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
                     linkList = checkLinkSaved[1];
 
                     if (link != null && !isSaved && isNeededLink(link)) {
-                        linkList.push([link, linkList[iList][1] + 1, 0]);
+                        linkList.push([link, 1]);
                         newLinkArray.push(link);
                     }
                 }
@@ -275,7 +275,7 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
 function saveBrute(array) {
     var jsonObj = null;
 
-    jsonObj = JSON.stringify(array, null, 4);
+    jsonObj = JSON.stringify(array);
 
     fs.writeFile(defaultParams['args'][1] + "/../../savefiles/" + defaultParams['savefile'] + 'BruteData.json', jsonObj, (err) => {
         if (err) {
@@ -290,7 +290,7 @@ const { exit } = require('process');
 var eventEmitter = new events.EventEmitter();
 
 var dataHandler = async function (returnArray, iteration, time, linkEnteredCount) {
-    saveBrute(returnArray);
+    saveBrute(returnArray[0]);
     await saveFormData(returnArray, iteration, time, linkEnteredCount);
 }
 
@@ -495,7 +495,7 @@ if (!params) {
 // initialize starting arguments
 let iList = 0;
 let linkEnteredCount = 0;
-var linkList = [[params['domain'] + '/', 0, 1]];
+var linkList = [[params['domain'] + '/', 1]];
 
 writeInFile('{\n\t');
 

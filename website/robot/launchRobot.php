@@ -4,8 +4,12 @@ require_once '../views/header.php';
 set_time_limit(0);
 
 if (isset($_POST)) {
+    if (isset($_POST['domain']) && $_POST['domain'] !== '') {
     $query = 'node ../../scrapingRobot/main.js -D "' . $_POST['domain'] . '" ';
-
+    } else {
+        echo "Error: you need to specify a domain to scrape.";
+        return;
+    }
     if (isset($_POST['savefile']) && $_POST['savefile'] !== '')
         $query = $query . ' -S "' . $_POST['savefile'] . '" ';
     if (isset($_POST['include']) && $_POST['include'] !== '')
@@ -22,6 +26,7 @@ if (isset($_POST)) {
         $query = $query . ' -o ';
 
     $res = exec($query);
+    echo $res;
 
 } else {
     echo "An unknown error has occured. Please, try again and if the problem persists contact the creator.";
