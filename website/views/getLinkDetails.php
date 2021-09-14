@@ -25,7 +25,7 @@
             }
             $openFile = new OpenFileController($json_data);
         } else {
-            echo "The program encountered an error while opening the data file. Make sure you didn't delete the saved data file.";
+            echo "The program encountered an error while opening the data file. Make sure you didn't delete the saved data.";
         }
 ?>
 

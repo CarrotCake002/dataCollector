@@ -48,7 +48,7 @@
         }
 
         public function getUrlCharSize($ObjectNb) {
-            return (count($this->getUrl($ObjectNb)));
+            return (strlen($this->getUrl($ObjectNb)));
         }
 
         public function getStatus($ObjectNb) {
@@ -76,7 +76,7 @@
         }
 
         public function getTitleSize($ObjectNb) {
-            return (count($this->getTitle($ObjectNb)));
+            return (strlen($this->getTitle($ObjectNb)));
         }
 
         public function getAllMeta($ObjectNb) {

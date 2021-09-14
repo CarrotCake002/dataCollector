@@ -22,7 +22,6 @@ if (isset($_POST)) {
         $query = $query . ' -o ';
 
     $res = exec($query);
-    echo '<br><br><br>The robot worked perfectly and the savefile has been downloaded!';
 
 } else {
     echo "An unknown error has occured. Please, try again and if the problem persists contact the creator.";
