@@ -128,7 +128,14 @@
         public function displayAllHreflang($ObjectNb) {
             $hreflang_size = $this->getAllHreflangSize($ObjectNb);
             for ($i = 0; $i < $hreflang_size; $i++) {
-                echo '"' . $this->getSingleHreflang($ObjectNb, $i) . '"(' . $this->getSingleHreflangCharSize($ObjectNb, $i) . ')<br>';
+                echo $i . '. ' . htmlentities($this->getSingleHreflang($ObjectNb, $i)) . '<br>';
+            }
+        }
+
+        public function displayAllHreflangCharSizes($ObjectNb) {
+            $hreflang_size = $this->getAllHreflangSize($ObjectNb);
+            for ($i = 0; $i < $hreflang_size; $i++) {
+                echo $i . '.  ' . $this->getSingleHreflangCharSize($ObjectNb, $i) . '<br>';
             }
         }
 

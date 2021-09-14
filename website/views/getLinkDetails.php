@@ -40,9 +40,11 @@
                 <th>Title</th>
                 <th>Title Size</th>
                 <th>Nb Meta description</th>
-                <th>Meta description(size)</th>
+                <th>Meta description</th>
+                <th>Meta description sizes</th>
                 <th>Nb hreflang</th>
-                <th>hreflang(size)</th>
+                <th>hreflang</th>
+                <th>hreflang sizes</th>
                 <th>Nb links</th>
                 <th>Links(size)</th>
                 <th>Nb custom selectors</th>
@@ -62,8 +64,10 @@
                 <td><?= $openFile->getTitleSize($objectNb) ?></td>
                 <td><?= $openFile->getAllMetaSize($objectNb) ?></td>
                 <td class="array_display"><?= $openFile->displayAllMeta($objectNb) ?> </td>
+                <td><?= $openFile->displayAllMetaCharSizes($objectNb) ?></td>
                 <td><?= $openFile->getAllHreflangSize($objectNb) ?></td>
                 <td class="array_display"><?= $openFile->displayAllHreflang($objectNb) ?></td>
+                <td><?= $openFile->displayAllHreflangCharSizes($objectNb) ?></td>
                 <td><?= $openFile->getAllLinksSize($objectNb) ?></td>
                 <td class="array_display"><?= $openFile->displayAllLinks($objectNb) ?></td>
                 <td><?= $openFile->getAllUserSelectorCount($objectNb) ?></td>
