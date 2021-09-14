@@ -38,17 +38,14 @@
                 <th>Status</th>
                 <th>Load time</th>
                 <th>Title</th>
-                <th>Title Size</th>
                 <th>Nb Meta description</th>
                 <th>Meta description</th>
-                <th>Meta description sizes</th>
                 <th>Nb hreflang</th>
                 <th>hreflang</th>
-                <th>hreflang sizes</th>
                 <th>Nb links</th>
-                <th>Links(size)</th>
+                <th>Links</th>
                 <th>Nb custom selectors</th>
-                <th>Custom Selectors(size)</th>
+                <th>Custom Selectors</th>
             </tr>
             <tr>
                 <td><?= $openFile->getIteration($objectNb) ?></td>
@@ -60,7 +57,16 @@
                 </td>
                 <td><?= $openFile->getStatus($objectNb) ?></td>
                 <td><?= $openFile->getResponseTime($objectNb) ?></td>
-                <td><?= $openFile->getTitle($objectNb) ?></td>
+                <td>
+                    <table>
+                        <tr>
+                            <th>Title</th>
+                            <th>Size</th>
+                        </tr>
+
+                        <?= $openFile->displayTitleTable($objectNb) ?>
+                    </table>
+                </td>
                 <td><?= $openFile->getTitleSize($objectNb) ?></td>
                 <td><?= $openFile->getAllMetaSize($objectNb) ?></td>
                 <td class="array_display"><?= $openFile->displayAllMeta($objectNb) ?> </td>
@@ -70,6 +76,7 @@
                 <td><?= $openFile->displayAllHreflangCharSizes($objectNb) ?></td>
                 <td><?= $openFile->getAllLinksSize($objectNb) ?></td>
                 <td class="array_display"><?= $openFile->displayAllLinks($objectNb) ?></td>
+                <td><?= $openFile->displayAllLinkCharSizes($objectNb) ?></td>
                 <td><?= $openFile->getAllUserSelectorCount($objectNb) ?></td>
                 <td class="array_display"><?= $openFile->displayAllUserSelector($objectNb) ?></td>
             </tr>

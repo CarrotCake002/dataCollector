@@ -79,6 +79,15 @@
             return (strlen($this->getTitle($ObjectNb)));
         }
 
+        public function displayTitleTable($ObjectNb) {
+            return (
+                "<tr>
+                    <td>" . $this->getTitle($ObjectNb) . "</td>
+                    <td>" . $this->getTitleSize($ObjectNb) . "</td>
+                </tr>"
+            );
+        }
+
         public function getAllMeta($ObjectNb) {
             return ($this->getAllHtml($ObjectNb)['meta']);
         }
@@ -98,14 +107,14 @@
         public function displayAllMeta($ObjectNb) {
             $metaSize = $this->getAllMetaSize($ObjectNb);
             for ($i = 0; $i < $metaSize; $i++) {
-                echo $i . '. ' . htmlentities($this->getSingleMetaTag($ObjectNb, $i)) . '<br>';
+                echo htmlentities($this->getSingleMetaTag($ObjectNb, $i)) . '<br>';
             }
         }
 
         public function displayAllMetaCharSizes($ObjectNb) {
             $metaSize = $this->getAllMetaSize($ObjectNb);
             for ($i = 0; $i < $metaSize; $i++) {
-                echo $i . '. ' . $this->getSingleMetaCharSize($ObjectNb, $i) . "<br>";
+                echo $this->getSingleMetaCharSize($ObjectNb, $i) . "<br>";
             }
         }
 
@@ -128,14 +137,14 @@
         public function displayAllHreflang($ObjectNb) {
             $hreflang_size = $this->getAllHreflangSize($ObjectNb);
             for ($i = 0; $i < $hreflang_size; $i++) {
-                echo $i . '. ' . htmlentities($this->getSingleHreflang($ObjectNb, $i)) . '<br>';
+                echo htmlentities($this->getSingleHreflang($ObjectNb, $i)) . '<br>';
             }
         }
 
         public function displayAllHreflangCharSizes($ObjectNb) {
             $hreflang_size = $this->getAllHreflangSize($ObjectNb);
             for ($i = 0; $i < $hreflang_size; $i++) {
-                echo $i . '.  ' . $this->getSingleHreflangCharSize($ObjectNb, $i) . '<br>';
+                echo  $this->getSingleHreflangCharSize($ObjectNb, $i) . '<br>';
             }
         }
 
@@ -181,7 +190,14 @@
         public function displayAllLinks($ObjectNb) {
             $link_size = $this->getAllLinksSize($ObjectNb);
             for ($i = 0; $i < $link_size; $i++) {
-                echo '"<a href="' . $this->getSingleLink($ObjectNb, $i) . '">' . $this->getSingleLink($ObjectNb, $i) . '</a>",<br>';
+                echo '<a href="' . $this->getSingleLink($ObjectNb, $i) . '">' . $this->getSingleLink($ObjectNb, $i) . '</a>"<br>';
+            }
+        }
+        
+        public function displayAllLinkCharSizes($ObjectNb) {
+            $link_size = $this->getAllLinksSize($ObjectNb);
+            for ($i = 0; $i < $link_size; $i++) {
+                echo $this->getSingleLinkCharSize($ObjectNb, $i) . '<br>';
             }
         }
     }
