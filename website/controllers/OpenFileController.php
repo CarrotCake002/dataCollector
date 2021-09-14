@@ -79,15 +79,6 @@
             return (strlen($this->getTitle($ObjectNb)));
         }
 
-        public function displayTitleTable($ObjectNb) {
-            return (
-                "<tr>
-                    <td>" . $this->getTitle($ObjectNb) . "</td>
-                    <td>" . $this->getTitleSize($ObjectNb) . "</td>
-                </tr>"
-            );
-        }
-
         public function getAllMeta($ObjectNb) {
             return ($this->getAllHtml($ObjectNb)['meta']);
         }

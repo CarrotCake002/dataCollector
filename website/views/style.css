@@ -97,7 +97,6 @@ button {
 table, th, td {
     border: 1px solid black;
     text-align: center;
-    border-collapse: collapse;
 }
 
 table {
@@ -105,7 +104,7 @@ table {
     margin-left: auto;
     margin-right: auto;
     width: 95%;
-
+    border-collapse: collapse;
 }
 
 th, td {
@@ -113,7 +112,6 @@ th, td {
     padding-left: 10px;
     padding-right: 10px;
 }
-
 
 .array_display {
     text-align: left;

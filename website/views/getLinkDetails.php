@@ -57,16 +57,7 @@
                 </td>
                 <td><?= $openFile->getStatus($objectNb) ?></td>
                 <td><?= $openFile->getResponseTime($objectNb) ?></td>
-                <td>
-                    <table>
-                        <tr>
-                            <th>Title</th>
-                            <th>Size</th>
-                        </tr>
-
-                        <?= $openFile->displayTitleTable($objectNb) ?>
-                    </table>
-                </td>
+                <td><?= $openFile->getTitle($objectNb) ?></td>
                 <td><?= $openFile->getTitleSize($objectNb) ?></td>
                 <td><?= $openFile->getAllMetaSize($objectNb) ?></td>
                 <td class="array_display"><?= $openFile->displayAllMeta($objectNb) ?> </td>
