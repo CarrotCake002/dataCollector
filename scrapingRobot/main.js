@@ -25,6 +25,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     await page.setViewport({ width: 1000, height: 926 });
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
 
+    // not enter links containing any string from the -x flag
     function isUnwantedLink(link, unwantedLinks) {
         var j = 0;
 
@@ -37,6 +38,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         return false;
     }
 
+    // only enter links containing any string from the -i flag
     function isWantedLink(link, wantedLinks) {
         var h = 0;
 
