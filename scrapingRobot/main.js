@@ -204,7 +204,6 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
     iList++;
     iList = skipLinks(iList, linkList, params['notEnterLinksWith'], params['onlyEnterLinksWith']);
-
     if (!iList) {
         console.log("Info: the program has sucessfully obtained all the links it could!");
         return returnArray;
@@ -283,7 +282,6 @@ const { exit } = require('process');
 var eventEmitter = new events.EventEmitter();
 
 var dataHandler = async function (returnArray, iteration, time, linkEnteredCount) {
-    saveBrute(returnArray[0]);
     await saveFormData(returnArray, iteration, time, linkEnteredCount);
 }
 
