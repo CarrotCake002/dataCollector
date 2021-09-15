@@ -139,26 +139,48 @@
             }
         }
 
-        public function getAllUserSelector($ObjectNb) {
+        public function getAllUserSelectors($ObjectNb) {
             return ($this->getAllHtml($ObjectNb)['userSelected']);
         }
 
-        public function getAllUserSelectorCount($ObjectNb) {
-            return (count($this->getAllUserSelector($ObjectNb)));
+        public function getAllUserSelectorsSize($ObjectNb) {
+            return (count($this->getAllUserSelectors($ObjectNb)));
         }
 
-        public function getSingleUserSelector($ObjectNb, $SelectorNb) {
-            return ($this->getAllHtml($ObjectNb)['userSelected'][$SelectorNb]);
+        public function getTypeUserSelectors($ObjectNb, $typeNb) {
+            return ($this->getAllHtml($ObjectNb)['userSelected'][$typeNb]);
         }
 
-        public function getSingleUserSelectorCharSize($ObjectNb, $SelectorNb) {
-            return (strlen($this->getSingleUserSelector($ObjectNb, $SelectorNb)));
+        public function getTypeUserSelectorsSize($ObjectNb, $typeNb) {
+            return (count($this->getTypeUserSelectors($ObjectNb, $typeNb)));
         }
 
-        public function displayAllUserSelector($ObjectNb) {
-            $selector_size = $this->getAllUserSelectorCount($ObjectNb);
-            for ($i = 0; $i < $selector_size; $i++) {
-                echo '"' . $this->getSingleUserSelector($ObjectNb, $i) . '"(' . $this->getSingleUserSelectorCharSize($ObjectNb, $i) . '),<br>';
+        public function getSingleTypeUserSelector($ObjectNb, $typeNb, $selectorNb) {
+            return ($this->getAllHtml($ObjectNb)['userSelected'][$typeNb][$selectorNb]);
+        }
+
+        public function getSingleTypeUserSelectorCharSize($ObjectNb, $typeNb, $selectorNb) {
+            return (strlen($this->getSingleTypeUserSelector($ObjectNb, $typeNb, $selectorNb)));
+        }
+
+        public function displaySingleTypeUserSelector($ObjectNb, $typeNb, $selectorNb) {
+            echo htmlentities($this->getSingleTypeUserSelector($ObjectNb, $typeNb, $selectorNb));
+        }
+
+        public function displayTypeUserSelectors($ObjectNb, $typeNb) {
+            $typeUserSelectorsSize = $this->getTypeUserSelectorsSize($ObjectNb, $typeNb);
+
+            for ($j = 0; $j < $typeUserSelectorsSize; $j++) {
+                $this->displaySingleTypeUserSelector($ObjectNb, $typeNb, $j);
+                echo '<br>';
+            }
+        }
+
+        public function displayAllUserSelectors($ObjectNb) {
+            $allUserSelectorSize = $this->getAllUserSelectorsSize($ObjectNb);
+
+            for ($i = 0; $i < $allUserSelectorSize; $i++) {
+                $this->displayTypeUserSelectors($ObjectNb, $i);
             }
         }
 
