@@ -221,7 +221,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     return returnArray;
 }
 
-function writeInFile(string) {
+async function writeInFile(string) {
     fs.writeFile(defaultParams['args'][1] + "/../../savefiles/" + defaultParams['savefile'] + '.json', string, { flag: 'a+' }, (err) => {
         if (err) {
             throw err;
@@ -251,13 +251,15 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
         },
         "links": resultArray[2],
     };
-    
-    if (linkEnteredCount != 1) {
-        await writeInFile(',\n\t');
-    }
 
     defaultParams['formattedSavefile'] ? jsonObj = JSON.stringify(jsonObj, null, 4) : jsonObj = JSON.stringify(jsonObj);
-    await writeInFile('"' + linkEnteredCount + '": ' + jsonObj);
+
+    if (linkEnteredCount != 1)
+        jsonObj = ',\n\t' + '"' + linkEnteredCount + '": ' + jsonObj;
+    else
+        jsonObj = '"' + linkEnteredCount + '": ' + jsonObj;
+
+    writeInFile(jsonObj);
 }
 
 // save data that needs to evolve while the program runs
@@ -452,10 +454,6 @@ function configParams(args, defParams) {
     defParams['headlessBrowser'] = configHeadBrowser(args);
     defParams['formattedSavefile'] = configSaveFormat(args);
     return defParams;
-}
-
-async function programEnd() {
-    writeInFile('\n}');
 }
 
 // set the default values of the parameters
