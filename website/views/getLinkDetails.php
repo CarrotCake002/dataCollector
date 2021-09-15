@@ -38,12 +38,16 @@
                 <th>Status</th>
                 <th>Load time (sec)</th>
                 <th>Title</th>
+                <th>Title size</th>
                 <th>Nb Meta description</th>
                 <th>Meta description</th>
+                <th>Meta description sizes</th>
                 <th>Nb hreflang</th>
                 <th>hreflang</th>
+                <th>hreflang sizes</th>
                 <th>Nb links</th>
                 <th>Links</th>
+                <th>Links sizes</th>
                 <th>Nb custom selectors</th>
                 <th>Custom Selectors</th>
             </tr>

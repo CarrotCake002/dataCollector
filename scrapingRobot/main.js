@@ -28,7 +28,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     function isUnwantedLink(link, unwantedLinks) {
         var j = 0;
 
-        while (j < unwantedLinks.lengt) {
+        while (j < unwantedLinks.length) {
             if (link.includes(unwantedLinks[j])) {
                 return true;
             }
