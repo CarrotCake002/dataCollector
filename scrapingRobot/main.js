@@ -262,7 +262,7 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
     writeInFile(jsonObj);
 }
 
-// save data that needs to evolve while the program runs
+// save data that needs to evolve in runtime
 function saveBrute(array) {
     var jsonObj = null;
 
