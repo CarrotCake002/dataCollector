@@ -53,7 +53,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
     // skip all links set as undesired with the initial program arguments
     function skipLinks(iList, linkList, unwantedLinks, wantedLinks) {
-        while (linkList[iList] != undefined) {
+        while (linkList[iList] !== undefined) {
             var link = linkList[iList][0];
             if (isWantedLink(link, wantedLinks) && !isUnwantedLink(link, unwantedLinks)) {
                 return iList;
@@ -63,7 +63,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         return false;
     }
 
-    var returnArray = await page.evaluate((linkList, params) => {
+    var returnArray = await page.evaluate((linkList, params, iList) => {
 
         // avoid saving the same link multiple times and get better optimization
         function checkLinkIsSaved(linkList, newLink) {
@@ -71,7 +71,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
             for (var i = 0; i < linkList.length; i++) {
                 if (newLink === linkList[i][0]) {
-                    linkList[i][1]++;
+                    linkList[i][2]++;
                     result = [true, linkList];
                     return result;
                 }
@@ -88,7 +88,6 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             if (general !== null && general !== undefined) {
                 for (var i = 0; i < general.length; i++) {
                     var link = general[i].getAttribute('href');
-                    console.log(link);
                     if (link !== null && link.charAt(0) === '/') {
                         link = params['domain'] + link;
                     }
@@ -97,7 +96,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
                     linkList = checkLinkSaved[1];
 
                     if (link != null && !isSaved) {
-                        linkList.push([link, 1]);
+                        linkList.push([link, linkList[iList][1] + 1, 1]);
                         newLinkArray.push(link);
                     }
                 }
@@ -181,7 +180,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
         var returnArray = [linkList, htmlList, newLinkArray, metaArray, title, hreflangArray];
         return returnArray;
-    }, linkList, params);
+    }, linkList, params, iList);
 
     browser.close();
     time = Date.now() - time;
@@ -244,6 +243,7 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
         "url": url,
         "status": resultArray[6],
         "urlDepth": resultArray[0][iteration][1],
+        "timesFound": resultArray[0][iteration][2],
         "time": time / 1000,
         "html": {
             "title": resultArray[4],
@@ -483,7 +483,7 @@ if (!params) {
 // initialize starting arguments
 let iList = 0;
 let linkEnteredCount = 0;
-var linkList = [[params['domain'] + '/', 1]];
+var linkList = [[params['domain'] + '/', 0, 1]];
 
 writeInFile('{\n\t');
 
