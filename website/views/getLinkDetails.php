@@ -36,7 +36,7 @@
                 <th>Depth</th>
                 <th>Predecessor</th>
                 <th>Status</th>
-                <th>Load time</th>
+                <th>Load time (sec)</th>
                 <th>Title</th>
                 <th>Nb Meta description</th>
                 <th>Meta description</th>

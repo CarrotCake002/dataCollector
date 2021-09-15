@@ -3,6 +3,16 @@ const fs = require('fs');
 
 async function getContent(linkList, iList, params, linkEnteredCount) {
 
+    // format the next link it's going to enter, to avoid entering an unexistant link and crash it or getting lost in the web
+    function formatEnteringLink(link, domain) {
+        if (link.includes("https://") || link.includes("http://")) {
+            return link;
+        } else if (link.includes("https://") === false && link.includes("http://") === false && link[0] != '/') {
+            return domain + '/' + link;
+        }
+        return domain + link;
+    }
+
     console.log("Iteration " + iList);
     var formattedLink = formatEnteringLink(linkList[iList][0], params['domain']);
     console.log(formattedLink + "\n");
@@ -15,57 +25,43 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     await page.setViewport({ width: 1000, height: 926 });
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
 
-    // format the next link it's going to enter, to avoid entering an unexistant link and crash it or getting lost in the web
-    function formatEnteringLink(link, domain) {
-        if (link.includes("https://") || link.includes("http://")) {
-            return link;
-        } else if (link.includes("https://") === false && link.includes("http://") === false && link[0] != '/') {
-            return domain + '/' + link;
+    function isUnwantedLink(link, unwantedLinks) {
+        var j = 0;
+
+        while (j < unwantedLinks.lengt) {
+            if (link.includes(unwantedLinks[j])) {
+                return true;
+            }
+            j++;
         }
-        return domain + link;
+        return false;
+    }
+
+    function isWantedLink(link, wantedLinks) {
+        var h = 0;
+
+        while (h < wantedLinks.length) {
+            if (link.includes(wantedLinks[h])) {
+                return true;
+            }
+            h++;
+        }
+        return false;
     }
 
     // skip all links set as undesired with the initial program arguments
-    function skipUndesiredLinks(iList, linkList, unwantedLinks, wantedLinks) {
-        var j = 0;
-        var h = 0;
-
-        if (wantedLinks === null || wantedLinks === undefined) {
-            wantedLinks = ['/'];
-        }
+    function skipLinks(iList, linkList, unwantedLinks, wantedLinks) {
         while (linkList[iList] != undefined) {
-            var tempLink = linkList[iList][0];
-
-            if (wantedLinks[h] === undefined) {
-                iList++;
-                j = 0;
-                h = 0;
-                continue;
-            }
-            if (tempLink.includes("http://") === false && tempLink.includes("https://") === false) {
-                tempLink = params["domain"] + tempLink;
-            }
-            if (tempLink.includes(wantedLinks[h]) === false) {
-                h++;
-                continue;
-            }
-            while (j < unwantedLinks.length) {
-                if (tempLink.includes(unwantedLinks[j])) {
-                    break;
-                }
-                j++;
-            }
-            if (j >= unwantedLinks.length) {
+            var link = linkList[iList][0];
+            if (isWantedLink(link, wantedLinks) && !isUnwantedLink(link, unwantedLinks)) {
                 return iList;
             }
             iList++;
-            j = 0;
-            h = 0;
         }
-        return iList;
+        return false;
     }
 
-    var returnArray = await page.evaluate((linkList, params, iList) => {
+    var returnArray = await page.evaluate((linkList, params) => {
 
         // avoid saving the same link multiple times and get better optimization
         function checkLinkIsSaved(linkList, newLink) {
@@ -80,14 +76,6 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             }
             result = [false, linkList];
             return result;
-        }
-
-        // filter empty links
-        function isNeededLink(newLink) {
-            if (newLink === '') {
-                return false;
-            }
-            return true;
         }
 
         // get all the new links from the current website and add them the the link lists
@@ -106,7 +94,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
                     var isSaved = checkLinkSaved[0];
                     linkList = checkLinkSaved[1];
 
-                    if (link != null && !isSaved && isNeededLink(link)) {
+                    if (link != null && !isSaved) {
                         linkList.push([link, 1]);
                         newLinkArray.push(link);
                     }
@@ -118,7 +106,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             return linkResultArray;
         }
 
-        // save the default selectors
+        // save the <meta> selectors
         function getMetaArray() {
             var metaArray = Array.from(document.querySelectorAll(params['querySelector'][0]));
             metaArray = metaArray.map(element => {
@@ -130,7 +118,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             return metaArray;
         }
 
-        // get the title of the website
+        // get the <title> of the website
         function getTitle() {
             var titleArray = Array.from(document.querySelectorAll(params['querySelector'][1]));
             titleArray = titleArray.map(element => {
@@ -191,12 +179,12 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
         var returnArray = [linkList, htmlList, newLinkArray, metaArray, title, hreflangArray];
         return returnArray;
-    }, linkList, params, iList);
+    }, linkList, params);
 
     browser.close();
     time = Date.now() - time;
 
-    if (returnArray === null || returnArray === undefined) {
+    if (returnArray === undefined || returnArray === null) {
         console.log("Error: something unexpected happened when collecting all the data from the website '" + params['domain'] + "'.");
         return returnArray;
     }
@@ -214,14 +202,15 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     var linkList = returnArray[0];
 
     iList++;
-    iList = skipUndesiredLinks(iList, linkList, params['notEnterLinksWith'], params['onlyEnterLinksWith']);
-
-    returnArray = returnArray.push(linkEnteredCount);
-
-    if (linkList[iList] === undefined || linkList[iList] === null) {
+    iList = skipLinks(iList, linkList, params['notEnterLinksWith'], params['onlyEnterLinksWith']);
+    
+    if (!iList) {
         console.log("Info: the program has sucessfully obtained all the links it could!");
         return returnArray;
     }
+
+    returnArray = returnArray.push(linkEnteredCount);
+
     console.log(linkEnteredCount);
     returnArray = await getContent(linkList, iList, params, linkEnteredCount);
     linkEnteredCount--;
@@ -253,7 +242,7 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
         "url": url,
         "status": resultArray[6],
         "urlDepth": resultArray[0][iteration][1],
-        "time": time / 1000 + 's',
+        "time": time / 1000,
         "html": {
             "title": resultArray[4],
             "meta": resultArray[3],
@@ -343,7 +332,7 @@ function configHelp(args) {
 
 // check if the domain is correct and asign the variable's value
 function configDomain(args) {
-    if (args.includes("-D") === false || args[args.indexOf("-D") + 1] === undefined || args[args.indexOf("-D") + 1].includes('http') === false) {
+    if (!args.includes("-D") || args[args.indexOf("-D") + 1] === undefined || !args[args.indexOf("-D") + 1].includes('http')) {
         console.log("Error: you need to set a valid domain of the website you want to scrape.");
         return false;
     }
@@ -360,7 +349,7 @@ function configSiteName(domain) {
     if (siteName === '') {
         siteName = domain.slice(domain.lastIndexOf('/') + 1, domain.lastIndexOf('.') - domain.length);
     }
-    if (siteName === null || siteName === undefined) {
+    if (siteName === undefined || siteName === null) {
         console.log("Error: an error has occured with the domain. Check the input is correct and try again.");
         return false;
     }
@@ -420,13 +409,13 @@ function configQuerySelector(args) {
 // include only links contaning the specified string
 function configStrLinkInclude(args, defParams) {
     if (args.includes("-i") === false) {
-        return defParams;
+        return ['/'];
     } if (args[args.indexOf("-i") + 1] === undefined) {
         console.log("Error: after -i: missing link inclusion arguments.");
         return false;
     }
     defParams['onlyEnterLinksWith'] = args[args.indexOf("-i") + 1].trim().split(" ");
-    return defParams;
+    return defParams['onlyEnterLinksWith'];
 }
 
 // apply formatting to the save file if the flag is sent
@@ -456,7 +445,7 @@ function configParams(args, defParams) {
         return false;
     } if (defParams['querySelector'] = configQuerySelector(args), defParams['querySelector'] === false) {
         return false;
-    } if (defParams = configStrLinkInclude(args, defParams), defParams === false) {
+    } if (defParams['onlyEnterLinksWith'] = configStrLinkInclude(args, defParams), defParams['onlyEnterLinksWith'] === false) {
         return false;
     }
     defParams['getOneSelector'] = configGetAllHtml(args);
@@ -471,7 +460,6 @@ async function programEnd() {
 
 // set the default values of the parameters
 var defaultParams = {
-    help: false,
     domain: null,
     notEnterLinksWith: ["mailto:", "javascript:", "tel:", "steam:", "#", "excel", "word", "pdf"],
     onlyEnterLinksWith: null,
@@ -501,7 +489,7 @@ writeInFile('{\n\t');
 
 var returnArray = getContent(linkList, iList, params, linkEnteredCount);
 
-if (returnArray === null || returnArray === undefined || returnArray === false) {
+if (returnArray === undefined || returnArray === null || returnArray === false) {
     console.log("Error: an error has occured and the program closed unexpectedly.");
     return 84;
 }
