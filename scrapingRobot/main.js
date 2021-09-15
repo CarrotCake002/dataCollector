@@ -158,7 +158,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             if (params['getOneSelector'] === false) {
                 for (var i = 3; i < params['querySelector'].length; i++) {
                     var html = Array.from(document.querySelectorAll(params['querySelector'][i]));
-                    htmlList = htmlList.push(html.map(element => {
+                    htmlList.push(html.map(element => {
                         return element.outerHTML;
                     }));
                 }
@@ -204,7 +204,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
     iList++;
     iList = skipLinks(iList, linkList, params['notEnterLinksWith'], params['onlyEnterLinksWith']);
-    
+
     if (!iList) {
         console.log("Info: the program has sucessfully obtained all the links it could!");
         return returnArray;
