@@ -92,9 +92,10 @@
                     <?php
                     
                         for ($i = 0; $i < 6; $i++):?>
-                            <td class="array_display"></td>
+                            <td class="array_display"><?= $openFile->displayTypeHead($objectNb, $i) ?></td>
+                            <td><?= $openFile->displayTypeHeadSizes($objectNb, $i) ?></td>
+                        <?php endfor;
 
-                            
                     ?>
                     
                     <?php

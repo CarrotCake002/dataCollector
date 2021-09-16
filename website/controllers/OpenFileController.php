@@ -155,6 +155,36 @@
             return (count($this->getTypeHead($ObjectNb, $typeNb)));
         }
 
+        public function getSingleHead($ObjectNb, $typeNb, $headNb) {
+            return (htmlentities($this->getTypeHead($ObjectNb, $typeNb)[$headNb]));
+        }
+
+        public function getSingleHeadSize($ObjectNb, $typeNb, $headNb) {
+            return (strlen($this->getSingleHead($ObjectNb, $typeNb, $headNb)));
+        }
+
+        public function displayTypeHead($ObjectNb, $typeNb) {
+            $sizeTypeHead = $this->getTypeHeadSize($ObjectNb, $typeNb);            
+
+            if ($sizeTypeHead === 0) {
+                echo '-';
+            }
+            for ($i = 0; $i < $sizeTypeHead; $i++) {
+                echo $this->getSingleHead($ObjectNb, $typeNb, $i) . '<br>';
+            }
+        }
+
+        public function displayTypeHeadSizes($ObjectNb, $typeNb) {
+            $sizeTypeHead = $this->getTypeHeadSize($ObjectNb, $typeNb);
+
+            if ($sizeTypeHead === 0) {
+                echo '0';
+            }
+            for ($i = 0; $i < $sizeTypeHead; $i++) {
+                echo $this->getSingleHeadSize($ObjectNb, $typeNb, $i) . '<br>';
+            }
+        }
+
         public function getAllUserSelectors($ObjectNb) {
             return ($this->getAllHtml($ObjectNb)['userSelected']);
         }
