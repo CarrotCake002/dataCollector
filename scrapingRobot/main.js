@@ -253,15 +253,15 @@ function saveFinalData(linkList) {
     var saveData = [];
 
     for (var i = 0; i < linkList.length; i++) {
-        saveData.push(linkList[2]);
+        saveData.push(linkList[i][2]);
     }
 
     defaultParams['formattedSavefile'] ? saveData = JSON.stringify(saveData, null, 4) : saveData = JSON.stringify(saveData);
-    saveData = "runtime: {\n" + saveData + '\n\t}\n}';
+    saveData = '"runtime": ' + saveData + '\n}';
     writeInFile(saveData);
 }
 
-// save data that will be removed from the PC's RAM while the program runs
+// save data that won't be modified and will be deleted at runtime for better optimization
 async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
     var url = resultArray[0][iteration][0];
 
