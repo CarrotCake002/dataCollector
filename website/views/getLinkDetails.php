@@ -29,9 +29,8 @@
         }
 ?>
 
-        <button class="copyTableButton" onclick="copyDetailsTable()">Copy Table contents</button>
-
         <div id="table_container">
+            <button class="copyTableButton" onclick="copyDetailsTable()">Copy Table contents</button>
             <table id="details_table">
                 <tr>
                     <th>Iteration</th>
@@ -51,6 +50,16 @@
                     <th>Nb links</th>
                     <th>Links</th>
                     <th>Links sizes</th>
+
+                    <?php
+
+                        for ($i = 0; $i < 6; $i++):?>
+                            <th>h<?=($i + 1)?></th>
+                            <th>h<?=($i + 1)?> Sizes</th>
+                        <?php endfor;
+
+                    ?>
+
                     <?php
                         $selectorSize = $openFile->getAllUserSelectorsSize($objectNb);
 
@@ -81,11 +90,21 @@
                     <td class="array_display"><?= $openFile->displayAllLinks($objectNb) ?></td>
                     <td><?= $openFile->displayAllLinkCharSizes($objectNb) ?></td>
                     <?php
+                    
+                        for ($i = 0; $i < 6; $i++):?>
+                            <td class="array_display"></td>
+
+                            
+                    ?>
+                    
+                    <?php
 
                         for ($i = 0; $i < $selectorSize; $i++):?>
-                            <td class="array_display"> <?= $openFile->displayTypeUserSelectors($objectNb, $i) ?></td>
+                            <td class="array_display"><?= $openFile->displayTypeUserSelectors($objectNb, $i) ?></td>
                             <td><?= $openFile->getTypeUserSelectorSizes($objectNb, $i) ?></td>
-                        <?php endfor; ?>
+                        <?php endfor;
+                        
+                    ?>
                 </tr>
             </table>
         </div>

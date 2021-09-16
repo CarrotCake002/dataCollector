@@ -22,9 +22,9 @@ if (isset($_POST)) {
 
     ?>
 
-    <button class="copyTableButton" onclick="copyLinksTable()">Copy Table contents</button>
 
-    <div id="tableBlock">
+<div id="tableBlock">
+        <button class="copyTableButton" onclick="copyLinksTable()">Copy Table contents</button>
         <table id="allLinksTable">
             <tr>
                 <th>Iteration</th>

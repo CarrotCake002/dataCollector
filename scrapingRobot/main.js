@@ -152,18 +152,31 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             return hreflangArray;
         }
 
+        function getHeadsArray() {
+            var headsArray = [];
+            var tempArray = [];
+
+            for (var i = 3; i < 9; i++) {
+                tempArray = Array.from(document.querySelectorAll(params['querySelector'][i]));
+                headsArray.push(tempArray.map(element => {
+                    return element.outerHTML;
+                }));
+            }
+            return headsArray;
+        }
+
         // get all the html the user asked for
         function getHtmlList() {
             var htmlList = [];
             if (params['getOneSelector'] === false) {
-                for (var i = 3; i < params['querySelector'].length; i++) {
+                for (var i = 9; i < params['querySelector'].length; i++) {
                     var html = Array.from(document.querySelectorAll(params['querySelector'][i]));
                     htmlList.push(html.map(element => {
                         return element.outerHTML;
                     }));
                 }
             } else {
-                for (var i = 3; i < params['querySelector'].length; i++) {
+                for (var i = 9; i < params['querySelector'].length; i++) {
                     htmlList = htmlList.concat(document.querySelector(params['querySelector'][i]).outerHTML);
                 }
             }
@@ -173,12 +186,13 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         var linkResultArray = getNewLinks(linkList);
         linkList = linkResultArray[0];
         var newLinkArray = linkResultArray[1];
-        var htmlList = getHtmlList();
         var hreflangArray = getHreflangArray();
         var metaArray = getMetaArray();
         var title = getTitle();
+        var headsArray = getHeadsArray();
+        var htmlList = getHtmlList();
 
-        var returnArray = [linkList, htmlList, newLinkArray, metaArray, title, hreflangArray];
+        var returnArray = [linkList, htmlList, newLinkArray, metaArray, title, hreflangArray, headsArray];
         return returnArray;
     }, linkList, params, iList);
 
@@ -240,7 +254,7 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
     {
         "Iteration": iteration,
         "url": url,
-        "status": resultArray[6],
+        "status": resultArray[7],
         "urlDepth": resultArray[0][iteration][1],
         "timesFound": resultArray[0][iteration][2],
         "time": time / 1000,
@@ -248,6 +262,7 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
             "title": resultArray[4],
             "meta": resultArray[3],
             "hreflang": resultArray[5],
+            "heads": resultArray[6],
             "userSelected": resultArray[1],
         },
         "links": resultArray[2],
@@ -462,7 +477,7 @@ var defaultParams = {
     notEnterLinksWith: ["mailto:", "javascript:", "tel:", "steam:", "#", "excel", "word", "pdf"],
     onlyEnterLinksWith: null,
     savefile: "default",
-    querySelector: ['meta', 'title', 'link'],
+    querySelector: ['meta', 'title', 'link', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
     getOneSelector: false,
     formattedSavefile: false,
     headlessBrowser: false,

@@ -139,6 +139,22 @@
             }
         }
 
+        public function getAllHeads($ObjectNb) {
+            return ($this->getAllHtml($ObjectNb)['heads']);
+        }
+
+        public function getAllHeadsSize($ObjectNb) {
+            return (count($this->getAllHeads($ObjectNb)));
+        }
+
+        public function getTypeHead($ObjectNb, $typeNb) {
+            return ($this->getAllHeads($ObjectNb)[$typeNb]);
+        }
+
+        public function getTypeHeadSize($ObjectNb, $typeNb) {
+            return (count($this->getTypeHead($ObjectNb, $typeNb)));
+        }
+
         public function getAllUserSelectors($ObjectNb) {
             return ($this->getAllHtml($ObjectNb)['userSelected']);
         }
