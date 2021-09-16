@@ -5,9 +5,9 @@ require '../controllers/OpenFileController.php';
 
 use classes\OpenFileController;
 
-if (isset($_POST)) {
-    if (isset($_POST['openFile'])) {
-        @ $json = file_get_contents('../../savefiles/' . $_POST['openFile']);
+if (isset($_FILES)) {
+    if (isset($_FILES['openFile'])) {
+        @ $json = file_get_contents($_FILES['openFile']['tmp_name']);
         if ($json === false) {
             echo "The file you sent doesn't exist";
             return;
@@ -36,7 +36,7 @@ if (isset($_POST)) {
                 <th>More details</th>
             </tr>
 
-            <?php for ($i = 1; $i < $openFile->getObjectCount() + 1; $i++): ?>
+            <?php for ($i = 1; $i < $openFile->getObjectCount(); $i++): ?>
 
             <tr>
                 <td><?= $i ?></td>
