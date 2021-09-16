@@ -29,8 +29,10 @@
         }
 ?>
 
+        <button id="copyTableButton" onclick="copyTable()">Copy Table contents</button>
+
         <div id="table_container">
-            <table>
+            <table id="details_table">
                 <tr>
                     <th>Iteration</th>
                     <th>URL</th>
@@ -87,6 +89,16 @@
                 </tr>
             </table>
         </div>
+
+        <script>
+            function copyTable() {
+                var copy = document.getElementById("details_table");
+
+                window.getSelection().selectAllChildren(copy);
+                document.execCommand('Copy')
+                alert("Table copied to clipboard!");
+            }
+        </script>
 
 <?php
     else:
