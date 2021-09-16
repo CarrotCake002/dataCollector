@@ -139,6 +139,38 @@
             }
         }
 
+        public function getAllCanonicals($ObjectNb) {
+            return ($this->getAllHtml($ObjectNb)['canonicals']);
+        }
+
+        public function getAllCanonicalsSize($ObjectNb) {
+            return (count($this->getAllCanonicals($ObjectNb)));
+        }
+
+        public function getSingleCanonical($ObjectNb, $canonicalNb) {
+            return (htmlentities($this->getAllCanonicals($ObjectNb)[$canonicalNb]));
+        }
+
+        public function getSingleCanonicalCharSize($ObjectNb, $canonicalNb) {
+            return (strlen($this->getSingleCanonical($ObjectNb, $canonicalNb)));
+        }
+
+        public function displayAllCanonicals($ObjectNb) {
+            $allCanonicalsSize = $this->getAllCanonicalsSize($ObjectNb);
+
+            for ($i = 0; $i < $allCanonicalsSize; $i++) {
+                echo $this->getSingleCanonical($ObjectNb, $i) . '<br>';
+            }
+        }
+
+        public function displayAllCanonicalSizes($ObjectNb) {
+            $allCanonicalsSize = $this->getAllCanonicalsSize($ObjectNb);
+
+            for ($i = 0; $i < $allCanonicalsSize; $i++) {
+                echo $this->getSingleCanonicalCharSize($ObjectNb, $i) . '<br>';
+            }
+        }
+
         public function getAllHeads($ObjectNb) {
             return ($this->getAllHtml($ObjectNb)['heads']);
         }

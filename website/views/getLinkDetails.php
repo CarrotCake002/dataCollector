@@ -33,6 +33,7 @@
             <button class="copyTableButton" onclick="copyDetailsTable()">Copy Table contents</button>
             <table id="details_table">
                 <tr>
+                    <th>Id</th>
                     <th>Iteration</th>
                     <th>URL</th>
                     <th>Depth</th>
@@ -47,6 +48,8 @@
                     <th>Nb hreflang</th>
                     <th>hreflang</th>
                     <th>hreflang sizes</th>
+                    <th>Canonicals</th>
+                    <th>Canonicals sizes</th>
                     <th>Nb links</th>
                     <th>Links</th>
                     <th>Links sizes</th>
@@ -69,6 +72,7 @@
                         <?php endfor; ?>
                 </tr>
                 <tr>
+                    <td><?= $objectNb ?></td>
                     <td><?= $openFile->getIteration($objectNb) ?></td>
                     <td><a href="<?= $openFile->getUrl($objectNb) ?>"><?= $openFile->getUrl($objectNb) ?></a></td>
                     <td><?= $openFile->getUrlDepth($objectNb) ?></td>
@@ -86,6 +90,8 @@
                     <td><?= $openFile->getAllHreflangSize($objectNb) ?></td>
                     <td class="array_display"><?= $openFile->displayAllHreflang($objectNb) ?></td>
                     <td><?= $openFile->displayAllHreflangCharSizes($objectNb) ?></td>
+                    <td><?= $openFile->displayAllCanonicals($objectNb) ?></td>
+                    <td><?= $openFile->displayAllCanonicalSizes($objectNb) ?></td>
                     <td><?= $openFile->getAllLinksSize($objectNb) ?></td>
                     <td class="array_display"><?= $openFile->displayAllLinks($objectNb) ?></td>
                     <td><?= $openFile->displayAllLinkCharSizes($objectNb) ?></td>

@@ -235,7 +235,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     linkEnteredCount--;
     console.log(linkEnteredCount);
     if (linkEnteredCount === 0) {
-        writeInFile('\n}');
+        saveFinalData(linkList);
     }
     return returnArray;
 }
@@ -246,6 +246,19 @@ async function writeInFile(string) {
             throw err;
         }
     });
+}
+
+// this function saves the data that was being updated in runtime and that could not be saved in the main file before
+function saveFinalData(linkList) {
+    var saveData = [];
+
+    for (var i = 0; i < linkList.length; i++) {
+        saveData.push(linkList[2]);
+    }
+
+    defaultParams['formattedSavefile'] ? saveData = JSON.stringify(saveData, null, 4) : saveData = JSON.stringify(saveData);
+    saveData = "runtime: {\n" + saveData + '\n\t}\n}';
+    writeInFile(saveData);
 }
 
 // save data that will be removed from the PC's RAM while the program runs
@@ -276,15 +289,12 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
 
     defaultParams['formattedSavefile'] ? jsonObj = JSON.stringify(jsonObj, null, 4) : jsonObj = JSON.stringify(jsonObj);
 
-    if (linkEnteredCount != 1)
-        jsonObj = ',\n\t' + '"' + linkEnteredCount + '": ' + jsonObj;
-    else
-        jsonObj = '"' + linkEnteredCount + '": ' + jsonObj;
+    jsonObj = '"' + linkEnteredCount + '": ' + jsonObj + ',\n\t';
 
     writeInFile(jsonObj);
 }
 
-// save data that needs to evolve in runtime
+// save data that needs to evolve in runtime in a file
 function saveBrute(array) {
     var jsonObj = null;
 

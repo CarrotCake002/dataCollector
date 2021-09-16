@@ -27,6 +27,7 @@ if (isset($_POST)) {
         <button class="copyTableButton" onclick="copyLinksTable()">Copy Table contents</button>
         <table id="allLinksTable">
             <tr>
+                <th>Id</th>
                 <th>Iteration</th>
                 <th>URL</th>
                 <th>Depth</th>
@@ -38,12 +39,13 @@ if (isset($_POST)) {
             <?php for ($i = 1; $i < $openFile->getObjectCount() + 1; $i++): ?>
 
             <tr>
-                <td><?=$openFile->getIteration($i)?></td>
-                <td><a href="<?=$openFile->getURl($i)?>"><?=$openFile->getUrl($i)?></a></td>
-                <td><?=$openFile->getUrlDepth($i)?></td>
-                <td><?=$openFile->getStatus($i)?></td>
-                <td><?=$openFile->getAllLinksSize($i)?></td>
-                <td><a href="<?='/website/views/getLinkDetails.php/?object=' . $i . '&filename=' . $_POST['openFile'] ?>">Click for more details</a></td>
+                <td><?= $i ?></td>
+                <td><?= $openFile->getIteration($i) ?></td>
+                <td><a href="<?= $openFile->getURl($i) ?>"><?= $openFile->getUrl($i) ?></a></td>
+                <td><?= $openFile->getUrlDepth($i) ?></td>
+                <td><?= $openFile->getStatus($i) ?></td>
+                <td><?= $openFile->getAllLinksSize($i) ?></td>
+                <td><a href="<?= '/website/views/getLinkDetails.php/?object=' . $i . '&filename=' . $_POST['openFile'] ?>">Click for more details</a></td>
             </tr>
             <?php
                 endfor;
