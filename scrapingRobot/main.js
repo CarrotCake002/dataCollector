@@ -132,24 +132,27 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         }
 
         // get the <link> selectors with an hreflang attribute
-        function getHreflangArray() {
+        function getLinkTagArrays() {
             var hreflangArray = [];
-            var getHreflangArray = Array.from(document.querySelectorAll(params['querySelector'][2]));
-            getHreflangArray = getHreflangArray.map(element => {
+            var canonicalArray = [];
+
+            var getLinkTagArray = Array.from(document.querySelectorAll(params['querySelector'][2]));
+            getLinkTagArray = getLinkTagArray.map(element => {
                 return element.outerHTML;
             });
-            if (getHreflangArray !== null && getHreflangArray !== undefined) {
-                if (getHreflangArray[0] !== undefined) {
-                    for (var i = 0; i < getHreflangArray.length; i++) {
-                        if (getHreflangArray[i].includes("hreflang")) {
-                            hreflangArray.push(getHreflangArray[i]);
-                        }
+            if (getLinkTagArray !== null && getLinkTagArray !== undefined) {
+                if (getLinkTagArray[0] !== undefined) {
+                    for (var i = 0; i < getLinkTagArray.length; i++) {
+                        if (getLinkTagArray[i].includes("hreflang"))
+                            hreflangArray.push(getLinkTagArray[i]);
+                        if (getLinkTagArray[i].includes("canonical"))
+                            canonicalArray.push(getLinkTagArray[i]);
                     }
                 }
             } else {
                 console.log("Error: something unexpected happened when getting the hreflang attribute from '" + params['domain'] + "'.")
             }
-            return hreflangArray;
+            return [hreflangArray, canonicalArray];
         }
 
         function getHeadsArray() {
@@ -186,13 +189,15 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         var linkResultArray = getNewLinks(linkList);
         linkList = linkResultArray[0];
         var newLinkArray = linkResultArray[1];
-        var hreflangArray = getHreflangArray();
+        var linkTagArray = getLinkTagArrays();
+        var hreflangArray = linkTagArray[0];
+        var canonicalArray = linkTagArray[1];
         var metaArray = getMetaArray();
         var title = getTitle();
         var headsArray = getHeadsArray();
         var htmlList = getHtmlList();
 
-        var returnArray = [linkList, htmlList, newLinkArray, metaArray, title, hreflangArray, headsArray];
+        var returnArray = [linkList, htmlList, newLinkArray, metaArray, title, hreflangArray, canonicalArray, headsArray];
         return returnArray;
     }, linkList, params, iList);
 
@@ -254,7 +259,7 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
     {
         "Iteration": iteration,
         "url": url,
-        "status": resultArray[7],
+        "status": resultArray[8],
         "urlDepth": resultArray[0][iteration][1],
         "timesFound": resultArray[0][iteration][2],
         "time": time / 1000,
@@ -262,7 +267,8 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
             "title": resultArray[4],
             "meta": resultArray[3],
             "hreflang": resultArray[5],
-            "heads": resultArray[6],
+            "canonicals": resultArray[6],
+            "heads": resultArray[7],
             "userSelected": resultArray[1],
         },
         "links": resultArray[2],
