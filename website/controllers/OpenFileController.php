@@ -176,6 +176,15 @@
             }
         }
 
+        public function getTypeUserSelectorSizes($ObjectNb, $typeNb) {
+            $typeUserSelectorsSize = $this->getTypeUserSelectorsSize($ObjectNb, $typeNb);
+
+            for ($i = 0; $i < $typeUserSelectorsSize; $i++) {
+                echo $this->getSingleTypeUserSelectorCharSize($ObjectNb, $typeNb, $i);
+                echo '<br>';
+            }
+        }
+
         public function displayAllUserSelectors($ObjectNb) {
             $allUserSelectorSize = $this->getAllUserSelectorsSize($ObjectNb);
 
@@ -203,7 +212,7 @@
         public function displayAllLinks($ObjectNb) {
             $link_size = $this->getAllLinksSize($ObjectNb);
             for ($i = 0; $i < $link_size; $i++) {
-                echo '<a href="' . $this->getSingleLink($ObjectNb, $i) . '">' . $this->getSingleLink($ObjectNb, $i) . '</a>"<br>';
+                echo '<a href="' . $this->getSingleLink($ObjectNb, $i) . '">' . $this->getSingleLink($ObjectNb, $i) . '</a><br>';
             }
         }
         
@@ -211,6 +220,18 @@
             $link_size = $this->getAllLinksSize($ObjectNb);
             for ($i = 0; $i < $link_size; $i++) {
                 echo $this->getSingleLinkCharSize($ObjectNb, $i) . '<br>';
+            }
+        }
+
+        public function addSpacesToSizeCols($spacesNb) {
+            for ($i = 0; $i < $spacesNb; $i++) {
+                echo "&nbsp";
+            }
+        }
+
+        public function addTabsToSizeCols($tabsNb) {
+            for ($i = 0; $i < $tabsNb; $i++) {
+                $this->addSpacesToSizeCols(4);
             }
         }
     }
