@@ -21,8 +21,11 @@ if (isset($_POST)) {
     $openFile = new OpenFileController($json_data);
 
     ?>
+
+    <button class="copyTableButton" onclick="copyLinksTable()">Copy Table contents</button>
+
     <div id="tableBlock">
-        <table>
+        <table id="allLinksTable">
             <tr>
                 <th>Iteration</th>
                 <th>URL</th>
@@ -47,6 +50,16 @@ if (isset($_POST)) {
             ?>
         </table>
     </div>
+
+    <script>
+        function copyLinksTable() {
+            var copy = document.getElementById('allLinksTable');
+            
+            window.getSelection().selectAllChildren(copy);
+            document.execCommand('Copy');
+        }
+    </script>
+
 <?php
 }
 

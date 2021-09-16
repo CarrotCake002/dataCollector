@@ -131,3 +131,7 @@ th, td {
 .home_p {
     word-spacing: 5px;
 }
+
+.copyTableButton {
+    margin-left: 40px;
+}

@@ -29,7 +29,7 @@
         }
 ?>
 
-        <button id="copyTableButton" onclick="copyTable()">Copy Table contents</button>
+        <button class="copyTableButton" onclick="copyDetailsTable()">Copy Table contents</button>
 
         <div id="table_container">
             <table id="details_table">
@@ -91,12 +91,11 @@
         </div>
 
         <script>
-            function copyTable() {
-                var copy = document.getElementById("details_table");
+            function copyDetailsTable() {
+                var copy = document.getElementById('details_table');
 
                 window.getSelection().selectAllChildren(copy);
-                document.execCommand('Copy')
-                alert("Table copied to clipboard!");
+                document.execCommand('Copy');
             }
         </script>
 
