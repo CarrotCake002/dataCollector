@@ -235,7 +235,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     linkEnteredCount--;
     console.log(linkEnteredCount);
     if (linkEnteredCount === 0) {
-        saveFinalData(linkList);
+        saveFinalData(returnArray[0]);
     }
     return returnArray;
 }
