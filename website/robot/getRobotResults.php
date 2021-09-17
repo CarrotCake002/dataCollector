@@ -7,9 +7,13 @@ use classes\OpenFileController;
 
 if (isset($_FILES)) {
     $json_data = null;
-    if (isset($_FILES['openFile'])) {
+    if (isset($_FILES['openFile']) && isset($_FILES['openFile']['tmp_name'])) {
         $filePath = "../../savefiles/" . basename($_FILES['openFile']['tmp_name']);
-        copy($_FILES['openFile']['tmp_name'], $filePath);
+        $move = move_uploaded_file($_FILES['openFile']['tmp_name'], $filePath);
+        if ($move === false) {
+            echo "There has been an error managing the file.";
+            return;
+        }
         @ $json = file_get_contents($filePath);
         if ($json === false) {
             echo "The file you sent doesn't exist.";
@@ -20,6 +24,9 @@ if (isset($_FILES)) {
             echo "The save file format is not correct. Make sure there are no errors in the syntax.";
             return;
         }
+    } else {
+        echo "There has been a problem with the file's name.";
+        return;
     }
     $openFile = new OpenFileController($json_data);
 
