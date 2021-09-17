@@ -16,7 +16,7 @@
                 (auto: "mailto:", "javascript:", "tel:", "#", "excel", "word", "pdf")</p>
                 <input class="home_inputs" type="text" name="exclude" placeholder="blog store https:// .fr">
                 <p class="home_p" >Custom Selectors<br>
-                (auto: "meta", "title", "link"->"hreflang")</p>
+                (auto: "meta", "title", "link"->"hreflang", "link"->"canonical", all headers: h1, h2, etc.)</p>
                 <input class="home_inputs" type="text" name="userSelectors" placeholder="h1 h2 .class #id">
                 <p class="home_p" >Get only the first selector<br>
                 (default: all selectors)</p>
