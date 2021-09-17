@@ -48,18 +48,14 @@
                     <th>Meta description sizes</th>
                     <th>Nb hreflang</th>
                     <th>hreflang</th>
-                    <th>hreflang sizes</th>
-                    <th>Canonicals</th>
-                    <th>Canonicals sizes</th>
+                    <th>Canonical</th>
                     <th>Nb links</th>
                     <th>Links</th>
-                    <th>Links sizes</th>
 
                     <?php
 
                         for ($i = 0; $i < 6; $i++):?>
                             <th>h<?=($i + 1)?></th>
-                            <th>h<?=($i + 1)?> Sizes</th>
                         <?php endfor;
 
                     ?>
@@ -69,7 +65,6 @@
 
                         for ($i = 0; $i < $selectorSize; $i++): ?>
                            <th>Custom Selector Type <?= ($i + 1) ?> <?= $openFile->addTabsToSizeCols(15)?></th>
-                           <th>Custom Selector Type <?= ($i + 1) ?> Sizes</th>
                         <?php endfor; ?>
                 </tr>
                 <tr>
@@ -89,19 +84,15 @@
                     <td><?= $openFile->getAllMetaSize($objectNb) ?></td>
                     <td class="array_display"><?= $openFile->displayAllMeta($objectNb) ?> </td>
                     <td><?= $openFile->displayAllMetaCharSizes($objectNb) ?></td>
-                    <td><?= $openFile->getAllHreflangSize($objectNb) ?></td>
                     <td class="array_display"><?= $openFile->displayAllHreflang($objectNb) ?></td>
                     <td><?= $openFile->displayAllHreflangCharSizes($objectNb) ?></td>
                     <td><?= $openFile->displayAllCanonicals($objectNb) ?></td>
-                    <td><?= $openFile->displayAllCanonicalSizes($objectNb) ?></td>
                     <td><?= $openFile->getAllLinksSize($objectNb) ?></td>
                     <td class="array_display"><?= $openFile->displayAllLinks($objectNb) ?></td>
-                    <td><?= $openFile->displayAllLinkCharSizes($objectNb) ?></td>
                     <?php
                     
                         for ($i = 0; $i < 6; $i++):?>
                             <td class="array_display"><?= $openFile->displayTypeHead($objectNb, $i) ?></td>
-                            <td><?= $openFile->displayTypeHeadSizes($objectNb, $i) ?></td>
                         <?php endfor;
 
                     ?>
@@ -110,9 +101,8 @@
 
                         for ($i = 0; $i < $selectorSize; $i++):?>
                             <td class="array_display"><?= $openFile->displayTypeUserSelectors($objectNb, $i) ?></td>
-                            <td><?= $openFile->getTypeUserSelectorSizes($objectNb, $i) ?></td>
                         <?php endfor;
-                        
+
                     ?>
                 </tr>
             </table>
