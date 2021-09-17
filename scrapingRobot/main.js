@@ -162,7 +162,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             for (var i = 3; i < 9; i++) {
                 tempArray = Array.from(document.querySelectorAll(params['querySelector'][i]));
                 headsArray.push(tempArray.map(element => {
-                    return element.outerHTML;
+                    return element.innerHTML;
                 }));
             }
             return headsArray;
