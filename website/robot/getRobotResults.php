@@ -6,10 +6,13 @@ require '../controllers/OpenFileController.php';
 use classes\OpenFileController;
 
 if (isset($_FILES)) {
+    $json_data = null;
     if (isset($_FILES['openFile'])) {
-        @ $json = file_get_contents($_FILES['openFile']['tmp_name']);
+        $filePath = "../../savefiles/" . basename($_FILES['openFile']['tmp_name']);
+        copy($_FILES['openFile']['tmp_name'], $filePath);
+        @ $json = file_get_contents($filePath);
         if ($json === false) {
-            echo "The file you sent doesn't exist";
+            echo "The file you sent doesn't exist.";
             return;
         }
         $json_data = json_decode($json, true);
@@ -36,7 +39,14 @@ if (isset($_FILES)) {
                 <th>More details</th>
             </tr>
 
-            <?php for ($i = 1; $i < $openFile->getObjectCount(); $i++): ?>
+            <?php
+                $objectCount = $openFile->getObjectCount();
+
+                if ($objectCount < 1) {
+                    echo "<br><br><b>There is no data to display. Make sure you acessed the correct file </b>";
+                    die;
+                }
+                for ($i = 1; $i < $objectCount; $i++): ?>
 
             <tr>
                 <td><?= $i ?></td>
@@ -45,7 +55,7 @@ if (isset($_FILES)) {
                 <td><?= $openFile->getUrlDepth($i) ?></td>
                 <td><?= $openFile->getStatus($i) ?></td>
                 <td><?= $openFile->getAllLinksSize($i) ?></td>
-                <td><a href="<?= '/website/views/getLinkDetails.php/?object=' . $i . '&filename=' . $_POST['openFile'] ?>">Click for more details</a></td>
+                <td><a href="<?= '/website/views/getLinkDetails.php/?object=' . $i . '&filename=' . $filePath ?>">Click for more details</a></td>
             </tr>
             <?php
                 endfor;

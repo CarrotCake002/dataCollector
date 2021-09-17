@@ -13,7 +13,7 @@
                 Make sure the url syntax is correct and the url exists";
         }
         if (isset($_GET['filename'])) {
-            @$json = file_get_contents('../../savefiles/' . $_GET['filename']);
+            @$json = file_get_contents($_GET['filename']);
             if ($json === false) {
                 echo "The file you sent doesn't exist";
                 return;
@@ -37,6 +37,7 @@
                     <th>Iteration</th>
                     <th>URL</th>
                     <th>Depth</th>
+                    <th>Times URL found</th>
                     <th>Predecessor</th>
                     <th>Status</th>
                     <th>Load time (sec)</th>
@@ -76,6 +77,7 @@
                     <td><?= $openFile->getIteration($objectNb) ?></td>
                     <td><a href="<?= $openFile->getUrl($objectNb) ?>"><?= $openFile->getUrl($objectNb) ?></a></td>
                     <td><?= $openFile->getUrlDepth($objectNb) ?></td>
+                    <td><?= $openFile->getTimesUrlFound($objectNb) ?></td>
                     <td>
                         <a href="<?= $openFile->getUrlPredecessor($objectNb)?>"><?= $openFile->getUrlPredecessor($objectNb)?></a><br>
                         (<a href="<?= '/website/views/getLinkDetails.php/?object=' . $openFile->getObjectFromUrl($openFile->getUrlPredecessor($objectNb)) . '&filename=' . $_GET['filename']?>">details</a>)

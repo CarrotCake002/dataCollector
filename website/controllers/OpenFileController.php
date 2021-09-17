@@ -29,7 +29,7 @@
         public function getUrlPredecessor($ObjectNb) {
             $current_url = $this->getUrl($ObjectNb);
             if ($this->getIteration($ObjectNb) == 0)
-                return '-';
+                return;
             for ($obj = 1; $obj <= $this->getObjectCount(); $obj++) {
                 for ($link = 0; $link < $this->getAllLinksSize($obj); $link++) {
                     if ($this->getSingleLink($obj, $link) === $current_url)
@@ -57,6 +57,14 @@
 
         public function getUrlDepth($ObjectNb) {
             return ($this->jsonData[$ObjectNb]['urlDepth']);
+        }
+
+        public function getRuntimeData() {
+            return ($this->jsonData['runtime']);
+        }
+
+        public function getTimesUrlFound($ObjectNb) {
+            return ($this->getRuntimeData()[$ObjectNb]);
         }
 
         public function getResponseTime($ObjectNb) {
