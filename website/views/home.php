@@ -24,12 +24,12 @@
                     <input type="checkbox" name="allSelectors">
                     <div class="slider round"></div>
                 </label>
-                Headless browser
+                <p class="home_p">Headless browser</p>
                 <label class="switch">
                     <input type="checkbox" name="headless">
                     <div class="slider round"></div>
                 </label>
-                Formatted savefile
+                <p class="home_p">Formatted savefile</p>
                 <label class="switch">
                     <input type="checkbox" name="formSavefile">
                     <div class="slider round"></div>

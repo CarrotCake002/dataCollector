@@ -170,6 +170,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
         // get all the html the user asked for
         function getHtmlList() {
+            console.log(params['getOneSelector']);
             var htmlList = [];
             if (params['getOneSelector'] === false) {
                 for (var i = 9; i < params['querySelector'].length; i++) {
@@ -180,7 +181,13 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
                 }
             } else {
                 for (var i = 9; i < params['querySelector'].length; i++) {
-                    htmlList = htmlList.concat(document.querySelector(params['querySelector'][i]).outerHTML);
+                    htmlList[i - 9] = [];
+                    var elem = Array.from(document.querySelectorAll(params['querySelector'][i]));
+                    if (elem !== undefined && elem !== null) {
+                        htmlList[i - 9].push(elem.map(element => {
+                            return element.outerHTML;
+                        })[0]);
+                    }
                 }
             }
             return htmlList;
@@ -230,10 +237,8 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
     returnArray = returnArray.push(linkEnteredCount);
 
-    console.log(linkEnteredCount);
     returnArray = await getContent(linkList, iList, params, linkEnteredCount);
     linkEnteredCount--;
-    console.log(linkEnteredCount);
     if (linkEnteredCount === 0) {
         saveFinalData(returnArray[0]);
     }

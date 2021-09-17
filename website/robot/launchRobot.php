@@ -22,9 +22,8 @@ if (isset($_POST)) {
         $query = $query . ' -f ';
     if (isset($_POST['headless']) && $_POST['headless'] === 'on')
         $query = $query . ' -H ';
-    if (!isset($_POST['allSelectors']) || !$_POST['allSelectors'] === 'on')
+    if (isset($_POST['allSelectors']) && $_POST['allSelectors'] === 'on')
         $query = $query . ' -o ';
-
     $res = exec($query);
     echo $res;
 
