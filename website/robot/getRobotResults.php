@@ -27,6 +27,10 @@ if (isset($_FILES)) {
 
 
 <div id="tableBlock">
+        <form action="../views/getAllLinkDetails.php" method="GET">
+            <input type="text" name="filename" id="filename" value="<?= $filePath ?>">
+            <input type="submit" name="submit" value="Get all link details">
+        </form>
         <button class="copyTableButton" onclick="copyLinksTable()">Copy Table contents</button>
         <table id="allLinksTable">
             <tr>

@@ -90,6 +90,10 @@ button {
     position: relative;
 }
 
+#filename {
+    display: none;
+}
+
 #openFile {
     height: auto;
     background-color: auto;
@@ -140,10 +144,6 @@ th, td {
 
 .home_p {
     word-spacing: 5px;
-}
-
-.copyTableButton {
-    margin-left: 40px;
 }
 
 .table_container {
