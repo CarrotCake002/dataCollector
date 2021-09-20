@@ -415,6 +415,18 @@
             }
         }
 
+        public function getLinkTargetBlank($ObjectNb) {
+            $linkArticleSize = $this->getAllLinkArticlesSize($ObjectNb);
+
+            for ($i = 0; $i < $linkArticleSize; $i++) {
+                if (strpos($this->getSingleLinkArticle($ObjectNb, $i), "target=\"_blank\"") === false)
+                    echo 'N';
+                else
+                    echo 'Y';
+                echo '<br>';    
+            }
+        }
+
         public function addSpacesToSizeCols($spacesNb) {
             for ($i = 0; $i < $spacesNb; $i++) {
                 echo "&nbsp";
