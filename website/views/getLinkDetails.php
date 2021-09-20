@@ -43,9 +43,16 @@
                     <th>Load time (sec)</th>
                     <th>Title <?= $openFile->addTabsToSizeCols(15)?></th>
                     <th>Title size</th>
-                    <th>Nb Meta description</th>
+                    <th>Nb Meta tags</th>
                     <th>Meta description</th>
-                    <th>Meta description sizes</th>
+                    <th>Meta Description size</th>
+                    <th>Meta tags</th>
+                    <th>Meta tags sizes</th>
+                    <th>Meta index</th>
+                    <th>Meta follow</th>
+                    <th>Meta sponsored</th>
+                    <th>Meta ugc</th>
+                    <th>Meta noopener</th>
                     <th>Nb hreflang</th>
                     <th>hreflang</th>
                     <th>Canonical</th>
@@ -83,10 +90,17 @@
                     <td><?= $openFile->getTitle($objectNb) ?></td>
                     <td><?= $openFile->getTitleSize($objectNb) ?></td>
                     <td><?= $openFile->getAllMetaSize($objectNb) ?></td>
+                    <td><?= htmlentities($openFile->getMetaDescription($objectNb)) ?></td>
+                    <td><?= $openFile->getMetaDescriptionCharSize($objectNb) ?></td>
                     <td class="array_display"><?= $openFile->displayAllMeta($objectNb) ?> </td>
                     <td><?= $openFile->displayAllMetaCharSizes($objectNb) ?></td>
+                    <td><?= $openFile->getMetaIndex($objectNb) ?></td>
+                    <td><?= $openFile->getMetaFollow($objectNb) ?></td>
+                    <td><?= $openFile->getMetaSponsored($objectNb) ?></td>
+                    <td><?= $openFile->getMetaUgc($objectNb) ?></td>
+                    <td><?= $openFile->getMetaNoopener($objectNb) ?></td>
+                    <td><?= $openFile->getAllHreflangSize($objectNb) ?></td>
                     <td class="array_display"><?= $openFile->displayAllHreflang($objectNb) ?></td>
-                    <td><?= $openFile->displayAllHreflangCharSizes($objectNb) ?></td>
                     <td><?= $openFile->displayAllCanonicals($objectNb) ?></td>
                     <td><?= $openFile->getAllLinksSize($objectNb) ?></td>
                     <td class="array_display"><?= $openFile->displayAllLinks($objectNb) ?></td>
