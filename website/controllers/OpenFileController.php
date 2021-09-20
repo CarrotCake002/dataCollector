@@ -117,6 +117,16 @@
             }
         }
 
+        public function getMetaDescription($ObjectNb) {
+            $metaSize = $this->getAllMetaSize($ObjectNb);
+            for ($i = 0; $i < $metaSize; $i++) {
+                if (str_contains($this->getSingleMetaTag($ObjectNb, $i), "name=\"description\"")) {
+                    return $this->getSingleMetaTag($ObjectNb, $i);
+                }
+            }
+            return '';
+        }
+
         public function getAllHreflang($ObjectNb) {
             return ($this->getAllHtml($ObjectNb)['hreflang']);
         }
