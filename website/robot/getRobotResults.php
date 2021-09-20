@@ -14,12 +14,12 @@ if (isset($_FILES)) {
             echo "There has been an error managing the file.";
             return;
         }
-        @ $json = file_get_contents($filePath);
-        if ($json === false) {
+        @ $json_data = file_get_contents($filePath);
+        if ($json_data === false) {
             echo "The file you sent doesn't exist.";
             return;
         }
-        $json_data = json_decode($json, true);
+        $json_data = json_decode($json_data, true);
         if ($json_data === null) {
             echo "The save file format is not correct. Make sure there are no errors in the syntax.";
             return;
