@@ -86,6 +86,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             var newLinkArray = [];
             var linkArticle = [];
 
+            console.log(general);
             if (general !== null && general !== undefined) {
                 for (var i = 0; i < general.length; i++) {
                     var link = general[i].getAttribute('href');
@@ -99,7 +100,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
                     if (link != null && !isSaved) {
                         linkList.push([link, linkList[iList][1] + 1, 1]);
                         newLinkArray.push(link);
-                        linkArticle.push(general[i]);
+                        linkArticle.push(general[i].outerHTML);
                     }
                 }
             } else {
@@ -197,8 +198,8 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
         var linkResultArray = getNewLinks(linkList);
         linkList = linkResultArray[0];
-        linkArticle = linkResultArray[1];
         var newLinkArray = linkResultArray[1];
+        var linkArticle = linkResultArray[2];
         var linkTagArray = getLinkTagArrays();
         var hreflangArray = linkTagArray[0];
         var canonicalArray = linkTagArray[1];
