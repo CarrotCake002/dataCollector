@@ -1,6 +1,10 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 
+function readSitemap(linkList) {
+    // do nothing for now
+}
+
 async function getContent(linkList, iList, params, linkEnteredCount) {
 
     // format the next link it's going to enter, to avoid entering an unexistant link and crash it or getting lost in the web
@@ -172,33 +176,22 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             return headsArray;
         }
 
-        // get all images' outerHtml
-        function getImgArray() {
-            var imgArray = [];
-
-            imgArray = Array.from(document.querySelectorAll(params['querySelector'][9]));
-            imgArray = imgArray.map(element => {
-                return element.outerHTML;
-            });
-            return imgArray;
-        }
-
         // get all the html the user asked for
         function getHtmlList() {
             var htmlList = [];
             if (params['getOneSelector'] === false) {
-                for (var i = 10; i < params['querySelector'].length; i++) {
+                for (var i = 9; i < params['querySelector'].length; i++) {
                     var html = Array.from(document.querySelectorAll(params['querySelector'][i]));
                     htmlList.push(html.map(element => {
                         return element.outerHTML;
                     }));
                 }
             } else {
-                for (var i = 10; i < params['querySelector'].length; i++) {
-                    htmlList[i - 10] = [];
+                for (var i = 9; i < params['querySelector'].length; i++) {
+                    htmlList[i - 9] = [];
                     var elem = Array.from(document.querySelectorAll(params['querySelector'][i]));
                     if (elem !== undefined && elem !== null) {
-                        htmlList[i - 10].push(elem.map(element => {
+                        htmlList[i - 9].push(elem.map(element => {
                             return element.outerHTML;
                         })[0]);
                     }
@@ -217,10 +210,9 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         var metaArray = getMetaArray();
         var title = getTitle();
         var headsArray = getHeadsArray();
-        var imgArray = getImgArray();
         var htmlList = getHtmlList();
 
-        var returnArray = [linkList, htmlList, newLinkArray, metaArray, title, hreflangArray, canonicalArray, headsArray, linkArticle, imgArray];
+        var returnArray = [linkList, htmlList, newLinkArray, metaArray, title, hreflangArray, canonicalArray, headsArray, linkArticle];
         return returnArray;
     }, linkList, params, iList);
 
@@ -293,7 +285,7 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
     {
         "Iteration": iteration,
         "url": url,
-        "status": resultArray[10],
+        "status": resultArray[9],
         "urlDepth": resultArray[0][iteration][1],
         "time": time / 1000,
         "html": {
@@ -303,7 +295,6 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
             "canonicals": resultArray[6],
             "heads": resultArray[7],
             "linkArticle": resultArray[8],
-            "img": resultArray[9],
             "userSelected": resultArray[1],
         },
         "links": resultArray[2],
@@ -515,7 +506,7 @@ var defaultParams = {
     notEnterLinksWith: ["mailto:", "javascript:", "tel:", "steam:", "#", "excel", "word", "pdf"],
     onlyEnterLinksWith: null,
     savefile: "default",
-    querySelector: ['meta', 'title', 'link', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'img'],
+    querySelector: ['meta', 'title', 'link', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
     getOneSelector: false,
     formattedSavefile: false,
     headlessBrowser: false,
@@ -535,6 +526,11 @@ if (!params) {
 let iList = 0;
 let linkEnteredCount = 0;
 var linkList = [[params['domain'] + '/', 0, 1]];
+
+if (params['domain'].includes('sitemap.xml')) {
+    linkList = readSitemap(linkList);
+    iList++;
+}
 
 writeInFile('{\n\t');
 
