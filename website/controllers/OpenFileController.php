@@ -120,11 +120,75 @@
         public function getMetaDescription($ObjectNb) {
             $metaSize = $this->getAllMetaSize($ObjectNb);
             for ($i = 0; $i < $metaSize; $i++) {
-                if (str_contains($this->getSingleMetaTag($ObjectNb, $i), "name=\"description\"")) {
+                if (strpos($this->getSingleMetaTag($ObjectNb, $i), "name=\"description\"") !== false) {
                     return $this->getSingleMetaTag($ObjectNb, $i);
                 }
             }
             return '';
+        }
+
+        public function getMetaDescriptionCharSize($ObjectNb) {
+            return (strlen($this->getMetaDescription($ObjectNb)));
+        }
+
+        public function getMetaIndex($ObjectNb) {
+            $allMetaSize = $this->getAllMetaSize($ObjectNb);
+
+            for ($i = 0; $i < $allMetaSize; $i++) {
+                if (strpos($this->getSingleMetaTag($ObjectNb, $i), "noindex") === false)
+                    echo 'Y';
+                else
+                    echo 'N';
+                echo '<br>';
+            }
+        }
+
+        public function getMetaFollow($ObjectNb) {
+            $allMetaSize = $this->getAllMetaSize($ObjectNb);
+
+            for ($i = 0; $i < $allMetaSize; $i++) {
+                if (strpos($this->getSingleMetaTag($ObjectNb, $i), "nofollow") === false)
+                    echo 'Y';
+                else
+                    echo 'N';
+                echo '<br>';
+            }
+        }
+
+        public function getMetaSponsored($ObjectNb) {
+            $allMetaSize = $this->getAllMetaSize($ObjectNb);
+
+            for ($i = 0; $i < $allMetaSize; $i++) {
+                if (strpos($this->getSingleMetaTag($ObjectNb, $i), "sponsored") === false)
+                    echo 'N';
+                else
+                    echo 'Y';
+                echo '<br>';
+            }
+        }
+
+        public function getMetaUgc($ObjectNb) {
+            $allMetaSize = $this->getAllMetaSize($ObjectNb);
+
+            for ($i = 0; $i < $allMetaSize; $i++) {
+                if (strpos($this->getSingleMetaTag($ObjectNb, $i), "ugc") === false)
+                    echo 'N';
+                else
+                    echo 'Y';
+                echo '<br>';
+            }
+        }
+
+        public function getMetaNoopener($ObjectNb) {
+            $allMetaSize = $this->getAllMetaSize($ObjectNb);
+
+            for ($i = 0; $i < $allMetaSize; $i++) {
+                if (strpos($this->getSingleMetaTag($ObjectNb, $i), "noopener") === false)
+                    echo 'N';
+                else
+                    echo 'Y';
+                echo '<br>';
+            }
         }
 
         public function getAllHreflang($ObjectNb) {
