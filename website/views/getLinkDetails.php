@@ -60,6 +60,8 @@
                     <th>Links</th>
                     <th>Link 'article' tags</th>
                     <th>Link Target=_blank</th>
+                    <th>Nb images</th>
+                    <th>Images</th>
 
                     <?php
 
@@ -107,6 +109,8 @@
                     <td class="array_display"><?= $openFile->displayAllLinks($objectNb) ?></td>
                     <td class="array_display"><?= $openFile->displayAllLinkArticles($objectNb) ?></td>
                     <td><?= $openFile->getLinkTargetBlank($objectNb) ?></td>
+                    <td><?= $openFile->getAllImgSize($objectNb) ?></td>
+                    <td class="array_display"><?= $openFile->displayAllImgOuterHtml($objectNb) ?></td>
                     <?php
                     
                         for ($i = 0; $i < 6; $i++):?>
