@@ -37,34 +37,9 @@ if (isset($_GET)) :
                 <th>Load time (sec)</th>
                 <th>Title <?= $openFile->addTabsToSizeCols(15) ?></th>
                 <th>Title size</th>
-                <th>Nb Meta description</th>
-                <th>Meta description</th>
-                <th>Meta description sizes</th>
                 <th>Nb hreflang</th>
-                <th>hreflang</th>
-                <th>hreflang sizes</th>
                 <th>Canonicals</th>
-                <th>Canonicals sizes</th>
                 <th>Nb links</th>
-                <th>Links</th>
-                <th>Links sizes</th>
-
-                <?php
-
-                for ($i = 0; $i < 6; $i++) : ?>
-                    <th>h<?= ($i + 1) ?></th>
-                    <th>h<?= ($i + 1) ?> Sizes</th>
-                <?php endfor;
-
-                ?>
-
-                <?php
-                $selectorSize = $openFile->getAllUserSelectorsSize(1);
-
-                for ($i = 0; $i < $selectorSize; $i++) : ?>
-                    <th>Custom Selector Type <?= ($i + 1) ?> <?= $openFile->addTabsToSizeCols(15) ?></th>
-                    <th>Custom Selector Type <?= ($i + 1) ?> Sizes</th>
-                <?php endfor; ?>
             </tr>
 
             <?php for ($objectNb = 1; $objectNb < $openFile->getObjectCount() - 1; $objectNb++): ?>
@@ -75,41 +50,16 @@ if (isset($_GET)) :
                     <td><?= $openFile->getUrlDepth($objectNb) ?></td>
                     <td><?= $openFile->getTimesUrlFound($objectNb) ?></td>
                     <td>
-                        <a href="<?= $openFile->getUrlPredecessor($objectNb) ?>"><?= $openFile->getUrlPredecessor($objectNb) ?></a><br>
+                        <a href="<?= $openFile->getUrlPredecessor($objectNb) ?>"><?= $openFile->getUrlPredecessor($objectNb) ?></a>
                         (<a href="<?= '/website/views/getLinkDetails.php/?object=' . $openFile->getObjectFromUrl($openFile->getUrlPredecessor($objectNb)) . '&filename=' . $_GET['filename'] ?>">details</a>)
                     </td>
                     <td><?= $openFile->getStatus($objectNb) ?></td>
                     <td><?= $openFile->getResponseTime($objectNb) ?></td>
                     <td><?= $openFile->getTitle($objectNb) ?></td>
                     <td><?= $openFile->getTitleSize($objectNb) ?></td>
-                    <td><?= $openFile->getAllMetaSize($objectNb) ?></td>
-                    <td class="array_display"><?= $openFile->displayAllMeta($objectNb) ?> </td>
-                    <td><?= $openFile->displayAllMetaCharSizes($objectNb) ?></td>
                     <td><?= $openFile->getAllHreflangSize($objectNb) ?></td>
-                    <td class="array_display"><?= $openFile->displayAllHreflang($objectNb) ?></td>
-                    <td><?= $openFile->displayAllHreflangCharSizes($objectNb) ?></td>
                     <td><?= $openFile->displayAllCanonicals($objectNb) ?></td>
-                    <td><?= $openFile->displayAllCanonicalSizes($objectNb) ?></td>
                     <td><?= $openFile->getAllLinksSize($objectNb) ?></td>
-                    <td class="array_display"><?= $openFile->displayAllLinks($objectNb) ?></td>
-                    <td><?= $openFile->displayAllLinkCharSizes($objectNb) ?></td>
-                    <?php
-
-                    for ($i = 0; $i < 6; $i++) : ?>
-                        <td class="array_display"><?= $openFile->displayTypeHead($objectNb, $i) ?></td>
-                        <td><?= $openFile->displayTypeHeadSizes($objectNb, $i) ?></td>
-                    <?php endfor;
-
-                    ?>
-
-                    <?php
-
-                    for ($i = 0; $i < $selectorSize; $i++) : ?>
-                        <td class="array_display"><?= $openFile->displayTypeUserSelectors($objectNb, $i) ?></td>
-                        <td><?= $openFile->getTypeUserSelectorSizes($objectNb, $i) ?></td>
-                    <?php endfor;
-
-                    ?>
                 </tr>
                 <?php endfor; ?>
         </table>
