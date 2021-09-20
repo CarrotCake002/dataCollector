@@ -295,7 +295,6 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
         "url": url,
         "status": resultArray[10],
         "urlDepth": resultArray[0][iteration][1],
-        "timesFound": resultArray[0][iteration][2],
         "time": time / 1000,
         "html": {
             "title": resultArray[4],
