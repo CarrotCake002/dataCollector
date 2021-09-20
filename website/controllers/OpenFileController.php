@@ -329,7 +329,7 @@
             $linkArticleSize = $this->getAllLinkArticlesSize($ObjectNb);
 
             for ($i = 0; $i < $linkArticleSize; $i++) {
-                echo $this->getSingleLinkArticle($ObjectNb, $i) . "<br>";
+                echo htmlentities($this->getSingleLinkArticle($ObjectNb, $i)) . "<br>";
             }
         }
 
