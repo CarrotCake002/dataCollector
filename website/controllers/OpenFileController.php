@@ -427,6 +427,27 @@
             }
         }
 
+        public function getAllImg($ObjectNb) {
+            return ($this->getAllHtml($ObjectNb)['img']);
+        }
+
+        public function getAllImgSize($ObjectNb) {
+            return (count($this->getAllImg($ObjectNb)));
+        }
+
+        public function getSingleImg($ObjectNb, $imgNb) {
+            return ($this->getAllImg($ObjectNb)[$imgNb]);
+        }
+
+        public function displayAllImgOuterHtml($ObjectNb) {
+            $allImgSize = $this->getAllImgSize($ObjectNb);
+
+            for ($i = 0; $i < $allImgSize; $i++) {
+                echo htmlentities($this->getSingleImg($ObjectNb, $i));
+                echo '<br>';
+            }
+        }
+
         public function addSpacesToSizeCols($spacesNb) {
             for ($i = 0; $i < $spacesNb; $i++) {
                 echo "&nbsp";
