@@ -59,6 +59,7 @@
                     <th>Nb links</th>
                     <th>Links</th>
                     <th>Link 'article' tags</th>
+                    <th>Link Target=_blank</th>
 
                     <?php
 
@@ -105,6 +106,7 @@
                     <td><?= $openFile->getAllLinksSize($objectNb) ?></td>
                     <td class="array_display"><?= $openFile->displayAllLinks($objectNb) ?></td>
                     <td class="array_display"><?= $openFile->displayAllLinkArticles($objectNb) ?></td>
+                    <td><?= $openFile->getLinkTargetBlank($objectNb) ?></td>
                     <?php
                     
                         for ($i = 0; $i < 6; $i++):?>
