@@ -51,6 +51,7 @@
                     <th>Canonical</th>
                     <th>Nb links</th>
                     <th>Links</th>
+                    <th>Link 'article' tags</th>
 
                     <?php
 
@@ -89,6 +90,7 @@
                     <td><?= $openFile->displayAllCanonicals($objectNb) ?></td>
                     <td><?= $openFile->getAllLinksSize($objectNb) ?></td>
                     <td class="array_display"><?= $openFile->displayAllLinks($objectNb) ?></td>
+                    <td class="array_display"><?= $openFile->displayAllLinkArticles($objectNb) ?></td>
                     <?php
                     
                         for ($i = 0; $i < 6; $i++):?>

@@ -309,6 +309,38 @@
             }
         }
 
+        public function getAllLinkArticles($ObjectNb) {
+            return ($this->getAllHtml($ObjectNb)['linkArticle']);
+        }
+
+        public function getAllLinkArticlesSize($ObjectNb) {
+            return (count($this->getAllLinkArticles($ObjectNb)));
+        }
+
+        public function getSingleLinkArticle($ObjectNb, $articleNb) {
+            return ($this->getAllLinkArticles($ObjectNb)[$articleNb]);
+        }
+
+        public function getSingleLinkArticleCharSize($ObjectNb, $articleNb) {
+            return (strlen($this->getSingleLinkArticle($ObjectNb, $articleNb)));
+        }
+
+        public function displayAllLinkArticles($ObjectNb) {
+            $linkArticleSize = $this->getAllLinkArticlesSize($ObjectNb);
+
+            for ($i = 0; $i < $linkArticleSize; $i++) {
+                echo $this->getSingleLinkArticle($ObjectNb, $i) . "<br>";
+            }
+        }
+
+        public function displayAllLinkArticleCharSizes($ObjectNb) {
+            $linkArticleSize = $this->getAllLinkArticlesSize($ObjectNb);
+
+            for ($i = 0; $i < $linkArticleSize; $i++) {
+                echo strlen($this->getSingleLinkArticle($ObjectNb, $i)) . "<br>";
+            }
+        }
+
         public function addSpacesToSizeCols($spacesNb) {
             for ($i = 0; $i < $spacesNb; $i++) {
                 echo "&nbsp";

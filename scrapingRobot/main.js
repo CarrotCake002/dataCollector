@@ -84,6 +84,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         function getNewLinks(linkList) {
             var general = document.querySelectorAll('a');
             var newLinkArray = [];
+            var linkArticle = [];
 
             if (general !== null && general !== undefined) {
                 for (var i = 0; i < general.length; i++) {
@@ -98,12 +99,13 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
                     if (link != null && !isSaved) {
                         linkList.push([link, linkList[iList][1] + 1, 1]);
                         newLinkArray.push(link);
+                        linkArticle.push(general[i]);
                     }
                 }
             } else {
                 console.log("Error: something unexpected happened when collecting new urls from '" + params['domain'] + "'.");
             }
-            var linkResultArray = [linkList, newLinkArray];
+            var linkResultArray = [linkList, newLinkArray, linkArticle];
             return linkResultArray;
         }
 
@@ -195,6 +197,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
         var linkResultArray = getNewLinks(linkList);
         linkList = linkResultArray[0];
+        linkArticle = linkResultArray[1];
         var newLinkArray = linkResultArray[1];
         var linkTagArray = getLinkTagArrays();
         var hreflangArray = linkTagArray[0];
@@ -204,7 +207,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         var headsArray = getHeadsArray();
         var htmlList = getHtmlList();
 
-        var returnArray = [linkList, htmlList, newLinkArray, metaArray, title, hreflangArray, canonicalArray, headsArray];
+        var returnArray = [linkList, htmlList, newLinkArray, metaArray, title, hreflangArray, canonicalArray, headsArray, linkArticle];
         return returnArray;
     }, linkList, params, iList);
 
@@ -277,7 +280,7 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
     {
         "Iteration": iteration,
         "url": url,
-        "status": resultArray[8],
+        "status": resultArray[9],
         "urlDepth": resultArray[0][iteration][1],
         "timesFound": resultArray[0][iteration][2],
         "time": time / 1000,
@@ -287,6 +290,7 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
             "hreflang": resultArray[5],
             "canonicals": resultArray[6],
             "heads": resultArray[7],
+            "linkArticle": resultArray[8],
             "userSelected": resultArray[1],
         },
         "links": resultArray[2],
