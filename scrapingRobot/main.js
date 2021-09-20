@@ -2,7 +2,15 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 
 function readSitemap(linkList) {
-    // do nothing for now
+    var i = 1;
+    var siremapUrl = [''];
+
+    do { // define page for today
+        sitemapUrl = page.$x(`/html/body/div[3]/div/div[2]/div[` + i + `]/div[2]/div[1]/span[2]`);
+        console.log(sitemapUrl);
+        i++;
+    } while (sitemapUrl[0] !== undefined);
+    return (null/*linkList*/);
 }
 
 async function getContent(linkList, iList, params, linkEnteredCount) {
@@ -527,7 +535,7 @@ let iList = 0;
 let linkEnteredCount = 0;
 var linkList = [[params['domain'] + '/', 0, 1]];
 
-if (params['domain'].includes('sitemap.xml')) {
+if (params['domain'].includes('/sitemap.xml')) {
     linkList = readSitemap(linkList);
     iList++;
 }
