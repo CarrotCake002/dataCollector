@@ -1,19 +1,30 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 
-/*function readSitemap(linkList) {
+async function readSitemap(linkList) {
     var i = 1;
-    var siremapUrl = [''];
+    var sitemapUrl = [''];
+    
+    console.log('sitemap');
+    var browser = await puppeteer.launch({ headless: params['headlessBrowser'], args: ['--ignore-certificate-errors'] });
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1000, height: 926 });
+    const response = await page.goto(linkList[0][0], { waitUntil: 'networkidle0', timeout: 0 });
 
-    do { // define page for today
-        sitemapUrl = page.$x(`/html/body/div[3]/div/div[2]/div[` + i + `]/div[2]/div[1]/span[2]`);
+    console.log(response.status());
+    do {
+        sitemapUrl = await page.$x(`/html/body/div[3]/div/div[2]/div[` + i + `]/div[2]/div[1]/span[2]`);
         console.log(sitemapUrl);
         i++;
     } while (sitemapUrl[0] !== undefined);
-    return (null linkList);
-}*/
+
+    browser.close();
+    return (linkList);
+}
 
 async function getContent(linkList, iList, params, linkEnteredCount) {
+
+    linkList = await readSitemap(linkList);
 
     // format the next link it's going to enter, to avoid entering an unexistant link and crash it or getting lost in the web
     function formatEnteringLink(link, domain) {
@@ -32,7 +43,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
     // open a new browser and page with the new url
     var time = Date.now();
-    const browser = await puppeteer.launch({ headless: params['headlessBrowser'], args: ['--ignore-certificate-errors'] });
+    var browser = await puppeteer.launch({ headless: params['headlessBrowser'], args: ['--ignore-certificate-errors'] });
     const page = await browser.newPage();
     await page.setViewport({ width: 1000, height: 926 });
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
@@ -535,12 +546,6 @@ let iList = 0;
 let linkEnteredCount = 0;
 var linkList = [[params['domain'] + '/', 0, 1]];
 
-/*
-if (params['domain'].includes('/sitemap.xml')) {
-    linkList = readSitemap(linkList);
-    iList++;
-}
-*/
 writeInFile('{\n\t');
 
 var returnArray = getContent(linkList, iList, params, linkEnteredCount);
