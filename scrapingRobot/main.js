@@ -24,7 +24,7 @@ async function readSitemap(linkList) {
 
 async function getContent(linkList, iList, params, linkEnteredCount) {
 
-    linkList = await readSitemap(linkList);
+    //linkList = await readSitemap(linkList);
 
     // format the next link it's going to enter, to avoid entering an unexistant link and crash it or getting lost in the web
     function formatEnteringLink(link, domain) {
