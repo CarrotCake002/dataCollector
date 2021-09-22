@@ -1,58 +1,5 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
-/*const Apify = require('apify');
-
-function getSitemap() {
-    return (Apify.main(async () => {
-        const requestList = new Apify.RequestList({
-            sources: [{ requestsFromUrl: 'https://www.shbarcelona.com/sitemap.xml' }],
-        });
-        await requestList.initialize();
-
-        const requestQueue = await Apify.openRequestQueue();
-
-        const crawler = new Apify.PuppeteerCrawler({
-            requestList,
-            requestQueue,
-            handlePageFunction: async ({ page, request }) => {
-                console.log(`Processing ${request.url}...`);
-
-                // This is just an example, define your logic
-                await Apify.utils.enqueueLinks({
-                    page, selector: 'a', pseudoUrls: null, requestQueue,
-                });
-                await Apify.pushData({
-                    url: request.url,
-                    title: await page.title(),
-                    html: await page.content(),
-                });
-            },
-        });
-        await crawler.run();
-        console.log('Done.');
-    }));
-}*/
-
-async function readSitemap(linkList) {
-    var i = 1;
-    var sitemapUrl = [''];
-    
-    console.log('sitemap');
-    var browser = await puppeteer.launch({ headless: params['headlessBrowser'], args: ['--ignore-certificate-errors'] });
-    const page = await browser.newPage();
-    await page.setViewport({ width: 1000, height: 926 });
-    const response = await page.goto(linkList[0][0], { waitUntil: 'networkidle0', timeout: 0 });
-
-    console.log(response.status());
-    do {
-        sitemapUrl = await page.$x(`/html/body/div[3]/div/div[2]/div[` + i + `]/div[2]/div[1]/span[2]`);
-        console.log(sitemapUrl);
-        i++;
-    } while (sitemapUrl[0] !== undefined);
-
-    browser.close();
-    return (linkList);
-}
 
 async function getContent(linkList, iList, params, linkEnteredCount) {
 
@@ -81,17 +28,25 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
 
     await page.click('button#accepted-cookies');
-    await page.waitFor(2000);
-    const elements = await page.$x('/html/body/div[3]/div[1]/ul/li[1]/div[2]/div[4]/div[2]/button[2]');
-    console.log(elements);
-    await writeInFile(page.evaluate('body', (elem) => {
-        return document.querySelector('body').outerHTML;
-    }));
-    //await elements[0].click() ;
-    // await page.click('button[control-key="5e28fab2f2dd61007cb8368aafb96db1"]');
-    await page.waitFor(2000);
-    await page.screenshot({ path: "./screen.png"});
 
+    var elements = [];
+    var i = 1;
+    do {
+        xpath = `/html/body/div[4]/div[1]/ul/li[` + i + `]/div[2]/div[4]/div[2]/button[2]`;
+        await page.waitForXPath(xpath, {visible: true, timeout: 5000});
+        elements = await page.$x(xpath);
+        if (elements[0] !== undefined) {
+            console.log('click');
+            await elements[0].click();
+        }
+        await page.waitFor("#BoxAlertBtnOk");
+    await page.click("#BoxAlertBtnOk");
+        i++;
+    } while (elements[0] !== undefined);
+
+    //html/body/div[4]/div[1]/ul/li[1]/div[2]/div[4]/div[2]/button[2]
+    //html/body/div[4]/div[1]/ul/li[2]/div[2]/div[4]/div[2]/button[2]
+    //html/body/div[4]/div[1]/ul/li[3]/div[2]/div[4]/div[2]/button[2]
 
     // not enter links containing any string from the -x flag
     function isUnwantedLink(link, unwantedLinks) {
@@ -131,7 +86,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         return false;
     }
 
-    var returnArray = await page.evaluate((linkList, params, iList, page) => {
+    var returnArray = await page.evaluate((linkList, params, iList) => {
 
         // avoid saving the same link multiple times and get better optimization
         function checkLinkIsSaved(linkList, newLink) {
@@ -154,7 +109,6 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             var newLinkArray = [];
             var linkArticle = [];
 
-            console.log(general);
             if (general !== null && general !== undefined) {
                 for (var i = 0; i < general.length; i++) {
                     var link = general[i].getAttribute('href');
@@ -275,10 +229,10 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         var title = getTitle();
         var headsArray = getHeadsArray();
         var htmlList = getHtmlList();
-        
+
         var returnArray = [linkList, htmlList, newLinkArray, metaArray, title, hreflangArray, canonicalArray, headsArray, linkArticle];
         return returnArray;
-    }, linkList, params, iList, page);
+    }, linkList, params, iList);
 
     //browser.close();
     time = Date.now() - time;
