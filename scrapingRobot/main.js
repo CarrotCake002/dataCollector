@@ -80,16 +80,17 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     await page.setViewport({ width: 1000, height: 926 });
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
 
-    await page.click('#accepted-cookies');
+    await page.click('button#accepted-cookies');
     await page.waitFor(2000);
-    await page.click('');
+    const elements = await page.$x('/html/body/div[3]/div[1]/ul/li[1]/div[2]/div[4]/div[2]/button[2]');
+    console.log(elements);
+    await writeInFile(page.evaluate('body', (elem) => {
+        return document.querySelector('body').outerHTML;
+    }));
+    //await elements[0].click() ;
+    // await page.click('button[control-key="5e28fab2f2dd61007cb8368aafb96db1"]');
     await page.waitFor(2000);
     await page.screenshot({ path: "./screen.png"});
-
-    async function getClickElements() {
-        console.log('click');
-        await page.click('.btn-secondary-g');
-    }
 
 
     // not enter links containing any string from the -x flag
