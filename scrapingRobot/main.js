@@ -39,14 +39,14 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             console.log('click');
             await elements[0].click();
         }
-        await page.waitFor("#BoxAlertBtnOk");
-    await page.click("#BoxAlertBtnOk");
+        await page.waitFor(5000);
+        await page.on('dialog', async (dialog) => {
+            console.log(dialog.message());
+            await dialog.dismiss();
+        })
         i++;
     } while (elements[0] !== undefined);
 
-    //html/body/div[4]/div[1]/ul/li[1]/div[2]/div[4]/div[2]/button[2]
-    //html/body/div[4]/div[1]/ul/li[2]/div[2]/div[4]/div[2]/button[2]
-    //html/body/div[4]/div[1]/ul/li[3]/div[2]/div[4]/div[2]/button[2]
 
     // not enter links containing any string from the -x flag
     function isUnwantedLink(link, unwantedLinks) {
