@@ -80,19 +80,6 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     await page.setViewport({ width: 1000, height: 926 });
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
 
-    await page.click('button#accepted-cookies');
-    await page.waitFor(2000);
-    const elements = await page.$x('/html/body/div[3]/div[1]/ul/li[1]/div[2]/div[4]/div[2]/button[2]');
-    console.log(elements);
-    await writeInFile(page.evaluate('body', (elem) => {
-        return document.querySelector('body').outerHTML;
-    }));
-    //await elements[0].click() ;
-    // await page.click('button[control-key="5e28fab2f2dd61007cb8368aafb96db1"]');
-    await page.waitFor(2000);
-    await page.screenshot({ path: "./screen.png"});
-
-
     // not enter links containing any string from the -x flag
     function isUnwantedLink(link, unwantedLinks) {
         var j = 0;
@@ -131,7 +118,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         return false;
     }
 
-    var returnArray = await page.evaluate((linkList, params, iList, page) => {
+    var returnArray = await page.evaluate((linkList, params, iList) => {
 
         // avoid saving the same link multiple times and get better optimization
         function checkLinkIsSaved(linkList, newLink) {
@@ -263,7 +250,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             }
             return htmlList;
         }
-        
+
         var linkResultArray = getNewLinks(linkList);
         linkList = linkResultArray[0];
         var newLinkArray = linkResultArray[1];
@@ -275,12 +262,12 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         var title = getTitle();
         var headsArray = getHeadsArray();
         var htmlList = getHtmlList();
-        
+
         var returnArray = [linkList, htmlList, newLinkArray, metaArray, title, hreflangArray, canonicalArray, headsArray, linkArticle];
         return returnArray;
-    }, linkList, params, iList, page);
+    }, linkList, params, iList);
 
-    //browser.close();
+    browser.close();
     time = Date.now() - time;
 
     if (returnArray === undefined || returnArray === null) {
@@ -309,7 +296,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
     returnArray = returnArray.push(linkEnteredCount);
 
-    //returnArray = await getContent(linkList, iList, params, linkEnteredCount);
+    returnArray = await getContent(linkList, iList, params, linkEnteredCount);
     linkEnteredCount--;
     if (linkEnteredCount === 0) {
         saveFinalData(returnArray[0]);
