@@ -1,5 +1,55 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
+/*const Apify = require('apify');
+
+function getSitemap() {
+    return (Apify.main(async () => {
+        const requestList = new Apify.RequestList({
+            sources: [{ requestsFromUrl: 'https://www.shbarcelona.com/sitemap.xml' }],
+        });
+        await requestList.initialize();
+        const requestQueue = await Apify.openRequestQueue();
+        const crawler = new Apify.PuppeteerCrawler({
+            requestList,
+            requestQueue,
+            handlePageFunction: async ({ page, request }) => {
+                console.log(`Processing ${request.url}...`);
+                // This is just an example, define your logic
+                await Apify.utils.enqueueLinks({
+                    page, selector: 'a', pseudoUrls: null, requestQueue,
+                });
+                await Apify.pushData({
+                    url: request.url,
+                    title: await page.title(),
+                    html: await page.content(),
+                });
+            },
+        });
+        await crawler.run();
+        console.log('Done.');
+    }));
+}*/
+
+async function readSitemap(linkList) {
+    var i = 1;
+    var sitemapUrl = [''];
+    
+    console.log('sitemap');
+    var browser = await puppeteer.launch({ headless: params['headlessBrowser'], args: ['--ignore-certificate-errors'] });
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1000, height: 926 });
+    const response = await page.goto(linkList[0][0], { waitUntil: 'networkidle0', timeout: 0 });
+
+    console.log(response.status());
+    do {
+        sitemapUrl = await page.$x(`/html/body/div[3]/div/div[2]/div[` + i + `]/div[2]/div[1]/span[2]`);
+        console.log(sitemapUrl);
+        i++;
+    } while (sitemapUrl[0] !== undefined);
+
+    browser.close();
+    return (linkList);
+}
 
 async function getContent(linkList, iList, params, linkEnteredCount) {
 
