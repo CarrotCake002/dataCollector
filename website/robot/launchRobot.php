@@ -18,6 +18,8 @@ if (isset($_POST)) {
         $query = $query . ' -x "' . $_POST['exclude'] . '" ';
     if (isset($_POST['userSelectors']) && $_POST['userSelectors'] !== '')
         $query = $query . ' -s "' . $_POST['userSelectors'] . '" ';
+    if (isset($_POST['clickItems']) && $_POST['clickItems'] !== '')
+        $query = $query . ' -c "' . $_POST['clickItems'] . '" ';
     if (isset($_POST['formSavefile']) && $_POST['formSavefile'] === 'on')
         $query = $query . ' -f ';
     if (isset($_POST['headless']) && $_POST['headless'] === 'on')
