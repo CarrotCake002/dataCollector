@@ -3,8 +3,6 @@ const fs = require('fs');
 
 async function getContent(linkList, iList, params, linkEnteredCount) {
 
-    //linkList = await readSitemap(linkList);
-
     // format the next link it's going to enter, to avoid entering an unexistant link and crash it or getting lost in the web
     function formatEnteringLink(link, domain) {
         if (link.includes("https://") || link.includes("http://")) {
@@ -24,20 +22,9 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     var time = Date.now();
     var browser = await puppeteer.launch({ headless: params['headlessBrowser'], args: ['--ignore-certificate-errors'] });
     const page = await browser.newPage();
+    //await page.waitFor
     await page.setViewport({ width: 1000, height: 926 });
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
-
-    // click items the user selected
-    if (params['clickItems'] !== null && params['clickItems'] !== undefined) {
-        await page.evaluate((clickItems) => {
-            for (var i = 0; i < clickItems.length; i++) {
-                document.querySelectorAll(clickItems[i]).forEach(item => {
-                    item.click();
-                })
-            }
-        }, params['clickItems']);
-        await page.waitFor(1000);
-    }
 
     // not enter links containing any string from the -x flag
     function isUnwantedLink(link, unwantedLinks) {
@@ -225,7 +212,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         return returnArray;
     }, linkList, params, iList);
 
-    browser.close();
+    //browser.close();
     time = Date.now() - time;
 
     if (returnArray === undefined || returnArray === null) {
@@ -254,7 +241,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
     returnArray = returnArray.push(linkEnteredCount);
 
-    returnArray = await getContent(linkList, iList, params, linkEnteredCount);
+    //returnArray = await getContent(linkList, iList, params, linkEnteredCount);
     linkEnteredCount--;
     if (linkEnteredCount === 0) {
         saveFinalData(returnArray[0]);
@@ -264,9 +251,6 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
 async function writeInFile(string) {
     fs.writeFile(defaultParams['args'][1] + "/../../savefiles/" + defaultParams['savefile'] + '.json', string, { flag: 'a+' }, (err) => {
-        if (err) {
-            throw err;
-        }
     });
 }
 
@@ -548,7 +532,12 @@ if (!params) {
 // initialize starting arguments
 let iList = 0;
 let linkEnteredCount = 0;
-var linkList = [[params['domain'] + '/', 0, 1]];
+
+startingDomain = params['domain']
+if (params['domain'].includes('sitemap') === false && params['domain'].includes('robots.txt') === false)
+    startingDomain = startingDomain + '/';
+
+    var linkList = [[startingDomain, 0, 1]];
 
 writeInFile('{\n\t');
 
