@@ -27,26 +27,19 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     await page.setViewport({ width: 1000, height: 926 });
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
 
-    await page.click('button#accepted-cookies');
-
-    var elements = [];
-    var i = 1;
-    do {
-        xpath = `/html/body/div[4]/div[1]/ul/li[` + i + `]/div[2]/div[4]/div[2]/button[2]`;
-        await page.waitForXPath(xpath, {visible: true, timeout: 5000});
-        elements = await page.$x(xpath);
-        if (elements[0] !== undefined) {
-            console.log('click');
-            await elements[0].click();
-        }
-        await page.waitFor(5000);
-        await page.on('dialog', async (dialog) => {
-            console.log(dialog.message());
-            await dialog.dismiss();
-        })
-        i++;
-    } while (elements[0] !== undefined);
-
+    //div.propertyCard__infoWrapper > div.propertyCard__actions > div.propertyCard__actionsWrapper > button.btn-secondary-g.propertyCard__actions--call.hidden-xs.ga-contactSee > span
+    //div.propertyCard__infoWrapper > div.propertyCard__actions > div.propertyCard__actionsWrapper > button.btn-secondary-g.propertyCard__actions--call.hidden-xs
+    if (params['clickItems'] !== null && params['clickItems'] !== undefined) {
+        //await page.click('button#accepted-cookies');
+        await page.evaluate((clickItems) => {
+            for (var i = 0; i < clickItems.length; i++) {
+                document.querySelectorAll(clickItems[i]).forEach(item => {
+                    item.click();
+                })
+            }
+        }, params['clickItems']);
+        await page.waitFor(3000);
+    }
 
     // not enter links containing any string from the -x flag
     function isUnwantedLink(link, unwantedLinks) {
@@ -217,7 +210,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             }
             return htmlList;
         }
-        
+
         var linkResultArray = getNewLinks(linkList);
         linkList = linkResultArray[0];
         var newLinkArray = linkResultArray[1];
@@ -234,7 +227,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         return returnArray;
     }, linkList, params, iList);
 
-    //browser.close();
+    browser.close();
     time = Date.now() - time;
 
     if (returnArray === undefined || returnArray === null) {
@@ -263,7 +256,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
     returnArray = returnArray.push(linkEnteredCount);
 
-    //returnArray = await getContent(linkList, iList, params, linkEnteredCount);
+    returnArray = await getContent(linkList, iList, params, linkEnteredCount);
     linkEnteredCount--;
     if (linkEnteredCount === 0) {
         saveFinalData(returnArray[0]);
@@ -454,7 +447,7 @@ function configStrLinkExclude(args) {
         console.log("Error: after -x: missing link exclusion arguments.");
         return false;
     }
-    var avoidLinks = args[args.indexOf("-x") + 1].trim().split(" ");
+    var avoidLinks = args[args.indexOf("-x") + 1].trim().split(",");
     return defaultParams['notEnterLinksWith'].concat(avoidLinks);
 }
 
@@ -466,7 +459,7 @@ function configQuerySelector(args) {
         console.log("Error: after -s: missing selector argument.");
         return false;
     }
-    var selectorArray = args[args.indexOf("-s") + 1].trim().split(" ");
+    var selectorArray = args[args.indexOf("-s") + 1].trim().split(",");
     return defaultParams['querySelector'].concat(selectorArray);
 }
 
@@ -478,8 +471,19 @@ function configStrLinkInclude(args, defParams) {
         console.log("Error: after -i: missing link inclusion arguments.");
         return false;
     }
-    defParams['onlyEnterLinksWith'] = args[args.indexOf("-i") + 1].trim().split(" ");
+    defParams['onlyEnterLinksWith'] = args[args.indexOf("-i") + 1].trim().split(",");
     return defParams['onlyEnterLinksWith'];
+}
+
+function configClickItems(args) {
+    if (args.includes("-c") === false) {
+        return null;
+    } if (args[args.indexOf("-c") + 1] === undefined) {
+        console.log("Error: after -c: missing clickable items.");
+        return false;
+    }
+    defaultParams['clickItems'] = args[args.indexOf("-c") + 1].trim().split(",");
+    return defaultParams['clickItems'];
 }
 
 // apply formatting to the save file if the flag is sent
@@ -509,6 +513,8 @@ function configParams(args, defParams) {
         return false;
     } if (defParams['querySelector'] = configQuerySelector(args), defParams['querySelector'] === false) {
         return false;
+    } if (defParams['clickItems'] = configClickItems(args), defParams['clickItems'] === false) {
+        return false;
     } if (defParams['onlyEnterLinksWith'] = configStrLinkInclude(args, defParams), defParams['onlyEnterLinksWith'] === false) {
         return false;
     }
@@ -529,7 +535,8 @@ var defaultParams = {
     formattedSavefile: false,
     headlessBrowser: false,
     siteName: null,
-    args: process.argv
+    args: process.argv,
+    clickItems: []
 }
 
 // get the program execution arguments
