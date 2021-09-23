@@ -27,10 +27,8 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     await page.setViewport({ width: 1000, height: 926 });
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
 
-    //div.propertyCard__infoWrapper > div.propertyCard__actions > div.propertyCard__actionsWrapper > button.btn-secondary-g.propertyCard__actions--call.hidden-xs.ga-contactSee > span
-    //div.propertyCard__infoWrapper > div.propertyCard__actions > div.propertyCard__actionsWrapper > button.btn-secondary-g.propertyCard__actions--call.hidden-xs
+    // click items the user selected
     if (params['clickItems'] !== null && params['clickItems'] !== undefined) {
-        //await page.click('button#accepted-cookies');
         await page.evaluate((clickItems) => {
             for (var i = 0; i < clickItems.length; i++) {
                 document.querySelectorAll(clickItems[i]).forEach(item => {
@@ -38,7 +36,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
                 })
             }
         }, params['clickItems']);
-        await page.waitFor(3000);
+        await page.waitFor(1000);
     }
 
     // not enter links containing any string from the -x flag
