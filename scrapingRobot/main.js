@@ -27,6 +27,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     await page.setViewport({ width: 1000, height: 926 });
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
 
+<<<<<<< HEAD
     // click items the user selected
     if (params['clickItems'] !== null && params['clickItems'] !== undefined) {
         await page.evaluate((clickItems) => {
@@ -39,6 +40,8 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         await page.waitFor(1000);
     }
 
+=======
+>>>>>>> 009a0a6c568d9f600e34b285e2462cd3ca6c84b2
     // not enter links containing any string from the -x flag
     function isUnwantedLink(link, unwantedLinks) {
         var j = 0;
