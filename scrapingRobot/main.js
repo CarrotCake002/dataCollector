@@ -1,59 +1,7 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
-/*const Apify = require('apify');
-
-function getSitemap() {
-    return (Apify.main(async () => {
-        const requestList = new Apify.RequestList({
-            sources: [{ requestsFromUrl: 'https://www.shbarcelona.com/sitemap.xml' }],
-        });
-        await requestList.initialize();
-        const requestQueue = await Apify.openRequestQueue();
-        const crawler = new Apify.PuppeteerCrawler({
-            requestList,
-            requestQueue,
-            handlePageFunction: async ({ page, request }) => {
-                console.log(`Processing ${request.url}...`);
-                // This is just an example, define your logic
-                await Apify.utils.enqueueLinks({
-                    page, selector: 'a', pseudoUrls: null, requestQueue,
-                });
-                await Apify.pushData({
-                    url: request.url,
-                    title: await page.title(),
-                    html: await page.content(),
-                });
-            },
-        });
-        await crawler.run();
-        console.log('Done.');
-    }));
-}*/
-
-async function readSitemap(linkList) {
-    var i = 1;
-    var sitemapUrl = [''];
-    
-    console.log('sitemap');
-    var browser = await puppeteer.launch({ headless: params['headlessBrowser'], args: ['--ignore-certificate-errors'] });
-    const page = await browser.newPage();
-    await page.setViewport({ width: 1000, height: 926 });
-    const response = await page.goto(linkList[0][0], { waitUntil: 'networkidle0', timeout: 0 });
-
-    console.log(response.status());
-    do {
-        sitemapUrl = await page.$x(`/html/body/div[3]/div/div[2]/div[` + i + `]/div[2]/div[1]/span[2]`);
-        console.log(sitemapUrl);
-        i++;
-    } while (sitemapUrl[0] !== undefined);
-
-    browser.close();
-    return (linkList);
-}
 
 async function getContent(linkList, iList, params, linkEnteredCount) {
-
-    //linkList = await readSitemap(linkList);
 
     // format the next link it's going to enter, to avoid entering an unexistant link and crash it or getting lost in the web
     function formatEnteringLink(link, domain) {
@@ -74,6 +22,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     var time = Date.now();
     var browser = await puppeteer.launch({ headless: params['headlessBrowser'], args: ['--ignore-certificate-errors'] });
     const page = await browser.newPage();
+    //await page.waitFor
     await page.setViewport({ width: 1000, height: 926 });
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
 
@@ -263,7 +212,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         return returnArray;
     }, linkList, params, iList);
 
-    browser.close();
+    //browser.close();
     time = Date.now() - time;
 
     if (returnArray === undefined || returnArray === null) {
@@ -292,7 +241,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
     returnArray = returnArray.push(linkEnteredCount);
 
-    returnArray = await getContent(linkList, iList, params, linkEnteredCount);
+    //returnArray = await getContent(linkList, iList, params, linkEnteredCount);
     linkEnteredCount--;
     if (linkEnteredCount === 0) {
         saveFinalData(returnArray[0]);
@@ -302,9 +251,6 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
 async function writeInFile(string) {
     fs.writeFile(defaultParams['args'][1] + "/../../savefiles/" + defaultParams['savefile'] + '.json', string, { flag: 'a+' }, (err) => {
-        if (err) {
-            throw err;
-        }
     });
 }
 
@@ -586,7 +532,12 @@ if (!params) {
 // initialize starting arguments
 let iList = 0;
 let linkEnteredCount = 0;
-var linkList = [[params['domain'] + '/', 0, 1]];
+
+startingDomain = params['domain']
+if (params['domain'].includes('sitemap') === false && params['domain'].includes('robots.txt') === false)
+    startingDomain = startingDomain + '/';
+
+    var linkList = [[startingDomain, 0, 1]];
 
 writeInFile('{\n\t');
 
