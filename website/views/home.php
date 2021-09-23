@@ -11,13 +11,16 @@
                 <input class="home_inputs" type="text" name="savefile" placeholder="saveFile">
                 <p class="home_p" >Words to include<br>
                 (auto: "/")</p>
-                <input class="home_inputs" type="text" name="include" placeholder="home .com http:// /rental">
+                <input class="home_inputs" type="text" name="include" placeholder="home,.com,http://,/rental">
                 <p class="home_p" >Words to exclude<br>
                 (auto: "mailto:", "javascript:", "tel:", "#", "excel", "word", "pdf")</p>
-                <input class="home_inputs" type="text" name="exclude" placeholder="blog store https:// .fr">
+                <input class="home_inputs" type="text" name="exclude" placeholder="blog,store,https://,.fr">
                 <p class="home_p" >Custom Selectors<br>
                 (auto: "meta", "title", "link"->"hreflang", "link"->"canonical", all headers: h1, h2, etc.)</p>
-                <input class="home_inputs" type="text" name="userSelectors" placeholder="h1 h2 .class #id">
+                <input class="home_inputs" type="text" name="userSelectors" placeholder="h1,h2,.class,#id">
+                <p>Click items<br>
+                (paste the JS path)</p>
+                <input class="home_inputs" type="text" name="clickItems" placeholder="div.itemClass > div, #itemId">
                 <p class="home_p" >Get only the first selector<br>
                 (default: all selectors)</p>
                 <label class="switch">
