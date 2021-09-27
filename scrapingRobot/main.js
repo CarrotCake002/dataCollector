@@ -376,6 +376,9 @@ function configDomain(args) {
         return false;
     }
     var domain = args[args.indexOf("-D") + 1];
+    if (domain.includes('sitemap')) {
+        domain = domain.slice(0, domain.indexOf('sitemap') - (domain.length));
+    }
     if (domain[domain.length - 1] == '/') {
         domain = domain.slice(0, -1);
     }
