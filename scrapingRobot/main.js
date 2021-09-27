@@ -384,7 +384,7 @@ function configHelp(args) {
             block example: [...] -s "div"   -->     will get the first <div> block.\n
             class example: [...] -s ".class-name"   -->    will get the first element with the class 'class-name'.\n
             id example: [...] -s "#selectorId"   -->    will get the first element with the id 'selectorId'.\n\n\n
-        -a: use this flag if you want to get all the chosen selectors in every site instead of only the first one.\n
+        -o: use this flag if you want to get the first selector of each type in every site instead of all selectors.\n
             This flag takes no arguments.\n`
     );
     exit(0);
@@ -397,9 +397,6 @@ function configDomain(args) {
         return false;
     }
     var domain = args[args.indexOf("-D") + 1];
-    if (domain.includes('sitemap')) {
-        domain = domain.slice(0, domain.indexOf('sitemap') - (domain.length));
-    }
     if (domain[domain.length - 1] == '/') {
         domain = domain.slice(0, -1);
     }
@@ -479,6 +476,17 @@ function configClickItems(args) {
     return defaultParams['clickItems'];
 }
 
+function configSitemapLink(args) {
+    if (args.includes("-m") === false) {
+        return null;
+    } if (args[args.indexOf("-m") + 1] === undefined) {
+        console.log("Error: after -m: missing sitemap url.");
+        return false;
+    }
+    defaultParams['sitemapLink'] = args[args.indexOf("-m") + 1].trim();
+    return defaultParams['sitemapLink'];
+}
+
 // apply formatting to the save file if the flag is sent
 function configSaveFormat(args) {
     return args.includes("-f") ? true : false;
@@ -506,6 +514,8 @@ function configParams(args, defParams) {
         return false;
     } if (defParams['clickItems'] = configClickItems(args), defParams['clickItems'] === false) {
         return false;
+    } if (defParams['sitemapLink'] = configSitemapLink(args), defParams['sitemapLink'] === false) {
+        return false;
     } if (defParams['onlyEnterLinksWith'] = configStrLinkInclude(args, defParams), defParams['onlyEnterLinksWith'] === false) {
         return false;
     }
@@ -526,7 +536,8 @@ var defaultParams = {
     formattedSavefile: false,
     headlessBrowser: false,
     args: process.argv,
-    clickItems: []
+    clickItems: [],
+    sitemapLink: null
 }
 
 // get the program execution arguments
@@ -541,7 +552,7 @@ if (!params) {
 let iList = 0;
 let linkEnteredCount = 0;
 
-startingUrl = args[args.indexOf("-D") + 1];
+params['sitemapLink'] === null ? startingUrl = args[args.indexOf("-D") + 1] : startingUrl = params['sitemapLink'];
 
 var linkList = [[startingUrl, 0, 1]];
 
