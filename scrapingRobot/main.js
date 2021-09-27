@@ -1,6 +1,24 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 
+async function getSitemapUrls(linkList, page) {
+
+    linkList = await page.evaluate((linkList) => {
+
+        var i = 1;
+
+        while (i < 100000) {
+            var elem = document.querySelector("#folder" + i + " > div.opened > div:nth-child(2) > span:nth-child(2)");
+
+            if (elem === undefined || elem === null)
+                return linkList;
+            linkList[i] = [elem.innerHTML, 1, 1];
+            i++;
+        }
+    }, linkList);
+    return linkList;
+}
+
 async function getContent(linkList, iList, params, linkEnteredCount) {
 
     // format the next link it's going to enter, to avoid entering an unexistant link and crash it or getting lost in the web
@@ -22,9 +40,12 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     var time = Date.now();
     var browser = await puppeteer.launch({ headless: params['headlessBrowser'], args: ['--ignore-certificate-errors'] });
     const page = await browser.newPage();
-    //await page.waitFor
     await page.setViewport({ width: 1000, height: 926 });
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
+
+    if (startingUrl.includes('sitemap')) {
+        linkList = await getSitemapUrls(linkList, page);
+    }
 
     // not enter links containing any string from the -x flag
     function isUnwantedLink(link, unwantedLinks) {
@@ -520,11 +541,9 @@ if (!params) {
 let iList = 0;
 let linkEnteredCount = 0;
 
-startingDomain = params['domain']
-if (params['domain'].includes('sitemap') === false && params['domain'].includes('robots.txt') === false)
-    startingDomain = startingDomain + '/';
+startingUrl = args[args.indexOf("-D") + 1];
 
-    var linkList = [[startingDomain, 0, 1]];
+var linkList = [[startingUrl, 0, 1]];
 
 writeInFile('{\n\t');
 
