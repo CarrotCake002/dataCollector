@@ -21,6 +21,9 @@
                 <p>Click items<br>
                 (paste the JS path)</p>
                 <input class="home_inputs" type="text" name="clickItems" placeholder="div.itemClass > div, #itemId">
+                <p>Sitemap url<br>
+                (leave empty if no sitemap specified)</p>
+                <input class="home_inputs" type="text" name="sitemapLink" placeholder="https://example.com/sitemap.xml">
                 <p class="home_p" >Get only the first selector<br>
                 (default: all selectors)</p>
                 <label class="switch">
