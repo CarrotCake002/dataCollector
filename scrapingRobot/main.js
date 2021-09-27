@@ -4,11 +4,11 @@ const fs = require('fs');
 async function getSitemapUrls(linkList, page) {
 
     linkList = await page.evaluate((linkList) => {
-
         var i = 1;
+        var elem = null;
 
         while (i < 100000) {
-            var elem = document.querySelector("#folder" + i + " > div.opened > div:nth-child(2) > span:nth-child(2)");
+            elem = document.querySelector("#folder" + i + " > div.opened > div:nth-child(2) > span:nth-child(2)");
 
             if (elem === undefined || elem === null)
                 return linkList;
@@ -233,7 +233,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         return returnArray;
     }, linkList, params, iList);
 
-    //browser.close();
+    browser.close();
     time = Date.now() - time;
 
     if (returnArray === undefined || returnArray === null) {
@@ -262,7 +262,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
     returnArray = returnArray.push(linkEnteredCount);
 
-    //returnArray = await getContent(linkList, iList, params, linkEnteredCount);
+    returnArray = await getContent(linkList, iList, params, linkEnteredCount);
     linkEnteredCount--;
     if (linkEnteredCount === 0) {
         saveFinalData(returnArray[0]);
