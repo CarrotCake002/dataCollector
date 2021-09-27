@@ -382,19 +382,6 @@ function configDomain(args) {
     return domain.trim();
 }
 
-// get the site name without extensions
-function configSiteName(domain) {
-    var siteName = domain.slice(domain.indexOf('.') + 1, domain.lastIndexOf('.') - domain.length);
-    if (siteName === '') {
-        siteName = domain.slice(domain.lastIndexOf('/') + 1, domain.lastIndexOf('.') - domain.length);
-    }
-    if (siteName === undefined || siteName === null) {
-        console.log("Error: an error has occured with the domain. Check the input is correct and try again.");
-        return false;
-    }
-    return siteName;
-}
-
 //check savefile's name and return it or return default if no name specified
 function configSavefile(args) {
     if (args.includes("-S") === false) {
@@ -487,11 +474,9 @@ function configParams(args, defParams) {
     configHelp(args);
     if (defParams['domain'] = configDomain(args), defParams['domain'] === false) {
         return false;
-    } if (defParams['siteName'] = configSiteName(defParams['domain']), defParams['siteName'] === false) {
-        return false;
     } if (defParams['savefile'] = configSavefile(args), defParams['savefile'] === false) {
         return false;
-    } if (defParams['notEnterLinksWith'] = configStrLinkExclude(args, defParams['siteName']), defParams['notEnterLinksWith'] === false) {
+    } if (defParams['notEnterLinksWith'] = configStrLinkExclude(args), defParams['notEnterLinksWith'] === false) {
         return false;
     } if (defParams['querySelector'] = configQuerySelector(args), defParams['querySelector'] === false) {
         return false;
@@ -516,7 +501,6 @@ var defaultParams = {
     getOneSelector: false,
     formattedSavefile: false,
     headlessBrowser: false,
-    siteName: null,
     args: process.argv,
     clickItems: []
 }
