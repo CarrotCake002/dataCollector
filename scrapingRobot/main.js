@@ -12,8 +12,11 @@ async function getSitemapUrls(linkList, page) {
 
             if (elem === undefined || elem === null)
                 return linkList;
-            linkList[i] = [elem.innerHTML, 1, 1];
-            i++;
+            if (elem.innerHTML.includes("https") || elem.innerHTML.includes("http")) {
+                linkList[i] = [elem.innerHTML, 1, 1];
+                i++;
+            } else
+                return linkList;
         }
     }, linkList);
     return linkList;
