@@ -36,7 +36,7 @@
                         return $this->getUrl($obj);
                 }
             }
-            return 'Error: no predecessor found';
+            return 'sitemap';
         }
 
         public function getIteration($ObjectNb) {
