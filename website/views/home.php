@@ -4,8 +4,12 @@
     </div>
     <div>
         <form action="/website/robot/launchRobot.php" method="post">
-                Domain*
+                <p>Domain*<br>
+                (mandatory)</p>
                 <input class="home_inputs" type="text" name="domain" placeholder="https://example.com">
+                <p>Starting Url<br>
+                (default: same as domain)</p>
+                <input class="home_inputs" type="text" name="startingUrl" placeholder="https://example.com/es/blog">
                 <p class="home_p" >Save file name<br>
                 (default: "default.json")</p>
                 <input class="home_inputs" type="text" name="savefile" placeholder="saveFile">
