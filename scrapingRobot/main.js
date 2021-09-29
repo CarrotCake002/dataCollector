@@ -1,5 +1,8 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
+var events = require('events');
+const { exit } = require('process');
+const { devNull } = require('os');
 
 async function getSitemapUrls(linkList) {
 
@@ -40,14 +43,16 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         return domain + link;
     }
 
+    if (iList === 0 && params['sitemapLink'] !== null && params['sitemapLink'].includes('/sitemap.xml')) {
+        linkList = await getSitemapUrls(linkList);
+    }
+    if (linkList.length < 1)
+        return null;
+
     console.log("Iteration " + iList);
     var formattedLink = formatEnteringLink(linkList[iList][0], params['domain']);
     console.log(formattedLink + "\n");
     linkEnteredCount++;
-
-    if (iList === 0 && params['sitemapLink'] !== null && params['sitemapLink'].includes('/sitemap.xml')) {
-        linkList = await getSitemapUrls(linkList);
-    }
 
     // open a new browser and page with the new url
     var time = Date.now();
@@ -344,9 +349,6 @@ function saveBrute(array) {
 }
 
 // handle save execution then all content is gathered
-var events = require('events');
-const { exit } = require('process');
-const { devNull } = require('os');
 var eventEmitter = new events.EventEmitter();
 
 var dataHandler = async function (returnArray, iteration, time, linkEnteredCount) {
@@ -507,7 +509,7 @@ function configSitemapLink(args) {
 
 function configStartingUrl(args) {
     if (args.includes("-u") === false)
-        return defaultParams['domain'];
+        return defaultParams['domain'] + '/';
     if (args[args.indexOf("-u") + 1] === undefined) {
         console.log("Error: after -u: missing starting url.");
         return false;
@@ -584,8 +586,11 @@ if (!params) {
 // initialize starting arguments
 let iList = 0;
 let linkEnteredCount = 0;
+var linkList = [];
 
-var linkList = [[params['startingUrl'], 0, 1]];
+
+if (params['sitemapLink'] === null)
+    linkList = [[params['startingUrl'], 0, 1]];
 
 writeInFile('{\n\t');
 
