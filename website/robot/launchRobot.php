@@ -22,6 +22,8 @@ if (isset($_POST)) {
         $query = $query . ' -c "' . $_POST['clickItems'] . '" ';
     if (isset($_POST['sitemapLink']) && $_POST['sitemapLink'] !== '')
         $query = $query . ' -m "' . $_POST['sitemapLink'] . '" ';
+    if (isset($_POST['startingUrl']) && $_POST['startingUrl'] !== '')
+        $query = $query . ' -u "' . $_POST['startingUrl'] . '" ';
     if (isset($_POST['formSavefile']) && $_POST['formSavefile'] === 'on')
         $query = $query . ' -f ';
     if (isset($_POST['headless']) && $_POST['headless'] === 'on')
