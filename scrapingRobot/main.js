@@ -585,8 +585,6 @@ if (!params) {
 let iList = 0;
 let linkEnteredCount = 0;
 
-//params['sitemapLink'] === null ? startingUrl = args[args.indexOf("-D") + 1] : startingUrl = params['sitemapLink'];
-
 var linkList = [[params['startingUrl'], 0, 1]];
 
 writeInFile('{\n\t');
