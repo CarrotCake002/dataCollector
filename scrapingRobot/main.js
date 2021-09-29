@@ -1,24 +1,31 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 
-async function getSitemapUrls(linkList, page) {
+async function getSitemapUrls(linkList) {
+
+    console.log(params['sitemapLink']);
+    var browser = await puppeteer.launch({ headless: params['headlessBrowser'], args: ['--ignore-certificate-errors'] });
+    var page = await browser.newPage();
+    await page.setViewport({ width: 1000, height: 926 });
+    await page.goto(params['sitemapLink'], { waitUntil: 'networkidle0', timeout: 0 });
 
     linkList = await page.evaluate((linkList) => {
-        var i = 1;
         var elem = null;
+        var i = 1;
 
         while (i < 100000) {
             elem = document.querySelector("#folder" + i + " > div.opened > div:nth-child(2) > span:nth-child(2)");
 
             if (elem === undefined || elem === null)
                 return linkList;
-            if (elem.innerHTML.includes("https") || elem.innerHTML.includes("http")) {
-                linkList[i] = [elem.innerHTML, 1, 1];
-                i++;
-            } else
+            if (elem.innerHTML.includes("https") || elem.innerHTML.includes("http"))
+                linkList.push([elem.innerHTML, 1, 1]);
+            else
                 return linkList;
+            i++;
         }
     }, linkList);
+    browser.close();
     return linkList;
 }
 
@@ -39,16 +46,18 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     console.log(formattedLink + "\n");
     linkEnteredCount++;
 
+    console.log(linkList);
+    if (params['sitemapLink'] !== undefined && params['sitemapLink'].includes('/sitemap.xml') && iList === 0) {
+        linkList = await getSitemapUrls(linkList);
+    }
+    console.log(linkList);
+
     // open a new browser and page with the new url
     var time = Date.now();
     var browser = await puppeteer.launch({ headless: params['headlessBrowser'], args: ['--ignore-certificate-errors'] });
     const page = await browser.newPage();
     await page.setViewport({ width: 1000, height: 926 });
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
-
-    if (startingUrl.includes('sitemap')) {
-        linkList = await getSitemapUrls(linkList, page);
-    }
 
     // not enter links containing any string from the -x flag
     function isUnwantedLink(link, unwantedLinks) {
@@ -340,6 +349,7 @@ function saveBrute(array) {
 // handle save execution then all content is gathered
 var events = require('events');
 const { exit } = require('process');
+const { devNull } = require('os');
 var eventEmitter = new events.EventEmitter();
 
 var dataHandler = async function (returnArray, iteration, time, linkEnteredCount) {
@@ -540,7 +550,8 @@ var defaultParams = {
     headlessBrowser: false,
     args: process.argv,
     clickItems: [],
-    sitemapLink: null
+    sitemapLink: null,
+    startingUrl: null
 }
 
 // get the program execution arguments
@@ -557,7 +568,8 @@ let linkEnteredCount = 0;
 
 params['sitemapLink'] === null ? startingUrl = args[args.indexOf("-D") + 1] : startingUrl = params['sitemapLink'];
 
-var linkList = [[startingUrl, 0, 1]];
+params['startingUrl'] = params['domain'];
+var linkList = [[params['startingUrl'], 0, 1]];
 
 writeInFile('{\n\t');
 
