@@ -47,7 +47,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     linkEnteredCount++;
 
     console.log(linkList);
-    if (params['sitemapLink'] !== undefined && params['sitemapLink'].includes('/sitemap.xml') && iList === 0) {
+    if (iList === 0 && params['sitemapLink'] !== null && params['sitemapLink'].includes('/sitemap.xml')) {
         linkList = await getSitemapUrls(linkList);
     }
     console.log(linkList);
@@ -500,6 +500,18 @@ function configSitemapLink(args) {
     return defaultParams['sitemapLink'];
 }
 
+function configStartingUrl(args) {
+    if (args.includes("-u") === false)
+        return defaultParams['domain'];
+    if (args[args.indexOf("-u") + 1] === undefined) {
+        console.log("Error: after -u: missing starting url.");
+        return false;
+    }
+    defaultParams['startingUrl'] = args[args.indexOf("-u") + 1].trim();
+    return defaultParams['startingUrl'];
+
+}
+
 // apply formatting to the save file if the flag is sent
 function configSaveFormat(args) {
     return args.includes("-f") ? true : false;
@@ -528,6 +540,8 @@ function configParams(args, defParams) {
     } if (defParams['clickItems'] = configClickItems(args), defParams['clickItems'] === false) {
         return false;
     } if (defParams['sitemapLink'] = configSitemapLink(args), defParams['sitemapLink'] === false) {
+        return false;
+    } if (defParams['startingUrl'] = configStartingUrl(args), defParams['startingUrl'] === false) {
         return false;
     } if (defParams['onlyEnterLinksWith'] = configStrLinkInclude(args, defParams), defParams['onlyEnterLinksWith'] === false) {
         return false;
@@ -566,9 +580,8 @@ if (!params) {
 let iList = 0;
 let linkEnteredCount = 0;
 
-params['sitemapLink'] === null ? startingUrl = args[args.indexOf("-D") + 1] : startingUrl = params['sitemapLink'];
+//params['sitemapLink'] === null ? startingUrl = args[args.indexOf("-D") + 1] : startingUrl = params['sitemapLink'];
 
-params['startingUrl'] = params['domain'];
 var linkList = [[params['startingUrl'], 0, 1]];
 
 writeInFile('{\n\t');
