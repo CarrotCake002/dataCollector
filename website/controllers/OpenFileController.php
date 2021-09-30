@@ -60,11 +60,16 @@
         }
 
         public function getRuntimeData() {
-            return ($this->jsonData['runtime']);
+            if (isset($this->jsonData['runtime']))
+                return ($this->jsonData['runtime']);
+            else
+                return null;
         }
 
         public function getTimesUrlFound($ObjectNb) {
-            return ($this->getRuntimeData()[$ObjectNb]);
+            if ($this->getRuntimeData() !== null)
+                return ($this->getRuntimeData()[$ObjectNb]);
+            return "Error: runtime data is missing.";
         }
 
         public function getResponseTime($ObjectNb) {
