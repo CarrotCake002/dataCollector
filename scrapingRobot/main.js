@@ -91,7 +91,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     function skipLinks(iList, linkList, unwantedLinks, wantedLinks) {
         while (linkList[iList] !== undefined) {
             var link = linkList[iList][0];
-            if (isWantedLink(link, wantedLinks) && !isUnwantedLink(link, unwantedLinks)) {
+            if (isWantedLink(link, wantedLinks) && !isUnwantedLink(link, unwantedLinks) && linkList[iList][1] <= params['maxDepth']) {
                 return iList;
             }
             iList++;
@@ -507,6 +507,17 @@ function configSitemapLink(args) {
     return defaultParams['sitemapLink'];
 }
 
+function configMaxDepth(args) {
+    if (args.includes("-d") === false)
+        return 999;
+    if (args[args.indexOf("-d") + 1] === undefined) {
+        console.log("Error: after -d: you need to specify the maximum depth.");
+        return false;
+    }
+    defaultParams['maxDepth'] = parseInt(args[args.indexOf("-d") + 1]);
+    return(defaultParams['maxDepth']);
+}
+
 function configStartingUrl(args) {
     if (args.includes("-u") === false)
         return defaultParams['domain'] + '/';
@@ -516,7 +527,6 @@ function configStartingUrl(args) {
     }
     defaultParams['startingUrl'] = args[args.indexOf("-u") + 1].trim();
     return defaultParams['startingUrl'];
-
 }
 
 // apply formatting to the save file if the flag is sent
@@ -550,6 +560,8 @@ function configParams(args, defParams) {
         return false;
     } if (defParams['startingUrl'] = configStartingUrl(args), defParams['startingUrl'] === false) {
         return false;
+    } if (defParams['maxDepth'] = configMaxDepth(args), defParams['maxDepth'] === false) {
+        return false;
     } if (defParams['onlyEnterLinksWith'] = configStrLinkInclude(args, defParams), defParams['onlyEnterLinksWith'] === false) {
         return false;
     }
@@ -572,7 +584,8 @@ var defaultParams = {
     args: process.argv,
     clickItems: [],
     sitemapLink: null,
-    startingUrl: null
+    startingUrl: null,
+    maxDepth: 999
 }
 
 // get the program execution arguments
@@ -582,6 +595,8 @@ if (!params) {
     console.log("Execute with --help to view all valid options.");
     return 84;
 }
+
+console.log(params);
 
 // initialize starting arguments
 let iList = 0;
