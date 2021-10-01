@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 var events = require('events');
-const { exit } = require('process');
+const { exit, config } = require('process');
 const { devNull } = require('os');
 
 async function getSitemapUrls(linkList) {
@@ -135,7 +135,8 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
                     if (link != null && !isSaved) {
                         linkList.push([link, linkList[iList][1] + 1, 1]);
                         newLinkArray.push(link);
-                        linkArticle.push(general[i].outerHTML);
+                        if (params['getLinkArticle'])
+                            linkArticle.push(general[i].outerHTML);
                     }
                 }
             } else {
@@ -147,6 +148,8 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
         // save the <meta> selectors
         function getMetaArray() {
+            if (!params['getMeta'])
+                return [];
             var metaArray = Array.from(document.querySelectorAll(params['querySelector'][0]));
             metaArray = metaArray.map(element => {
                 return element.outerHTML;
@@ -159,6 +162,8 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
         // get the <title> of the website
         function getTitle() {
+            if (!params['getTitle'])
+                return '';
             var titleArray = Array.from(document.querySelectorAll(params['querySelector'][1]));
             titleArray = titleArray.map(element => {
                 return element.innerHTML;
@@ -174,6 +179,9 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             var hreflangArray = [];
             var canonicalArray = [];
 
+            if (!params['getHreflang'] && !params['getCanonical'])
+             return [hreflangArray, canonicalArray];
+
             var getLinkTagArray = Array.from(document.querySelectorAll(params['querySelector'][2]));
             getLinkTagArray = getLinkTagArray.map(element => {
                 return element.outerHTML;
@@ -181,9 +189,9 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             if (getLinkTagArray !== null && getLinkTagArray !== undefined) {
                 if (getLinkTagArray[0] !== undefined) {
                     for (var i = 0; i < getLinkTagArray.length; i++) {
-                        if (getLinkTagArray[i].includes("hreflang"))
+                        if (getLinkTagArray[i].includes("hreflang") && params['getHreflang'])
                             hreflangArray.push(getLinkTagArray[i]);
-                        if (getLinkTagArray[i].includes("canonical"))
+                        if (getLinkTagArray[i].includes("canonical") && params['getCanonical'])
                             canonicalArray.push(getLinkTagArray[i]);
                     }
                 }
@@ -198,6 +206,8 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
             var headsArray = [];
             var tempArray = [];
 
+            if (!params['getHeads'])
+                return headsArray;
             for (var i = 3; i < 9; i++) {
                 tempArray = Array.from(document.querySelectorAll(params['querySelector'][i]));
                 headsArray.push(tempArray.map(element => {
@@ -543,6 +553,30 @@ function configGetAllHtml(args) {
     return args.includes("-o") ? true : false;
 }
 
+function configGetLinkArticle(args) {
+    return args.includes("-gLink") ? true : false;
+}
+
+function configGetMeta(args) {
+    return args.includes("-gMeta") ? true : false;
+}
+
+function configGetHeads(args) {
+    return args.includes("-gHeads") ? true : false;
+}
+
+function configGetHreflang(args) {
+    return args.includes("-gHreflang") ? true : false;
+}
+
+function configGetCanonical(args) {
+    return args.includes("-gCanonical") ? true : false;
+}
+
+function configGetTitle(args) {
+    return args.includes("-gTitle") ? true : false;
+}
+
 // check if correct params are input and return their values to the program
 function configParams(args, defParams) {
     configHelp(args);
@@ -568,6 +602,12 @@ function configParams(args, defParams) {
     defParams['getOneSelector'] = configGetAllHtml(args);
     defParams['headlessBrowser'] = configHeadBrowser(args);
     defParams['formattedSavefile'] = configSaveFormat(args);
+    defParams['getLinkArticle'] = configGetLinkArticle(args);
+    defParams['getMeta'] = configGetMeta(args);
+    defParams['getHeads'] = configGetHeads(args);
+    defParams['getHreflang'] = configGetHreflang(args);
+    defParams['getCanonical'] = configGetCanonical(args);
+    defParams['getTitle'] = configGetTitle(args);
     return defParams;
 }
 
@@ -585,7 +625,14 @@ var defaultParams = {
     clickItems: [],
     sitemapLink: null,
     startingUrl: null,
-    maxDepth: 999
+    maxDepth: 999,
+    getLinkArticle: false,
+    getMeta: false,
+    getHeads: false,
+    getHreflang: false,
+    getCanonical: false,
+    getTitle: false,
+
 }
 
 // get the program execution arguments
