@@ -68,7 +68,7 @@
 
         public function getTimesUrlFound($ObjectNb) {
             if ($this->getRuntimeData() !== null)
-                return ($this->getRuntimeData()[$ObjectNb]);
+                return ($this->getRuntimeData()[$this->getIteration($ObjectNb)]);
             return "Error: runtime data is missing.";
         }
 
@@ -267,10 +267,15 @@
         }
 
         public function getTypeHead($ObjectNb, $typeNb) {
+            if ($this->getAllHeadsSize($ObjectNb) === 0)
+                return null;
             return ($this->getAllHeads($ObjectNb)[$typeNb]);
         }
 
         public function getTypeHeadSize($ObjectNb, $typeNb) {
+            $count = $this->getTypeHead($ObjectNb, $typeNb);
+            if ($count === null)
+                return 0;
             return (count($this->getTypeHead($ObjectNb, $typeNb)));
         }
 
