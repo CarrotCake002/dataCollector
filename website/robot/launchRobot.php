@@ -32,6 +32,18 @@ if (isset($_POST)) {
         $query = $query . ' -H ';
     if (isset($_POST['allSelectors']) && $_POST['allSelectors'] === 'on')
         $query = $query . ' -o ';
+    if (isset($_POST['getLinkArticle']) && $_POST['getLinkArticle'] === 'on')
+        $query = $query . ' -gArticle ';
+    if (isset($_POST['getMeta']) && $_POST['getMeta'] === 'on')
+        $query = $query . ' -gMeta ';
+    if (isset($_POST['getHeads']) && $_POST['getHeads'] === 'on')
+        $query = $query . ' -gHeads ';
+    if (isset($_POST['getHreflang']) && $_POST['getHreflang'] === 'on')
+        $query = $query . ' -gHreflang ';
+    if (isset($_POST['getCanonical']) && $_POST['getCanonical'] === 'on')
+        $query = $query . ' -gCanonical ';
+    if (isset($_POST['getTitle']) && $_POST['getTitle'] === 'on')
+        $query = $query . ' -gTitlte ';
     $res = exec($query);
     echo $res;
 
