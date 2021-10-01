@@ -38,10 +38,9 @@ if (isset($_POST)) {
 } else {
     echo "An unknown error has occured. Please, try again and if the problem persists contact the creator.";
 }
-if (isset($_POST['savefile']) && $_POST['savefile'] !== '')
-    $savefile = $_POST['savefile'];
-else
-    $savefile = "default";
+
+isset($_POST['savefile']) && $_POST['savefile'] !== '' ? $savefile = $_POST['savefile'] : $savefile = "default";
+
 ?>
 <br><br>
 <a href="<?= "/savefiles/" . $savefile . ".json"; ?>" download="<?= $savefile ?>">Download your data!</a>
