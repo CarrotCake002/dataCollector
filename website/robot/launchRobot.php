@@ -18,6 +18,8 @@ if (isset($_POST)) {
         $query = $query . ' -x "' . $_POST['exclude'] . '" ';
     if (isset($_POST['userSelectors']) && $_POST['userSelectors'] !== '')
         $query = $query . ' -s "' . $_POST['userSelectors'] . '" ';
+    if (isset($_POST['maxDepth']) && $_POST['maxDepth'] !== '')
+        $query = $query . ' -d "' . $_POST['maxDepth'] . '" ';
     if (isset($_POST['clickItems']) && $_POST['clickItems'] !== '')
         $query = $query . ' -c "' . $_POST['clickItems'] . '" ';
     if (isset($_POST['sitemapLink']) && $_POST['sitemapLink'] !== '')
@@ -36,5 +38,13 @@ if (isset($_POST)) {
 } else {
     echo "An unknown error has occured. Please, try again and if the problem persists contact the creator.";
 }
+if (isset($_POST['savefile']) && $_POST['savefile'] !== '')
+    $savefile = $_POST['savefile'];
+else
+    $savefile = "default";
+?>
+<br><br>
+<a href="<?= "/savefiles/" . $savefile . ".json"; ?>" download="<?= $savefile ?>">Download your data!</a>
 
+<?php
 require_once '../views/footer.php';
