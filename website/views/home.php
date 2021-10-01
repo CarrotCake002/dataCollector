@@ -22,6 +22,9 @@
                 <p class="home_p" >Custom Selectors<br>
                 (auto: "meta", "title", "link"->"hreflang", "link"->"canonical", all headers: h1, h2, etc.)</p>
                 <input class="home_inputs" type="text" name="userSelectors" placeholder="h1,h2,.class,#id">
+                <p>Maximum depth<br>
+                (default: 999)</p>
+                <input class="home_inputs" type="text" name="maxDepth" placeholder="3">
                 <p>Click items<br>
                 (paste the JS path)</p>
                 <input class="home_inputs" type="text" name="clickItems" placeholder="div.itemClass > div, #itemId">
