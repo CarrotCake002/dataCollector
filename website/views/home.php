@@ -31,6 +31,41 @@
                 <p>Sitemap url<br>
                 (leave empty if no sitemap specified)</p>
                 <input class="home_inputs" type="text" name="sitemapLink" placeholder="https://example.com/sitemap.xml">
+                <p class="home_p">Formatted savefile</p>
+                <label class="switch">
+                    <input type="checkbox" name="formSavefile">
+                    <div class="slider round"></div>
+                </label>
+                <p class="home_p">Get link's article tag</p>
+                <label class="switch">
+                    <input type="checkbox" name="getLinkArticle">
+                    <div class="slider round"></div>
+                </label>
+                <p class="home_p">Get meta tags</p>
+                <label class="switch">
+                    <input type="checkbox" name="getMeta">
+                    <div class="slider round"></div>
+                </label>
+                <p class="home_p">Get Heads (h1, h2, etc.)</p>
+                <label class="switch">
+                    <input type="checkbox" name="getHeads">
+                    <div class="slider round"></div>
+                </label>
+                <p class="home_p">Get hreflang</p>
+                <label class="switch">
+                    <input type="checkbox" name="getHreflang">
+                    <div class="slider round"></div>
+                </label>
+                <p class="home_p">Get canonical</p>
+                <label class="switch">
+                    <input type="checkbox" name="getCanonical">
+                    <div class="slider round"></div>
+                </label>
+                <p class="home_p">Get title</p>
+                <label class="switch">
+                    <input type="checkbox" name="getTitle">
+                    <div class="slider round"></div>
+                </label>
                 <p class="home_p" >Get only the first selector<br>
                 (default: all selectors)</p>
                 <label class="switch">
@@ -40,11 +75,6 @@
                 <p class="home_p">Headless browser</p>
                 <label class="switch">
                     <input type="checkbox" name="headless">
-                    <div class="slider round"></div>
-                </label>
-                <p class="home_p">Formatted savefile</p>
-                <label class="switch">
-                    <input type="checkbox" name="formSavefile">
                     <div class="slider round"></div>
                 </label>
             <button type="submit">Submit</button>
