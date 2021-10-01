@@ -554,7 +554,7 @@ function configGetAllHtml(args) {
 }
 
 function configGetLinkArticle(args) {
-    return args.includes("-gLink") ? true : false;
+    return args.includes("-gArticle") ? true : false;
 }
 
 function configGetMeta(args) {
