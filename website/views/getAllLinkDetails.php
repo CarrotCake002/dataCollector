@@ -38,7 +38,7 @@ if (isset($_GET)) :
                 <th>Title <?= $openFile->addTabsToSizeCols(15) ?></th>
                 <th>Title size</th>
                 <th>Nb hreflang</th>
-                <th>Canonicals</th>
+                <th>Canonical</th>
                 <th>Nb links</th>
             </tr>
 
