@@ -70,7 +70,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
                 })
             }
         }, params['clickItems']);
-        await page.waitFor(1000);
+        await page.waitFor(3000);
     }
 
     // not enter links containing any string from the -x flag
@@ -139,6 +139,8 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
                     var link = general[i].getAttribute('href');
                     if (link !== null && link.charAt(0) === '/') {
                         link = params['domain'] + link;
+                    } else if (link !== null && link.includes("https://") === false && link.includes("http://") === false && link[0] != '/' === false && link.includes(":") === false && link.includes("#") === false) {
+                        link = params['domain'] + '/' + link;
                     }
                     var checkLinkSaved = checkLinkIsSaved(linkList, link);
                     var isSaved = checkLinkSaved[0];
