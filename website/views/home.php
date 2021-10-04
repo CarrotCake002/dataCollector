@@ -29,7 +29,7 @@
                 (paste the JS path)</p>
                 <input class="home_inputs" type="text" name="clickItems" placeholder="div.itemClass > div, #itemId">
                 <p>Sitemap url<br>
-                (leave empty if no sitemap specified)</p>
+                (only for non-clickable sitemap)</p>
                 <input class="home_inputs" type="text" name="sitemapLink" placeholder="https://example.com/sitemap.xml">
                 <p class="home_p">Formatted savefile</p>
                 <label class="switch">
