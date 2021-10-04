@@ -20,7 +20,7 @@
                 (auto: "mailto:", "javascript:", "tel:", "#", "excel", "word", "pdf")</p>
                 <input class="home_inputs" type="text" name="exclude" placeholder="blog,store,https://,.fr">
                 <p class="home_p" >Custom Selectors<br>
-                (auto: "meta", "title", "link"->"hreflang", "link"->"canonical", all headers: h1, h2, etc.)</p>
+                (some can be automatically added below)</p>
                 <input class="home_inputs" type="text" name="userSelectors" placeholder="h1,h2,.class,#id">
                 <p>Maximum depth<br>
                 (default: 999)</p>
@@ -36,12 +36,12 @@
                     <input type="checkbox" name="formSavefile">
                     <div class="slider round"></div>
                 </label>
-                <p class="home_p">Get link's article tag</p>
+                <p class="home_p">Get link's <?= htmlentities("<a>"); ?> tag</p>
                 <label class="switch">
                     <input type="checkbox" name="getLinkArticle">
                     <div class="slider round"></div>
                 </label>
-                <p class="home_p">Get meta tags</p>
+                <p class="home_p">Get <?= htmlentities("<meta>"); ?> tags<br>(outerHTML)</p>
                 <label class="switch">
                     <input type="checkbox" name="getMeta">
                     <div class="slider round"></div>
@@ -51,23 +51,23 @@
                     <input type="checkbox" name="getHeads">
                     <div class="slider round"></div>
                 </label>
-                <p class="home_p">Get hreflang</p>
+                <p class="home_p">Get hreflang attribute</p>
                 <label class="switch">
                     <input type="checkbox" name="getHreflang">
                     <div class="slider round"></div>
                 </label>
-                <p class="home_p">Get canonical</p>
+                <p class="home_p">Get canonical attribute</p>
                 <label class="switch">
                     <input type="checkbox" name="getCanonical">
                     <div class="slider round"></div>
                 </label>
-                <p class="home_p">Get title</p>
+                <p class="home_p">Get <?= htmlentities("<title>"); ?> tag</p>
                 <label class="switch">
                     <input type="checkbox" name="getTitle">
                     <div class="slider round"></div>
                 </label>
-                <p class="home_p" >Get only the first selector<br>
-                (default: all selectors)</p>
+                <p class="home_p" >Get first selector only<br>
+                (for all custom selectors)</p>
                 <label class="switch">
                     <input type="checkbox" name="allSelectors">
                     <div class="slider round"></div>
