@@ -4,6 +4,13 @@ savefiles/*.json
 # ignore temporal files
 savefiles/*.tmp
 
+# ignore images created during dev
+savefiles/images
+savefiles/*.jpeg
+savefiles/*.jpg
+savefiles/*.png
+savefiles/*.pdf
+
 # ignore node and puppeteer packages
 node_modules
 
