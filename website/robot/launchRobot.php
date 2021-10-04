@@ -43,7 +43,7 @@ if (isset($_POST)) {
     if (isset($_POST['getCanonical']) && $_POST['getCanonical'] === 'on')
         $query = $query . ' -gCanonical ';
     if (isset($_POST['getTitle']) && $_POST['getTitle'] === 'on')
-        $query = $query . ' -gTitlte ';
+        $query = $query . ' -gTitle ';
     $res = exec($query);
     echo $res;
 
