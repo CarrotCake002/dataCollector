@@ -397,7 +397,7 @@ function configHelp(args) {
         --help: display a console message with all information on the program.\n\n\n
         -D: define the url you want to scrap right after this flag. This flag is mandatory. View example below:\n
             [...] -D "https://example.com"\n\n\n
-        -u: define the first url the robot should enter to start obtaining data. If this flag is not set, the first url will be the specified domain.\n\n\n
+        -u: Define the first set of urls the program will enter. Bare in mind that filters will not apply to the first url, but they will apply to the rest of urls.\n\n\n
         -S: define the name of the .json file in which you want to save all the information collected.\n
             The default name for this file will be formData. If a .json file with the same name already exists, the new data will be appended.\n
             If no file with that name exists, it will automatically be created with read and write permission.\n
@@ -412,8 +412,8 @@ function configHelp(args) {
             [...] -i "blog item beach"\n
             The bot will save every link, but will skip any link that does not contain any of the words 'blog', 'item', or 'beach'.\n
             The flags '-x' and '-i' can be used together to get a better filter, but the flag '-i' has the highest priority.\n\n\n
-        -s: allows you to choose which html selector you want to get from the website in every url.\n
-            This includes any Class or Id. However you will only get the first selector of each website. View example below:\n
+        -s: allows you to choose which html selectors you want to get from the website in every url.\n
+            This includes any Class or Id. View example below:\n
             block example: [...] -s "div"   -->     will get the first <div> block.\n
             class example: [...] -s ".class-name"   -->    will get the first element with the class 'class-name'.\n
             id example: [...] -s "#selectorId"   -->    will get the first element with the id 'selectorId'.\n\n\n
@@ -429,7 +429,15 @@ function configHelp(args) {
             but the bot will consume less resources.\n
             This flag takes no arguments.\n\n\n
         -o: use this flag if you want to get the first selector of each type in every site instead of all selectors.\n
-            This flag takes no arguments.\n
+            This flag takes no arguments.\n\n\n
+        
+    Other direct access flags:\n
+        -gArticle: gets the <a> tag from every url found.\n\n
+        -gMeta: gets all <meta> tags from every page.\n\n
+        -gHeads: gets all <h1>, <h2>, <h3>, <h4>, <h5>, <h6> from every page if they exists.\n\n
+        -gHreflang: gets all <link> tags with an hreflang attribute from every page.\n\n
+        -gCanonical: gets all <link> tags with a canonical attribute from every page.\n\n
+        -gTitle: gets the <title> tag of every page.\n
         `
         
     );
@@ -544,19 +552,19 @@ function configMaxDepth(args) {
     return(defaultParams['maxDepth']);
 }
 
-function configStartingUrl(args) {
+function configstartingUrls(args) {
     if (args.includes("-u") === false)
         return [[defaultParams['domain'] + '/', 0, 1]];
     if (args[args.indexOf("-u") + 1] === undefined) {
         console.log("Error: after -u: missing starting url.");
         return false;
     }
-    defaultParams['startingUrl'] = [];
+    defaultParams['startingUrls'] = [];
     var startingUrls = args[args.indexOf("-u") + 1].trim().split(",");
     for (var i = 0; i < startingUrls.length; i++) {
-        defaultParams['startingUrl'].push([startingUrls[i], 0, 1]);
+        defaultParams['startingUrls'].push([startingUrls[i], 0, 1]);
     }
-    return defaultParams['startingUrl'];
+    return defaultParams['startingUrls'];
 }
 
 // apply formatting to the save file if the flag is sent
@@ -612,7 +620,7 @@ function configParams(args, defParams) {
         return false;
     } if (defParams['sitemapLink'] = configSitemapLink(args), defParams['sitemapLink'] === false) {
         return false;
-    } if (defParams['startingUrl'] = configStartingUrl(args), defParams['startingUrl'] === false) {
+    } if (defParams['startingUrls'] = configstartingUrls(args), defParams['startingUrls'] === false) {
         return false;
     } if (defParams['maxDepth'] = configMaxDepth(args), defParams['maxDepth'] === false) {
         return false;
@@ -644,7 +652,7 @@ var defaultParams = {
     args: process.argv,
     clickItems: [],
     sitemapLink: null,
-    startingUrl: null,
+    startingUrls: null,
     maxDepth: 999,
     getLinkArticle: false,
     getMeta: false,
@@ -672,7 +680,7 @@ var linkList = [];
 
 
 if (params['sitemapLink'] === null)
-    linkList = params['startingUrl'];
+    linkList = params['startingUrls'];
 
 writeInFile('{\n\t');
 
