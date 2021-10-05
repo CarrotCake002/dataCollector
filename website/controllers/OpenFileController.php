@@ -428,6 +428,10 @@
         public function getLinkTargetBlank($ObjectNb) {
             $linkArticleSize = $this->getAllLinkArticlesSize($ObjectNb);
 
+            if ($linkArticleSize < 1) {
+                echo '-';
+                return;
+            }
             for ($i = 0; $i < $linkArticleSize; $i++) {
                 if (strpos($this->getSingleLinkArticle($ObjectNb, $i), "target=\"_blank\"") === false)
                     echo 'N';
