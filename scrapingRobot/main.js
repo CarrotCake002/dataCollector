@@ -546,12 +546,16 @@ function configMaxDepth(args) {
 
 function configStartingUrl(args) {
     if (args.includes("-u") === false)
-        return defaultParams['domain'] + '/';
+        return [[defaultParams['domain'] + '/', 0, 1]];
     if (args[args.indexOf("-u") + 1] === undefined) {
         console.log("Error: after -u: missing starting url.");
         return false;
     }
-    defaultParams['startingUrl'] = args[args.indexOf("-u") + 1].trim();
+    defaultParams['startingUrl'] = [];
+    var startingUrls = args[args.indexOf("-u") + 1].trim().split(",");
+    for (var i = 0; i < startingUrls.length; i++) {
+        defaultParams['startingUrl'].push([startingUrls[i], 0, 1]);
+    }
     return defaultParams['startingUrl'];
 }
 
@@ -668,7 +672,7 @@ var linkList = [];
 
 
 if (params['sitemapLink'] === null)
-    linkList = [[params['startingUrl'], 0, 1]];
+    linkList = params['startingUrl'];
 
 writeInFile('{\n\t');
 
