@@ -21,7 +21,7 @@ if (isset($_GET)) :
     } else {
         echo "The program encountered an error while opening the data file. Make sure you didn't delete the saved data.";
     }
-    $tels = false;
+    $tels = true;
 ?>
 
     <div id="table_container">
