@@ -62,7 +62,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
 
     // click items the user selected
-    if (params['clickItems'] !== null && params['clickItems'] !== undefined) {
+    if (params['clickItems'] !== null && params['clickItems'] !== undefined && params['clickItems'] !== '') {
         await page.evaluate((clickItems) => {
             for (var i = 0; i < clickItems.length; i++) {
                 document.querySelectorAll(clickItems[i]).forEach(item => {
