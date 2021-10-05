@@ -475,8 +475,10 @@
         }
 
         public function getTelNb($ObjectNb) {
-            if ($this->getTypeUserSelectors($ObjectNb, 0) === null)
+            if ($this->getTypeUserSelectors($ObjectNb, 0) == null)
                 return '-';
-            return ($this->getSingleTypeUserSelector($ObjectNb, 0, 0));
+            if ($this->getSingleTypeUserSelector($ObjectNb, 0, 0) != null)
+                return ($this->getSingleTypeUserSelector($ObjectNb, 0, 0));
+            return '-';
         }
     }
