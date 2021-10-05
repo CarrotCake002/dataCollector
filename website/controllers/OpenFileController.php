@@ -473,4 +473,10 @@
                 $this->addSpacesToSizeCols(4);
             }
         }
+
+        public function getTelNb($ObjectNb) {
+            if ($this->getTypeUserSelectors($ObjectNb, 0) === null)
+                return '-';
+            return ($this->getSingleTypeUserSelector($ObjectNb, 0, 0));
+        }
     }
