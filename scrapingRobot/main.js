@@ -556,6 +556,7 @@ function configSitemapLink(args) {
     return defaultParams['sitemapLink'];
 }
 
+// config the max depth the program will inter. The depth input will be entered, but not any higher than that
 function configMaxDepth(args) {
     if (args.includes("-d") === false)
         return 999;
