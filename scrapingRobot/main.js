@@ -434,19 +434,6 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
     writeInFile(jsonObj);
 }
 
-// save data that needs to evolve in runtime in a file
-function saveBrute(array) {
-    var jsonObj = null;
-
-    jsonObj = JSON.stringify(array);
-
-    fs.writeFile(defaultParams['args'][1] + "/../../savefiles/" + defaultParams['savefile'] + 'BruteData.json', jsonObj, (err) => {
-        if (err) {
-            throw err;
-        }
-    });
-}
-
 // handle save execution then all content is gathered
 var eventEmitter = new events.EventEmitter();
 
