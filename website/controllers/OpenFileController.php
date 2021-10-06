@@ -68,7 +68,7 @@
 
         public function getTimesUrlFound($ObjectNb) {
             if ($this->getRuntimeData() !== null)
-                return ($this->getRuntimeData()[$this->getIteration($ObjectNb)]);
+                return ($this->getRuntimeData()[$ObjectNb]);
             return "Error: runtime data is missing.";
         }
 
