@@ -614,6 +614,7 @@ function configGetHeads(args) {
     return args.includes("-gHeads") ? true : false;
 }
 
+// config if the program should get all <link> tags with a hreflang attribute for each page
 function configGetHreflang(args) {
     return args.includes("-gHreflang") ? true : false;
 }
