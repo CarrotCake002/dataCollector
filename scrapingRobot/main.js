@@ -584,7 +584,7 @@ function configStartingUrls(args) {
     return defaultParams['startingUrls'];
 }
 
-// config if the data file should be formatted
+// config if the data file should be formatted. A simple format will be present even if this flag is set as false
 function configSaveFormat(args) {
     return args.includes("-f") ? true : false;
 }
