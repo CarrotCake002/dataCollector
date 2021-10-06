@@ -434,7 +434,6 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
     writeInFile(jsonObj);
 }
 
-// handle save execution then all content is gathered
 var eventEmitter = new events.EventEmitter();
 
 var dataHandler = async function (returnArray, iteration, time, linkEnteredCount) {
