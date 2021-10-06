@@ -579,12 +579,10 @@ function configStartingUrls(args) {
     return defaultParams['startingUrls'];
 }
 
-// apply formatting to the save file if the flag is sent
 function configSaveFormat(args) {
     return args.includes("-f") ? true : false;
 }
 
-// change the headless property of the browser to true if specified
 function configHeadBrowser(args) {
     return args.includes("-H") ? true : false;
 }
@@ -617,7 +615,7 @@ function configGetTitle(args) {
     return args.includes("-gTitle") ? true : false;
 }
 
-// check if correct params are input and return their values to the program
+// check if correct params are input and formatting them for the program to read them
 function configParams(args, defParams) {
     configHelp(args);
     if (defParams['domain'] = configDomain(args), defParams['domain'] === false) {
@@ -651,7 +649,7 @@ function configParams(args, defParams) {
     return defParams;
 }
 
-// set the default values of the parameters
+// set the default values of the program's arguments formatting
 var defaultParams = {
     domain: null,
     notEnterLinksWith: ["mailto:", "javascript:", "tel:", "steam:", "#", "excel", "word", "pdf"],
@@ -682,7 +680,6 @@ if (!params) {
     console.log("Execute with --help to view all valid options.");
     return 84;
 }
-
 console.log(params);
 
 // initialize starting arguments
