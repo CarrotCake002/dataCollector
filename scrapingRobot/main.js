@@ -594,6 +594,7 @@ function configHeadBrowser(args) {
     return args.includes("-H") ? true : false;
 }
 
+// config if the program should get only the first of every custom selector instead of all of them
 function configGetAllHtml(args) {
     return args.includes("-o") ? true : false;
 }
