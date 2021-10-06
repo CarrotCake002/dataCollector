@@ -624,6 +624,7 @@ function configGetCanonical(args) {
     return args.includes("-gCanonical") ? true : false;
 }
 
+// config if the program should get the <title> tag for each page
 function configGetTitle(args) {
     return args.includes("-gTitle") ? true : false;
 }
