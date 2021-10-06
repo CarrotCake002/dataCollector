@@ -609,6 +609,7 @@ function configGetMeta(args) {
     return args.includes("-gMeta") ? true : false;
 }
 
+// config if the program should get all the heads (h1, h2, h3, h4, h5, h6) for each page
 function configGetHeads(args) {
     return args.includes("-gHeads") ? true : false;
 }
