@@ -532,7 +532,7 @@ function configStrLinkInclude(args, defParams) {
     return defParams['onlyEnterLinksWith'];
 }
 
-// configure the items that need to be clicked in every page
+// config the items that need to be clicked in every page
 function configClickItems(args) {
     if (args.includes("-c") === false) {
         return null;
@@ -599,6 +599,7 @@ function configGetAllHtml(args) {
     return args.includes("-o") ? true : false;
 }
 
+// config if the program should get the <a> tag for every found url in each page
 function configGetLinkArticle(args) {
     return args.includes("-gArticle") ? true : false;
 }
