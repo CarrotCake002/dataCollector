@@ -564,7 +564,7 @@ function configMaxDepth(args) {
     return(defaultParams['maxDepth']);
 }
 
-function configstartingUrls(args) {
+function configStartingUrls(args) {
     if (args.includes("-u") === false)
         return [[defaultParams['domain'] + '/', 0, 1]];
     if (args[args.indexOf("-u") + 1] === undefined) {
@@ -632,7 +632,7 @@ function configParams(args, defParams) {
         return false;
     } if (defParams['sitemapLink'] = configSitemapLink(args), defParams['sitemapLink'] === false) {
         return false;
-    } if (defParams['startingUrls'] = configstartingUrls(args), defParams['startingUrls'] === false) {
+    } if (defParams['startingUrls'] = configStartingUrls(args), defParams['startingUrls'] === false) {
         return false;
     } if (defParams['maxDepth'] = configMaxDepth(args), defParams['maxDepth'] === false) {
         return false;
