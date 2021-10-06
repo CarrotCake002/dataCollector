@@ -387,7 +387,8 @@ function saveFinalData(linkList) {
     var i = 0;
 
     while (i < linkList.length) {
-        i = skipLinks(i, linkList, params['notEnterLinksWith'], params['onlyEnterLinksWith'])
+        if (i > 0)
+            i = skipLinks(i, linkList, params['notEnterLinksWith'], params['onlyEnterLinksWith'])
         if (i === false)
             break;
         saveData.push(linkList[i][2]);
