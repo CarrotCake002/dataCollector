@@ -532,6 +532,7 @@ function configStrLinkInclude(args, defParams) {
     return defParams['onlyEnterLinksWith'];
 }
 
+// configure the items that need to be clicked in every page
 function configClickItems(args) {
     if (args.includes("-c") === false) {
         return null;
