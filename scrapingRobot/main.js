@@ -4,6 +4,44 @@ var events = require('events');
 const { exit, config } = require('process');
 const { devNull } = require('os');
 
+// not enter links containing any string from the -x flag
+function isUnwantedLink(link, unwantedLinks) {
+    var j = 0;
+
+    while (j < unwantedLinks.length) {
+        if (link.includes(unwantedLinks[j])) {
+            return true;
+        }
+        j++;
+    }
+    return false;
+}
+
+// only enter links containing any string from the -i flag
+function isWantedLink(link, wantedLinks) {
+    var h = 0;
+
+    while (h < wantedLinks.length) {
+        if (link.includes(wantedLinks[h])) {
+            return true;
+        }
+        h++;
+    }
+    return false;
+}
+
+// skip all links set as undesired with the initial program arguments
+function skipLinks(iList, linkList, unwantedLinks, wantedLinks) {
+    while (linkList[iList] !== undefined) {
+        var link = linkList[iList][0];
+        if (isWantedLink(link, wantedLinks) && !isUnwantedLink(link, unwantedLinks) && linkList[iList][1] <= params['maxDepth']) {
+            return iList;
+        }
+        iList++;
+    }
+    return false;
+}
+
 async function getSitemapUrls(linkList) {
 
     var browser = await puppeteer.launch({ headless: params['headlessBrowser'], args: ['--ignore-certificate-errors'] });
@@ -71,44 +109,6 @@ async function getContent(linkList, iList, linkEnteredCount) {
             }
         }, params['clickItems']);
         await page.waitFor(3000);
-    }
-
-    // not enter links containing any string from the -x flag
-    function isUnwantedLink(link, unwantedLinks) {
-        var j = 0;
-
-        while (j < unwantedLinks.length) {
-            if (link.includes(unwantedLinks[j])) {
-                return true;
-            }
-            j++;
-        }
-        return false;
-    }
-
-    // only enter links containing any string from the -i flag
-    function isWantedLink(link, wantedLinks) {
-        var h = 0;
-
-        while (h < wantedLinks.length) {
-            if (link.includes(wantedLinks[h])) {
-                return true;
-            }
-            h++;
-        }
-        return false;
-    }
-
-    // skip all links set as undesired with the initial program arguments
-    function skipLinks(iList, linkList, unwantedLinks, wantedLinks) {
-        while (linkList[iList] !== undefined) {
-            var link = linkList[iList][0];
-            if (isWantedLink(link, wantedLinks) && !isUnwantedLink(link, unwantedLinks) && linkList[iList][1] <= params['maxDepth']) {
-                return iList;
-            }
-            iList++;
-        }
-        return false;
     }
 
     var returnArray = await page.evaluate((linkList, params, iList) => {
@@ -321,9 +321,14 @@ async function writeInFile(string) {
 // this function saves the data that was being updated in runtime and that could not be saved in the main file before
 function saveFinalData(linkList) {
     var saveData = [];
+    var i = 0;
 
-    for (var i = 0; i < linkList.length; i++) {
+    while (i < linkList.length) {
+        i = skipLinks(i, linkList, params['notEnterLinksWith'], params['onlyEnterLinksWith'])
+        if (i === false)
+            break;
         saveData.push(linkList[i][2]);
+        i++;
     }
 
     defaultParams['formattedSavefile'] ? saveData = JSON.stringify(saveData) : saveData = JSON.stringify(saveData);
