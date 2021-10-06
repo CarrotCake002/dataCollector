@@ -544,6 +544,7 @@ function configClickItems(args) {
     return defaultParams['clickItems'];
 }
 
+// config the non-clickable links sitemap url
 function configSitemapLink(args) {
     if (args.includes("-m") === false) {
         return null;
