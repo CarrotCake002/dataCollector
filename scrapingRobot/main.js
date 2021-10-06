@@ -31,7 +31,7 @@ async function getSitemapUrls(linkList) {
     return linkList;
 }
 
-async function getContent(linkList, iList, params, linkEnteredCount) {
+async function getContent(linkList, iList, linkEnteredCount) {
 
     // format the next link it's going to enter, to avoid entering an unexistant link and crash it or getting lost in the web
     function formatEnteringLink(link, domain) {
@@ -115,17 +115,14 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
         // avoid saving the same link multiple times and get better optimization
         function checkLinkIsSaved(linkList, newLink) {
-            var result = [];
 
             for (var i = 0; i < linkList.length; i++) {
                 if (newLink === linkList[i][0]) {
                     linkList[i][2]++;
-                    result = [true, linkList];
-                    return result;
+                    return [true, linkList];
                 }
             }
-            result = [false, linkList];
-            return result;
+            return [false, linkList];
         }
 
         // get all the new links from the current website and add them the the link lists
@@ -147,6 +144,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
                     var checkLinkSaved = checkLinkIsSaved(linkList, link);
                     var isSaved = checkLinkSaved[0];
                     linkList = checkLinkSaved[1];
+                    checkLinkSaved = null;
 
                     if (link != null && !isSaved) {
                         linkList.push([link, linkList[iList][1] + 1, 1]);
@@ -230,6 +228,7 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
                     return element.innerHTML;
                 }));
             }
+            tempArray = null;
             return headsArray;
         }
 
@@ -261,9 +260,11 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         linkList = linkResultArray[0];
         var newLinkArray = linkResultArray[1];
         var linkArticle = linkResultArray[2];
+        linkResultArray = null;
         var linkTagArray = getLinkTagArrays();
         var hreflangArray = linkTagArray[0];
         var canonicalArray = linkTagArray[1];
+        linkTagArray = null;
         var metaArray = getMetaArray();
         var title = getTitle();
         var headsArray = getHeadsArray();
@@ -286,8 +287,9 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
         console.log("Error: the current url '" + params['domain'] + "' cannot be scraped. Please add the corresponding filters.");
         return null;
     } else {
-        returnArray = returnArray.concat(response.status());
+        returnArray = returnArray.concat(siteStatus);
     }
+    siteStatus = null;
 
     eventEmitter.emit('saveData', returnArray, iList, time, linkEnteredCount);
 
@@ -302,7 +304,8 @@ async function getContent(linkList, iList, params, linkEnteredCount) {
 
     returnArray = returnArray.push(linkEnteredCount);
     returnArray = [returnArray[0], null];
-    returnArray = await getContent(linkList, iList, params, linkEnteredCount);
+    //returnArray = null;
+    returnArray = await getContent(linkList, iList, linkEnteredCount);
     linkEnteredCount--;
     if (linkEnteredCount === 0) {
         saveFinalData(returnArray[0]);
@@ -323,9 +326,10 @@ function saveFinalData(linkList) {
         saveData.push(linkList[i][2]);
     }
 
-    defaultParams['formattedSavefile'] ? saveData = JSON.stringify(saveData, null, 4) : saveData = JSON.stringify(saveData);
+    defaultParams['formattedSavefile'] ? saveData = JSON.stringify(saveData) : saveData = JSON.stringify(saveData);
     saveData = '"runtime": ' + saveData + '\n}';
     writeInFile(saveData);
+    saveData = null;
 }
 
 // save data that won't be modified and will be deleted at runtime for better optimization
@@ -650,7 +654,7 @@ var defaultParams = {
     formattedSavefile: false,
     headlessBrowser: false,
     args: process.argv,
-    clickItems: [],
+    clickItems: null,
     sitemapLink: null,
     startingUrls: null,
     maxDepth: 999,
@@ -684,7 +688,7 @@ if (params['sitemapLink'] === null)
 
 writeInFile('{\n\t');
 
-var returnArray = getContent(linkList, iList, params, linkEnteredCount);
+var returnArray = getContent(linkList, iList, linkEnteredCount);
 
 if (returnArray === undefined || returnArray === null || returnArray === false) {
     console.log("Error: an error has occured and the program closed unexpectedly.");
