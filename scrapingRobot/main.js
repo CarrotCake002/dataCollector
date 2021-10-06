@@ -604,6 +604,7 @@ function configGetLinkArticle(args) {
     return args.includes("-gArticle") ? true : false;
 }
 
+// config if the program should get all the <meta> tags for each page
 function configGetMeta(args) {
     return args.includes("-gMeta") ? true : false;
 }
