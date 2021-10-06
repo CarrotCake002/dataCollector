@@ -618,6 +618,7 @@ function configGetHreflang(args) {
     return args.includes("-gHreflang") ? true : false;
 }
 
+// config if the program should get all <link> tags with a canonical attribute for each page
 function configGetCanonical(args) {
     return args.includes("-gCanonical") ? true : false;
 }
