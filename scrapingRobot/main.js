@@ -589,6 +589,7 @@ function configSaveFormat(args) {
     return args.includes("-f") ? true : false;
 }
 
+// config if the program should open a chromium browser, or instead launch headless
 function configHeadBrowser(args) {
     return args.includes("-H") ? true : false;
 }
