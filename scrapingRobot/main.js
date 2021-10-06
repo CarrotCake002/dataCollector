@@ -568,6 +568,7 @@ function configMaxDepth(args) {
     return(defaultParams['maxDepth']);
 }
 
+// config the array of urls the robot will enter first. However the non-clickable sitemap, if set, will always have the highest priority
 function configStartingUrls(args) {
     if (args.includes("-u") === false)
         return [[defaultParams['domain'] + '/', 0, 1]];
