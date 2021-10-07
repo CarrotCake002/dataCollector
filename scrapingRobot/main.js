@@ -20,11 +20,11 @@ function configHelp(args) {
         -D: define the url you want to scrap right after this flag. This flag is mandatory. View example below:\n
             [...] -D "https://example.com"\n\n\n
         -u: Define the first set of urls the program will enter. Bare in mind that filters will not apply to the first url, but they will apply to the rest of urls.\n\n\n
-        -S: define the name of the .json file in which you want to save all the information collected.\n
+        -f: define the name of the .json file in which you want to save all the information collected.\n
             The default name for this file will be formData. If a .json file with the same name already exists, the new data will be appended.\n
             If no file with that name exists, it will automatically be created with read and write permission.\n
             No extension will be provided and forbidden characters will display an error message. View example below:\n
-            [...] -S "saveFile" --> Will create a file named 'saveFile.json' and save all the data in there\n\n\n
+            [...] -f "saveFile" --> Will create a file named 'saveFile.json' and save all the data in there\n\n\n
         -x: allows you to decide which urls the bot should not enter. The argument after the flag will contain\n
             the keywords that could be found in the urls you want to skip. View example below:\n
             [...] -x "blog item beach"\n
@@ -458,23 +458,23 @@ function configDomain(args) {
 
 //check savefile's name and return it or return default if no name specified
 function configSavefile(args) {
-    if (args.includes("-S") === false) {
+    if (args.includes("-f") === false) {
         return defaultParams['savefile'];
-    } if (args[args.indexOf("-S") + 1] === undefined) {
-        console.log("Error: after '-S': no name was provided for the .json save file.");
+    } if (args[args.indexOf("-f") + 1] === undefined) {
+        console.log("Error: after '-f': no name was provided for the .json save file.");
         return false;
-    } if (args[args.indexOf("-S") + 1].includes(".")) {
-        console.log("Error: after '-S': the file name should not contain an extension. It will automatically be a .json file.")
+    } if (args[args.indexOf("-f") + 1].includes(".")) {
+        console.log("Error: after '-f': the file name should not contain an extension. It will automatically be a .json file.")
         return false;
     }
 
     var i = 0;
-    var savefile = args[args.indexOf("-S") + 1];
+    var savefile = args[args.indexOf("-f") + 1];
     const forbidChars = `<>:"/\\|?*\n-!&`;
 
     while (i < forbidChars.length) {
         if (savefile.includes(forbidChars[i])) {
-            console.log("Error: after '-S': the save file name can't contain a forbidden character.");
+            console.log("Error: after '-f': the save file name can't contain a forbidden character.");
             return false;
         }
         i++;
@@ -572,6 +572,26 @@ function configStartingUrls(args) {
     return defaultParams['startingUrls'];
 }
 
+function configSaveLinksWith(args) {
+    if (!args.includes("-sL"))
+        return null;
+    if (args[args.indexOf("-sL") + 1] === undefined) {
+        console.log("Error: after -sL: missing links to be saved.");
+        return false;
+    }
+    return (args[args.indexOf("-sL") + 1].trim().split(","));
+}
+
+function configNotSaveLinksWith(args) {
+    if (!args.includes("-nL"))
+        return null;
+    if (args[args.indexOf("-nL") + 1] === undefined) {
+        console.log("Error: after -nL: missing links to be saved.");
+        return false;
+    }
+    return (args[args.indexOf("-nL") + 1].trim().split(","));
+}
+
 // config if the data file should be formatted. A simple format will be present even if this flag is set as false
 function configSaveFormat(args) {
     return args.includes("-f") ? true : false;
@@ -638,6 +658,10 @@ function configParams(args, defParams) {
         return false;
     } if (defParams['onlyEnterLinksWith'] = configStrLinkInclude(args, defParams), defParams['onlyEnterLinksWith'] === false) {
         return false;
+    } if (defParams['onlySaveLinksWith'] = configSaveLinksWith(args), defParams['onlySaveLinksWith'] === false) {
+        return false;
+    } if (defParams['notSaveLinksWith'] = configNotSaveLinksWith(args), defParams['notSaveLinksWith'] === false) {
+        return false;
     }
     defParams['getOneSelector'] = configGetAllHtml(args);
     defParams['headlessBrowser'] = configHeadBrowser(args);
@@ -656,6 +680,8 @@ var defaultParams = {
     domain: null,
     notEnterLinksWith: ["mailto:", "javascript:", "tel:", "steam:", "#", "excel", "word", "pdf"],
     onlyEnterLinksWith: null,
+    notSaveLinksWith: null,
+    onlySaveLinksWith: null,
     savefile: "default",
     querySelector: ['meta', 'title', 'link', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
     getOneSelector: false,
