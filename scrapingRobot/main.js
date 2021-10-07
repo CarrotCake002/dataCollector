@@ -551,6 +551,8 @@ function configMaxDepth(args) {
         return false;
     }
     defaultParams['maxDepth'] = parseInt(args[args.indexOf("-d") + 1]);
+    if (defaultParams['maxDepth'] < 1)
+        return false;
     return(defaultParams['maxDepth']);
 }
 
