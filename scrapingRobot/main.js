@@ -572,6 +572,7 @@ function configStartingUrls(args) {
     return defaultParams['startingUrls'];
 }
 
+// configure the links you will want to save when getting new links from a page
 function configSaveLinksWith(args) {
     if (!args.includes("-sL"))
         return null;
