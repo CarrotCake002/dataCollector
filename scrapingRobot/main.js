@@ -181,10 +181,10 @@ async function getContent(linkList, iList, linkEnteredCount) {
             if (wantedLinks == null)
                 return true;
             for (var i = 0; i < wantedLinks.length; i++) {
-                if (!link.includes(wantedLinks[i]))
-                    return false;
+                if (link.includes(wantedLinks[i]))
+                    return true;
             }
-            return true;
+            return false;
         }
 
         // not save links that contain any string from the -nL flag
