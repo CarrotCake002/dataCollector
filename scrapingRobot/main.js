@@ -44,7 +44,7 @@ function configHelp(args) {
             You can also provide multiple elements to click, separating them with comas.\n\n\n
         -m: with this flag you can specify the sitemap of the website to obtain the highest number of links possible in only one website.\n
             It is currently working only for ShBarcelona, but the idea is to amplify it to any website in the future.\n\n\n
-        -f: if this flag is present, the save data file will be formatted and easier to read.\n
+        -F: if this flag is present, the save data file will be formatted and easier to read.\n
             This flag takes no arguments.\n\n\n
         -H: if this flag is present, the program will launch with a headless browser.\n
             Have in mind that a headless browser will make it easier for some websites to detect the bot,\n
@@ -620,7 +620,7 @@ function configNotSaveLinksWith(args) {
 
 // config if the data file should be formatted. A simple format will be present even if this flag is set as false
 function configSaveFormat(args) {
-    return args.includes("-f") ? true : false;
+    return args.includes("-F") ? true : false;
 }
 
 // config if the program should open a chromium browser, or instead launch headless
