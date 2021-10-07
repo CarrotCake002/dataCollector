@@ -67,7 +67,7 @@ function configHelp(args) {
 }
 
 // not enter links containing any string from the -x flag
-function isUnwantedLink(link, unwantedLinks) {
+function notEnterLink(link, unwantedLinks) {
     var j = 0;
 
     while (j < unwantedLinks.length) {
@@ -80,7 +80,7 @@ function isUnwantedLink(link, unwantedLinks) {
 }
 
 // only enter links containing any string from the -i flag
-function isWantedLink(link, wantedLinks) {
+function enterLink(link, wantedLinks) {
     var h = 0;
 
     while (h < wantedLinks.length) {
@@ -96,7 +96,7 @@ function isWantedLink(link, wantedLinks) {
 function skipLinks(iList, linkList, unwantedLinks, wantedLinks) {
     while (linkList[iList] !== undefined) {
         var link = linkList[iList][0];
-        if (isWantedLink(link, wantedLinks) && !isUnwantedLink(link, unwantedLinks) && linkList[iList][1] <= params['maxDepth']) {
+        if (enterLink(link, wantedLinks) && !notEnterLink(link, unwantedLinks) && linkList[iList][1] <= params['maxDepth']) {
             return iList;
         }
         iList++;
@@ -551,7 +551,7 @@ function configMaxDepth(args) {
         return false;
     }
     defaultParams['maxDepth'] = parseInt(args[args.indexOf("-d") + 1]);
-    if (defaultParams['maxDepth'] < 1)
+    if (defaultParams['maxDepth'] < 0)
         return false;
     return(defaultParams['maxDepth']);
 }
