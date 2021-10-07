@@ -31,7 +31,7 @@ if (isset($_POST)) {
     if (isset($_POST['startingUrl']) && $_POST['startingUrl'] !== '')
         $query = $query . ' -u "' . $_POST['startingUrl'] . '" ';
     if (isset($_POST['formSavefile']) && $_POST['formSavefile'] === 'on')
-        $query = $query . ' -f ';
+        $query = $query . ' -F ';
     if (isset($_POST['headless']) && $_POST['headless'] === 'on')
         $query = $query . ' -H ';
     if (isset($_POST['allSelectors']) && $_POST['allSelectors'] === 'on')
