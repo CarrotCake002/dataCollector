@@ -66,6 +66,26 @@ function configHelp(args) {
     exit(0);
 }
 
+function saveLinksWith(link, wantedLinks) {
+    if (wantedLinks == null)
+        return true;
+    for (var i = 0; i < wantedLinks.length; i++) {
+        if (!link.includes(wantedLinks[i]))
+            return false;
+    }
+    return true;
+}
+
+function notSaveLinksWith(link, unwantedLinks) {
+    if (unwantedLinks == null)
+        return false;
+    for (var i = 0; i < unwantedLinks.length; i++) {
+        if (link.includes(unwantedLinks[i]))
+            return false;
+    }
+    return true;
+}
+
 // not enter links containing any string from the -x flag
 function notEnterLink(link, unwantedLinks) {
     var j = 0;
@@ -210,10 +230,12 @@ async function getContent(linkList, iList, linkEnteredCount) {
                     checkLinkSaved = null;
 
                     if (link != null && !isSaved) {
-                        linkList.push([link, linkList[iList][1] + 1, 1]);
-                        newLinkArray.push(link);
-                        if (params['getLinkArticle'])
-                            linkArticle.push(general[i].outerHTML);
+                        if (saveLinksWith(link, params['onlySaveLinksWith']) && !notSaveLinksWith(link, params['notSaveLinksWith'])) {
+                            linkList.push([link, linkList[iList][1] + 1, 1]);
+                            newLinkArray.push(link);
+                            if (params['getLinkArticle'])
+                                linkArticle.push(general[i].outerHTML);
+                        }
                     }
                 }
             } else {
