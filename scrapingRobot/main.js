@@ -198,6 +198,13 @@ async function getContent(linkList, iList, linkEnteredCount) {
             return true;
         }
 
+        function checkSavingLink(link) {
+            if (saveLinksWith(link, params['onlySaveLinksWith']) && !notSaveLinksWith(link, params['notSaveLinksWith'])) {
+                return true;
+            }
+            return false;
+        }
+
         // avoid saving the same link multiple times and get better optimization
         function checkLinkIsSaved(linkList, newLink) {
 
@@ -232,7 +239,7 @@ async function getContent(linkList, iList, linkEnteredCount) {
                     checkLinkSaved = null;
 
                     if (link != null && !isSaved) {
-                        if (saveLinksWith(link, params['onlySaveLinksWith']) && !notSaveLinksWith(link, params['notSaveLinksWith'])) {
+                        if (checkSavingLink(link)) {
                             linkList.push([link, linkList[iList][1] + 1, 1]);
                             newLinkArray.push(link);
                             if (params['getLinkArticle'])
