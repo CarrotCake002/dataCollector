@@ -367,7 +367,6 @@ async function getContent(linkList, iList, linkEnteredCount) {
 
     returnArray = returnArray.push(linkEnteredCount);
     returnArray = [returnArray[0], null];
-    //returnArray = null;
     returnArray = await getContent(linkList, iList, linkEnteredCount);
     linkEnteredCount--;
     if (linkEnteredCount === 0) {
@@ -376,6 +375,7 @@ async function getContent(linkList, iList, linkEnteredCount) {
     return returnArray;
 }
 
+// function to write a string in the specified file. If the file doesn't exist it will be created
 async function writeInFile(string) {
     fs.writeFile(defaultParams['args'][1] + "/../../savefiles/" + defaultParams['savefile'] + '.json', string, { flag: 'a+' }, (err) => {
     });
