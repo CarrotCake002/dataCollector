@@ -66,6 +66,7 @@ function configHelp(args) {
     exit(0);
 }
 
+// save found links that contain any string from the -sL flag
 function saveLinksWith(link, wantedLinks) {
     if (wantedLinks == null)
         return true;
