@@ -77,6 +77,7 @@ function saveLinksWith(link, wantedLinks) {
     return true;
 }
 
+// not save links that contain any string from the -nL flag
 function notSaveLinksWith(link, unwantedLinks) {
     if (unwantedLinks == null)
         return false;
