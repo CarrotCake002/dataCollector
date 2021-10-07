@@ -11,7 +11,7 @@ if (isset($_POST)) {
         return;
     }
     if (isset($_POST['savefile']) && $_POST['savefile'] !== '')
-        $query = $query . ' -S "' . $_POST['savefile'] . '" ';
+        $query = $query . ' -f "' . $_POST['savefile'] . '" ';
     if (isset($_POST['include']) && $_POST['include'] !== '')
         $query = $query . ' -i "' . $_POST['include'] . '" ';
     if (isset($_POST['exclude']) && $_POST['exclude'] !== '')
