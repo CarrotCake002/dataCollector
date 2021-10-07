@@ -13,12 +13,18 @@
                 <p class="home_p" >Save file name<br>
                 (default: "default.json")</p>
                 <input class="home_inputs" type="text" name="savefile" placeholder="saveFile">
-                <p class="home_p" >Words to include<br>
+                
+                <p class="home_p" >Words to include when filtering saving links</p>
+                <input class="home_inputs" type="text" name="includeSaving" placeholder="home,.com,http://,/rental">
+                <p class="home_p" >Words to exclude when filtering saving links</p>
+                <input class="home_inputs" type="text" name="excludeSaving" placeholder="blog,store,https://,.fr">
+
+                <p class="home_p" >Words to include when filtering entering links<br>
                 (auto: "/")</p>
-                <input class="home_inputs" type="text" name="include" placeholder="home,.com,http://,/rental">
-                <p class="home_p" >Words to exclude<br>
+                <input class="home_inputs" type="text" name="includeEntering" placeholder="home,.com,http://,/rental">
+                <p class="home_p" >Words to exclude when filtering entering links<br>
                 (auto: "mailto:", "javascript:", "tel:", "#", "excel", "word", "pdf")</p>
-                <input class="home_inputs" type="text" name="exclude" placeholder="blog,store,https://,.fr">
+                <input class="home_inputs" type="text" name="excludeEntering" placeholder="blog,store,https://,.fr">
                 <p class="home_p" >Custom Selectors<br>
                 (some can be automatically added below)</p>
                 <input class="home_inputs" type="text" name="userSelectors" placeholder="h1,h2,.class,#id">
