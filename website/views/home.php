@@ -13,12 +13,10 @@
                 <p class="home_p" >Save file name<br>
                 (default: "default.json")</p>
                 <input class="home_inputs" type="text" name="savefile" placeholder="saveFile">
-                
                 <p class="home_p" >Words to include when filtering saving links</p>
                 <input class="home_inputs" type="text" name="includeSaving" placeholder="home,.com,http://,/rental">
                 <p class="home_p" >Words to exclude when filtering saving links</p>
                 <input class="home_inputs" type="text" name="excludeSaving" placeholder="blog,store,https://,.fr">
-
                 <p class="home_p" >Words to include when filtering entering links<br>
                 (auto: "/")</p>
                 <input class="home_inputs" type="text" name="includeEntering" placeholder="home,.com,http://,/rental">

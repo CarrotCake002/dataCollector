@@ -12,10 +12,14 @@ if (isset($_POST)) {
     }
     if (isset($_POST['savefile']) && $_POST['savefile'] !== '')
         $query = $query . ' -f "' . $_POST['savefile'] . '" ';
-    if (isset($_POST['include']) && $_POST['include'] !== '')
-        $query = $query . ' -i "' . $_POST['include'] . '" ';
-    if (isset($_POST['exclude']) && $_POST['exclude'] !== '')
-        $query = $query . ' -x "' . $_POST['exclude'] . '" ';
+    if (isset($_POST['includeEntering']) && $_POST['includeEntering'] !== '')
+        $query = $query . ' -i "' . $_POST['includeEntering'] . '" ';
+    if (isset($_POST['excludeEntering']) && $_POST['excludeEntering'] !== '')
+        $query = $query . ' -x "' . $_POST['excludeEntering'] . '" ';
+    if (isset($_POST['includeSaving']) && $_POST['includeSaving'] !== '')
+        $query = $query . ' -sL "' . $_POST['includeSaving'] . '" ';
+    if (isset($_POST['excludeSaving']) && $_POST['excludeSaving'] !== '')
+        $query = $query . ' -nL "' . $_POST['excludeSaving'] . '" ';
     if (isset($_POST['userSelectors']) && $_POST['userSelectors'] !== '')
         $query = $query . ' -s "' . $_POST['userSelectors'] . '" ';
     if (isset($_POST['maxDepth']) && $_POST['maxDepth'] !== '')
