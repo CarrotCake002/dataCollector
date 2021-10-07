@@ -61,31 +61,9 @@ function configHelp(args) {
         -gCanonical: gets all <link> tags with a canonical attribute from every page.\n\n
         -gTitle: gets the <title> tag of every page.\n
         `
-        
+
     );
     exit(0);
-}
-
-// save found links that contain any string from the -sL flag
-function saveLinksWith(link, wantedLinks) {
-    if (wantedLinks == null)
-        return true;
-    for (var i = 0; i < wantedLinks.length; i++) {
-        if (!link.includes(wantedLinks[i]))
-            return false;
-    }
-    return true;
-}
-
-// not save links that contain any string from the -nL flag
-function notSaveLinksWith(link, unwantedLinks) {
-    if (unwantedLinks == null)
-        return false;
-    for (var i = 0; i < unwantedLinks.length; i++) {
-        if (link.includes(unwantedLinks[i]))
-            return false;
-    }
-    return true;
 }
 
 // not enter links containing any string from the -x flag
@@ -198,6 +176,28 @@ async function getContent(linkList, iList, linkEnteredCount) {
 
     var returnArray = await page.evaluate((linkList, params, iList) => {
 
+        // save found links that contain any string from the -sL flag
+        function saveLinksWith(link, wantedLinks) {
+            if (wantedLinks == null)
+                return true;
+            for (var i = 0; i < wantedLinks.length; i++) {
+                if (!link.includes(wantedLinks[i]))
+                    return false;
+            }
+            return true;
+        }
+
+        // not save links that contain any string from the -nL flag
+        function notSaveLinksWith(link, unwantedLinks) {
+            if (unwantedLinks == null)
+                return false;
+            for (var i = 0; i < unwantedLinks.length; i++) {
+                if (link.includes(unwantedLinks[i]))
+                    return false;
+            }
+            return true;
+        }
+
         // avoid saving the same link multiple times and get better optimization
         function checkLinkIsSaved(linkList, newLink) {
 
@@ -281,7 +281,7 @@ async function getContent(linkList, iList, linkEnteredCount) {
             var canonicalArray = [];
 
             if (!params['getHreflang'] && !params['getCanonical'])
-             return [hreflangArray, canonicalArray];
+                return [hreflangArray, canonicalArray];
 
             var getLinkTagArray = Array.from(document.querySelectorAll(params['querySelector'][2]));
             getLinkTagArray = getLinkTagArray.map(element => {
@@ -577,7 +577,7 @@ function configMaxDepth(args) {
     defaultParams['maxDepth'] = parseInt(args[args.indexOf("-d") + 1]);
     if (defaultParams['maxDepth'] < 0)
         return false;
-    return(defaultParams['maxDepth']);
+    return (defaultParams['maxDepth']);
 }
 
 // config the array of urls the robot will enter first. However the non-clickable sitemap, if set, will always have the highest priority
