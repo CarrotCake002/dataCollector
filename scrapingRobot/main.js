@@ -193,9 +193,9 @@ async function getContent(linkList, iList, linkEnteredCount) {
                 return false;
             for (var i = 0; i < unwantedLinks.length; i++) {
                 if (link.includes(unwantedLinks[i]))
-                    return false;
+                    return true;
             }
-            return true;
+            return false;
         }
 
         function checkSavingLink(link) {
