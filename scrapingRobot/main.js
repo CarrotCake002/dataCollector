@@ -583,6 +583,7 @@ function configSaveLinksWith(args) {
     return (args[args.indexOf("-sL") + 1].trim().split(","));
 }
 
+// configure the links you will not want to save when getting new links from a page
 function configNotSaveLinksWith(args) {
     if (!args.includes("-nL"))
         return null;
