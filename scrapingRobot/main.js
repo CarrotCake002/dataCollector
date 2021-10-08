@@ -132,6 +132,7 @@ async function getSitemapUrls(linkList) {
     return linkList;
 }
 
+// main loop of the program. Recursive function that open/closes browsers and gets all the information from every page
 async function getContent(linkList, iList, linkEnteredCount) {
 
     // format the next link it's going to enter, to avoid entering an unexistant link and crash it or getting lost in the web
