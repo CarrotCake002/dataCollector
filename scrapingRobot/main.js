@@ -604,6 +604,18 @@ function configStartingUrls(args) {
     return defaultParams['startingUrls'];
 }
 
+// config the file containing the starting urls when there are too many to write directly
+function configStartingUrlsFile(args) {
+    if (args.includes("-uf") === false)
+        return null;
+    if (args[args.indexOf("-uf") + 1] === undefined) {
+        console.log("Error: after -uf: missing filepath.");
+        return false;
+    }
+    defaultParams["startingUrlsFile"] = args[args.indexOf("-uf") + 1];
+    return defaultParams['startingUrlsFile'];
+}
+
 // configure the links you will want to save when getting new links from a page
 function configSaveLinksWith(args) {
     if (!args.includes("-sL"))
@@ -688,6 +700,8 @@ function configParams(args, defParams) {
         return false;
     } if (defParams['startingUrls'] = configStartingUrls(args), defParams['startingUrls'] === false) {
         return false;
+    } if (defParams['startingUrlsFile'] = configStartingUrlsFile(args), defParams['startingUrlsFile'] === false) {
+        return false;
     } if (defParams['maxDepth'] = configMaxDepth(args), defParams['maxDepth'] === false) {
         return false;
     } if (defParams['onlyEnterLinksWith'] = configStrLinkInclude(args, defParams), defParams['onlyEnterLinksWith'] === false) {
@@ -725,6 +739,7 @@ var defaultParams = {
     clickItems: null,
     sitemapLink: null,
     startingUrls: null,
+    startingUrlsFile: null,
     maxDepth: 999,
     getLinkArticle: false,
     getMeta: false,
@@ -757,7 +772,7 @@ writeInFile('{\n\t');
 
 var returnArray = getContent(linkList, iList, linkEnteredCount);
 
-if (returnArray === undefined || returnArray === null || returnArray === false) {
+if (returnArray == null || returnArray === false) {
     console.log("Error: an error has occured and the program closed unexpectedly.");
     return 84;
 }
