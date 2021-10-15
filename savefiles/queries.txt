@@ -1,2 +1,8 @@
+# Example query
+    - node main.js -D "" -u "" -i "" -f " -s "" -d 0 -F
+
 # Entre particulares
     - node main.js -D "https://www.entreparticulares.com" -u "https://www.entreparticulares.com/resultados-de-busqueda/?property-state=3411&location=barcelona-barcelona&status=alquiler&type=pisos-apartamentos" -i "page/2,anuncio/" -f "entreparticularesPisos" -c "#phone_info > input" -s "#phone_info > h5:nth-child(1) > a" -F
+
+# Milanuncios
+    - node main.js -D "https://www.milanuncios.com" -uf "milanunciosContactList.txt" -i "datos-contacto/" -f "milanunciosContacts" -s "body > div.plaincontenido > div > div.texto > div.telefonos" -d 0 -F
