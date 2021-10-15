@@ -588,22 +588,6 @@ function configMaxDepth(args) {
     return (defaultParams['maxDepth']);
 }
 
-// config the array of urls the robot will enter first. However the non-clickable sitemap, if set, will always have the highest priority
-function configStartingUrls(args) {
-    if (args.includes("-u") === false)
-        return [[defaultParams['domain'] + '/', 0, 1]];
-    if (args[args.indexOf("-u") + 1] === undefined) {
-        console.log("Error: after -u: missing starting url.");
-        return false;
-    }
-    defaultParams['startingUrls'] = [];
-    var startingUrls = args[args.indexOf("-u") + 1].trim().split(",");
-    for (var i = 0; i < startingUrls.length; i++) {
-        defaultParams['startingUrls'].push([startingUrls[i], 0, 1]);
-    }
-    return defaultParams['startingUrls'];
-}
-
 // config the file containing the starting urls when there are too many to write directly
 function configStartingUrlsFile(args) {
     if (args.includes("-uf") === false)
@@ -614,6 +598,40 @@ function configStartingUrlsFile(args) {
     }
     defaultParams["startingUrlsFile"] = args[args.indexOf("-uf") + 1];
     return defaultParams['startingUrlsFile'];
+}
+
+function readStartingUrls(filepath) {
+    var data = null;
+    try {
+        data = fs.readFileSync(filepath, 'utf8');
+    } catch (err) {
+        console.log(err);
+    }
+    return data;
+}
+
+// config the array of urls the robot will enter first. However the non-clickable sitemap, if set, will have the highest priority
+function configStartingUrls(args, startingUrlFile) {
+    if (args.includes("-u") === false && args.includes("-uf") === false)
+        return [[defaultParams['domain'] + '/', 0, 1]];
+    else if (args.includes("-u") && args.includes("-uf")) {
+        console.log("Error: only one starting url argument can be provided.");
+        return false;
+    } else if (args.includes("-u") === false && args.includes("-uf"))
+        var startingUrls = readStartingUrls(startingUrlFile).trim().split(",");
+    else {
+        if (args[args.indexOf("-u") + 1] !== undefined)
+            var startingUrls = args[args.indexOf("-u") + 1].trim().split(",");
+        else {
+            console.log("Error: after -u: missing starting url.");
+            return false;
+        }
+    }
+    defaultParams['startingUrls'] = [];
+    for (var i = 0; i < startingUrls.length; i++) {
+        defaultParams['startingUrls'].push([startingUrls[i], 0, 1]);
+    }
+    return defaultParams['startingUrls'];
 }
 
 // configure the links you will want to save when getting new links from a page
@@ -698,9 +716,9 @@ function configParams(args, defParams) {
         return false;
     } if (defParams['sitemapLink'] = configSitemapLink(args), defParams['sitemapLink'] === false) {
         return false;
-    } if (defParams['startingUrls'] = configStartingUrls(args), defParams['startingUrls'] === false) {
-        return false;
     } if (defParams['startingUrlsFile'] = configStartingUrlsFile(args), defParams['startingUrlsFile'] === false) {
+        return false;
+    } if (defParams['startingUrls'] = configStartingUrls(args, defaultParams['startingUrlsFile']), defParams['startingUrls'] === false) {
         return false;
     } if (defParams['maxDepth'] = configMaxDepth(args), defParams['maxDepth'] === false) {
         return false;
