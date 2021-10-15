@@ -28,9 +28,9 @@
 
         public function getUrlPredecessor($ObjectNb) {
             $current_url = $this->getUrl($ObjectNb);
-            if ($this->getIteration($ObjectNb) == 0)
+            if ($this->getUrlDepth($ObjectNb) == 0)
                 return;
-            for ($obj = 1; $obj <= $this->getObjectCount(); $obj++) {
+            for ($obj = 1; $obj <= $this->getObjectCount() - 1; $obj++) {
                 for ($link = 0; $link < $this->getAllLinksSize($obj); $link++) {
                     if ($this->getSingleLink($obj, $link) === $current_url)
                         return $this->getUrl($obj);
