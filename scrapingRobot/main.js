@@ -602,6 +602,7 @@ function configStartingUrlsFile(args) {
     return defaultParams['startingUrlsFile'];
 }
 
+// read the starting urls from a file when they are sent through a .txt file because there are too many and the command line doesn't accept them
 function readStartingUrls(filepath) {
     var data = null;
     try {
