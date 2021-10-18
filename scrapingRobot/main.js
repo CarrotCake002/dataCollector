@@ -199,6 +199,7 @@ async function getContent(linkList, iList, linkEnteredCount) {
             return false;
         }
 
+        // check if the user wants, or not, the link that is beeing saved
         function checkSavingLink(link) {
             if (saveLinksWith(link, params['onlySaveLinksWith']) && !notSaveLinksWith(link, params['notSaveLinksWith'])) {
                 return true;
