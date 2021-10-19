@@ -1,3 +1,4 @@
+
 <?php
 require_once '../views/header.php';
 
@@ -60,6 +61,15 @@ isset($_POST['savefile']) && $_POST['savefile'] !== '' ? $savefile = $_POST['sav
 ?>
 <br><br>
 <a href="<?= "/savefiles/" . $savefile . ".json"; ?>" download="<?= $savefile ?>">Download your data!</a>
+
+<script>
+    fs.unlink('file.txt', (err) => {
+        if (err) {
+            throw err;
+        }
+        console.log("File is deleted.");
+    });
+</script>
 
 <?php
 require_once '../views/footer.php';
