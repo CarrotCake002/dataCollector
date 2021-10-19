@@ -436,7 +436,7 @@ function saveFinalData(linkList) {
     saveData = null;
 }
 
-// save data that won't be modified and will be deleted at runtime for better optimization
+// save data that won't be modified and will be deleted in runtime for better optimization
 async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
     var url = resultArray[0][iteration][0];
 
