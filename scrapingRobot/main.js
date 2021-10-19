@@ -542,15 +542,15 @@ function configQuerySelector(args) {
 }
 
 // include only links contaning the specified string
-function configStrLinkInclude(args, defParams) {
+function configStrLinkInclude(args, defaultParams) {
     if (args.includes("-i") === false) {
         return ['/'];
     } if (args[args.indexOf("-i") + 1] === undefined) {
         console.log("Error: after -i: missing link inclusion arguments.");
         return false;
     }
-    defParams['onlyEnterLinksWith'] = args[args.indexOf("-i") + 1].trim().split(",");
-    return defParams['onlyEnterLinksWith'];
+    defaultParams['onlyEnterLinksWith'] = args[args.indexOf("-i") + 1].trim().split(",");
+    return defaultParams['onlyEnterLinksWith'];
 }
 
 // config the items that need to be clicked in every page
@@ -706,43 +706,43 @@ function configGetTitle(args) {
 }
 
 // check if correct params are input and formatting them for the program to read them
-function configParams(args, defParams) {
+function configParams(args, defaultParams) {
     configHelp(args);
-    if (defParams['domain'] = configDomain(args), defParams['domain'] === false) {
+    if (defaultParams['domain'] = configDomain(args), defaultParams['domain'] === false) {
         return false;
-    } if (defParams['savefile'] = configSavefile(args), defParams['savefile'] === false) {
+    } if (defaultParams['savefile'] = configSavefile(args), defaultParams['savefile'] === false) {
         return false;
-    } if (defParams['notEnterLinksWith'] = configStrLinkExclude(args), defParams['notEnterLinksWith'] === false) {
+    } if (defaultParams['notEnterLinksWith'] = configStrLinkExclude(args), defaultParams['notEnterLinksWith'] === false) {
         return false;
-    } if (defParams['querySelector'] = configQuerySelector(args), defParams['querySelector'] === false) {
+    } if (defaultParams['querySelector'] = configQuerySelector(args), defaultParams['querySelector'] === false) {
         return false;
-    } if (defParams['clickItems'] = configClickItems(args), defParams['clickItems'] === false) {
+    } if (defaultParams['clickItems'] = configClickItems(args), defaultParams['clickItems'] === false) {
         return false;
-    } if (defParams['sitemapLink'] = configSitemapLink(args), defParams['sitemapLink'] === false) {
+    } if (defaultParams['sitemapLink'] = configSitemapLink(args), defaultParams['sitemapLink'] === false) {
         return false;
-    } if (defParams['startingUrlsFile'] = configStartingUrlsFile(args), defParams['startingUrlsFile'] === false) {
+    } if (defaultParams['startingUrlsFile'] = configStartingUrlsFile(args), defaultParams['startingUrlsFile'] === false) {
         return false;
-    } if (defParams['startingUrls'] = configStartingUrls(args, defaultParams['startingUrlsFile']), defParams['startingUrls'] === false) {
+    } if (defaultParams['startingUrls'] = configStartingUrls(args, defaultParams['startingUrlsFile']), defaultParams['startingUrls'] === false) {
         return false;
-    } if (defParams['maxDepth'] = configMaxDepth(args), defParams['maxDepth'] === false) {
+    } if (defaultParams['maxDepth'] = configMaxDepth(args), defaultParams['maxDepth'] === false) {
         return false;
-    } if (defParams['onlyEnterLinksWith'] = configStrLinkInclude(args, defParams), defParams['onlyEnterLinksWith'] === false) {
+    } if (defaultParams['onlyEnterLinksWith'] = configStrLinkInclude(args, defaultParams), defaultParams['onlyEnterLinksWith'] === false) {
         return false;
-    } if (defParams['onlySaveLinksWith'] = configSaveLinksWith(args), defParams['onlySaveLinksWith'] === false) {
+    } if (defaultParams['onlySaveLinksWith'] = configSaveLinksWith(args), defaultParams['onlySaveLinksWith'] === false) {
         return false;
-    } if (defParams['notSaveLinksWith'] = configNotSaveLinksWith(args), defParams['notSaveLinksWith'] === false) {
+    } if (defaultParams['notSaveLinksWith'] = configNotSaveLinksWith(args), defaultParams['notSaveLinksWith'] === false) {
         return false;
     }
-    defParams['getOneSelector'] = configGetAllHtml(args);
-    defParams['headlessBrowser'] = configHeadBrowser(args);
-    defParams['formattedSavefile'] = configSaveFormat(args);
-    defParams['getLinkArticle'] = configGetLinkArticle(args);
-    defParams['getMeta'] = configGetMeta(args);
-    defParams['getHeads'] = configGetHeads(args);
-    defParams['getHreflang'] = configGetHreflang(args);
-    defParams['getCanonical'] = configGetCanonical(args);
-    defParams['getTitle'] = configGetTitle(args);
-    return defParams;
+    defaultParams['getOneSelector'] = configGetAllHtml(args);
+    defaultParams['headlessBrowser'] = configHeadBrowser(args);
+    defaultParams['formattedSavefile'] = configSaveFormat(args);
+    defaultParams['getLinkArticle'] = configGetLinkArticle(args);
+    defaultParams['getMeta'] = configGetMeta(args);
+    defaultParams['getHeads'] = configGetHeads(args);
+    defaultParams['getHreflang'] = configGetHreflang(args);
+    defaultParams['getCanonical'] = configGetCanonical(args);
+    defaultParams['getTitle'] = configGetTitle(args);
+    return defaultParams;
 }
 
 // set the default values of the program's arguments formatting
