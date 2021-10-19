@@ -121,7 +121,7 @@ async function getSitemapUrls(linkList) {
 
             if (elem === undefined || elem === null)
                 return linkList;
-            if (elem.innerHTML.includes("https") || elem.innerHTML.includes("http"))
+            if (elem.innerHTML.includes("http"))
                 linkList.push([elem.innerHTML, 1, 1]);
             else
                 return linkList;
@@ -172,7 +172,7 @@ async function getContent(linkList, iList, linkEnteredCount) {
                 })
             }
         }, params['clickItems']);
-        await page.waitFor(3000);
+        await page.waitFor(2000);
     }
 
     var returnArray = await page.evaluate((linkList, params, iList) => {
