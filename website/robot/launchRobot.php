@@ -1,7 +1,15 @@
 
 <?php
 require_once '../views/header.php';
-
+?>
+<script>
+    window.addEventListener("beforeunload", function (e) {
+            const xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "deleteFiles.php", true);
+            xhttp.send();        
+        });
+</script>
+<?php
 set_time_limit(0);
 
 if (isset($_POST)) {
@@ -62,14 +70,6 @@ isset($_POST['savefile']) && $_POST['savefile'] !== '' ? $savefile = $_POST['sav
 <br><br>
 <a href="<?= "/savefiles/" . $savefile . ".json"; ?>" download="<?= $savefile ?>">Download your data!</a>
 
-<script>
-    fs.unlink('file.txt', (err) => {
-        if (err) {
-            throw err;
-        }
-        console.log("File is deleted.");
-    });
-</script>
 
 <?php
 require_once '../views/footer.php';
