@@ -14,6 +14,9 @@ savefiles/*.pdf
 # ignore node and puppeteer packages
 node_modules
 
+# ingnore composer packages
+website/vendor
+
 # keep the configuration .json files
 !package-lock.json
 !package.json
