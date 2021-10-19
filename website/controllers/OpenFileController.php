@@ -68,7 +68,7 @@
 
         public function getTimesUrlFound($ObjectNb) {
             if ($this->getRuntimeData() !== null)
-                return ($this->getRuntimeData()[$ObjectNb]);
+                return ($this->getRuntimeData()[$ObjectNb - 1]);
             return "Error: runtime data is missing.";
         }
 
@@ -318,7 +318,9 @@
         }
 
         public function getTypeUserSelectors($ObjectNb, $typeNb) {
-            return ($this->getAllHtml($ObjectNb)['userSelected'][$typeNb]);
+            if (count($this->getAllHtml($ObjectNb)['userSelected']) > 0)
+                return ($this->getAllHtml($ObjectNb)['userSelected'][$typeNb]);
+            return '-';
         }
 
         public function getTypeUserSelectorsSize($ObjectNb, $typeNb) {
