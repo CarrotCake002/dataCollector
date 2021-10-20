@@ -115,7 +115,6 @@ async function getContent(linkList, iList, linkEnteredCount) {
     }
 
     const eval = require("./evaluate.js");
-
     var returnArray = await eval.evaluate(linkList, params, iList, page);
 
     browser.close();
