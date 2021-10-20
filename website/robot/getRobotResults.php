@@ -2,13 +2,23 @@
 
 require_once __DIR__ . '/../views/header.php';
 require '../controllers/OpenFileController.php';
+require '../controllers/SessionController.php';
 
 use classes\OpenFileController;
+use classes\SessionController;
+
+$session = new SessionController();
 
 if (isset($_FILES)) {
     $json_data = null;
     if (isset($_FILES['openFile']) && isset($_FILES['openFile']['tmp_name'])) {
-        $filePath = "../../savefiles/" . basename($_FILES['openFile']['tmp_name']);
+        if (!$session->checkSessionFolderExists()) {
+            if (!$session->createSessionFolder()) {
+                echo "Error: the session folder couldn't be created.";
+                return;
+            }
+        }
+        $filePath = $session->getSessionFolderPath() . '/' . basename($_FILES['openFile']['tmp_name']);
         $move = move_uploaded_file($_FILES['openFile']['tmp_name'], $filePath);
         if ($move === false) {
             echo "There has been an error managing the file.";
@@ -21,7 +31,7 @@ if (isset($_FILES)) {
         }
         $json_data = json_decode($json_data, true);
         if ($json_data === null) {
-            echo "The save file format is not correct. Make sure there are no errors in the syntax.";
+            echo "The savefile format is not correct. Make sure there are no errors in the syntax.";
             return;
         }
     } else {
@@ -29,8 +39,7 @@ if (isset($_FILES)) {
         return;
     }
     $openFile = new OpenFileController($json_data);
-
-    ?>
+?>
 
 
 <div id="tableBlock">
