@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once __DIR__ . '/../views/header.php';
 require '../controllers/OpenFileController.php';
 require '../controllers/SessionController.php';
@@ -21,7 +23,7 @@ if (isset($_FILES)) {
         $filePath = $session->getSessionFolderPath() . '/' . basename($_FILES['openFile']['tmp_name']);
         $move = move_uploaded_file($_FILES['openFile']['tmp_name'], $filePath);
         if ($move === false) {
-            echo "There has been an error managing the file.";
+            echo "There has been an error moving the file.";
             return;
         }
         @ $json_data = file_get_contents($filePath);
