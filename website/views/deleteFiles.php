@@ -2,7 +2,7 @@
 
 session_start();
 
-require '../controllers/SessionController.php';
+require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/SessionController.php';
 
 use classes\SessionController;
 
