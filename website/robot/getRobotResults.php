@@ -2,9 +2,9 @@
 
 session_start();
 
-require_once __DIR__ . '/../views/header.php';
-require '../controllers/OpenFileController.php';
-require '../controllers/SessionController.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/header.php';
+require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/OpenFileController.php';
+require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/SessionController.php';
 
 use classes\OpenFileController;
 use classes\SessionController;
@@ -97,4 +97,4 @@ if (isset($_FILES)) {
 <?php
 }
 
-require_once __DIR__ . '/../views/footer.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/footer.php';
