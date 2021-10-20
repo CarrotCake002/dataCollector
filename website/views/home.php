@@ -1,3 +1,9 @@
+<?php
+
+require_once $_SERVER["DOCUMENT_ROOT"] . "/website/views/header.php";
+
+?>
+
 <div>
     <div id="homeh1">
         <h1>Scrape a new site!</h1>
@@ -85,3 +91,7 @@
         </form>
     </div>
 </div>
+
+<?php
+
+require_once $_SERVER["DOCUMENT_ROOT"] . "/website/views/footer.php";
