@@ -412,7 +412,7 @@ async function getContent(linkList, iList, linkEnteredCount) {
 
 // function to write a string in the specified file. If the file doesn't exist it will be created
 async function writeInFile(string) {
-    fs.writeFile(defaultParams['args'][1] + "/../../savefiles/" + defaultParams['savefile'] + '.json', string, { flag: 'a+' }, (err) => {
+    fs.writeFile(params['args'][1] + "/../../savefiles/" + params['savefile'] + '.json', string, { flag: 'a+' }, (err) => {
     });
 }
 
@@ -430,7 +430,7 @@ function saveFinalData(linkList) {
         i++;
     }
 
-    defaultParams['formattedSavefile'] ? saveData = JSON.stringify(saveData) : saveData = JSON.stringify(saveData);
+    params['formattedSavefile'] ? saveData = JSON.stringify(saveData) : saveData = JSON.stringify(saveData);
     saveData = '"runtime": ' + saveData + '\n}';
     writeInFile(saveData);
     saveData = null;
@@ -462,7 +462,7 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
         "links": resultArray[2],
     };
 
-    defaultParams['formattedSavefile'] ? jsonObj = JSON.stringify(jsonObj, null, 4) : jsonObj = JSON.stringify(jsonObj);
+    params['formattedSavefile'] ? jsonObj = JSON.stringify(jsonObj, null, 4) : jsonObj = JSON.stringify(jsonObj);
 
     jsonObj = '"' + linkEnteredCount + '": ' + jsonObj + ',\n\t';
 
@@ -494,7 +494,7 @@ function configDomain(args) {
 //check savefile's name and return it or return default if no name specified
 function configSavefile(args) {
     if (args.includes("-f") === false) {
-        return defaultParams['savefile'];
+        return initValues.defaultParams['savefile'];
     } if (args[args.indexOf("-f") + 1] === undefined) {
         console.log("Error: after '-f': no name was provided for the .json save file.");
         return false;
@@ -520,25 +520,25 @@ function configSavefile(args) {
 // exclude the links containing a particular string
 function configStrLinkExclude(args) {
     if (args.includes("-x") === false) {
-        return defaultParams['notEnterLinksWith'];
+        return initValues.defaultParams['notEnterLinksWith'];
     } if (args[args.indexOf("-x") + 1] === undefined) {
         console.log("Error: after -x: missing link exclusion arguments.");
         return false;
     }
     var avoidLinks = args[args.indexOf("-x") + 1].trim().split(",");
-    return defaultParams['notEnterLinksWith'].concat(avoidLinks);
+    return initValues.defaultParams['notEnterLinksWith'].concat(avoidLinks);
 }
 
 // use the selector the user asked for
 function configQuerySelector(args) {
     if (args.includes("-s") === false) {
-        return defaultParams['querySelector'];
+        return initValues.defaultParams['querySelector'];
     } if (args[args.indexOf("-s") + 1] === undefined) {
         console.log("Error: after -s: missing selector argument.");
         return false;
     }
     var selectorArray = args[args.indexOf("-s") + 1].trim().split(",");
-    return defaultParams['querySelector'].concat(selectorArray);
+    return initValues.defaultParams['querySelector'].concat(selectorArray);
 }
 
 // include only links contaning the specified string
@@ -561,8 +561,8 @@ function configClickItems(args) {
         console.log("Error: after -c: missing clickable items.");
         return false;
     }
-    defaultParams['clickItems'] = args[args.indexOf("-c") + 1].trim().split(",");
-    return defaultParams['clickItems'];
+    initValues.defaultParams['clickItems'] = args[args.indexOf("-c") + 1].trim().split(",");
+    return initValues.defaultParams['clickItems'];
 }
 
 // config the non-clickable links sitemap url
@@ -573,8 +573,8 @@ function configSitemapLink(args) {
         console.log("Error: after -m: missing sitemap url.");
         return false;
     }
-    defaultParams['sitemapLink'] = args[args.indexOf("-m") + 1].trim();
-    return defaultParams['sitemapLink'];
+    initValues.defaultParams['sitemapLink'] = args[args.indexOf("-m") + 1].trim();
+    return initValues.defaultParams['sitemapLink'];
 }
 
 // config the max depth the program will inter. The depth input will be entered, but not any higher than that
@@ -585,10 +585,10 @@ function configMaxDepth(args) {
         console.log("Error: after -d: you need to specify the maximum depth.");
         return false;
     }
-    defaultParams['maxDepth'] = parseInt(args[args.indexOf("-d") + 1]);
-    if (defaultParams['maxDepth'] < 0)
+    initValues.defaultParams['maxDepth'] = parseInt(args[args.indexOf("-d") + 1]);
+    if (initValues.defaultParams['maxDepth'] < 0)
         return false;
-    return (defaultParams['maxDepth']);
+    return (initValues.defaultParams['maxDepth']);
 }
 
 // config the file containing the starting urls when there are too many to write directly
@@ -599,8 +599,8 @@ function configStartingUrlsFile(args) {
         console.log("Error: after -uf: missing filepath.");
         return false;
     }
-    defaultParams["startingUrlsFile"] = args[args.indexOf("-uf") + 1];
-    return defaultParams['startingUrlsFile'];
+    initValues.defaultParams["startingUrlsFile"] = args[args.indexOf("-uf") + 1];
+    return initValues.defaultParams['startingUrlsFile'];
 }
 
 // read the starting urls from a file when they are sent through a .txt file because there are too many and the command line doesn't accept them
@@ -617,7 +617,7 @@ function readStartingUrls(filepath) {
 // config the array of urls the robot will enter first. However the non-clickable sitemap, if set, will have the highest priority
 function configStartingUrls(args, startingUrlFile) {
     if (args.includes("-u") === false && args.includes("-uf") === false)
-        return [[defaultParams['domain'] + '/', 0, 1]];
+        return [[initValues.defaultParams['domain'] + '/', 0, 1]];
     else if (args.includes("-u") && args.includes("-uf")) {
         console.log("Error: only one starting url argument can be provided.");
         return false;
@@ -631,11 +631,11 @@ function configStartingUrls(args, startingUrlFile) {
             return false;
         }
     }
-    defaultParams['startingUrls'] = [];
+    initValues.defaultParams['startingUrls'] = [];
     for (var i = 0; i < startingUrls.length; i++) {
-        defaultParams['startingUrls'].push([startingUrls[i], 0, 1]);
+        initValues.defaultParams['startingUrls'].push([startingUrls[i], 0, 1]);
     }
-    return defaultParams['startingUrls'];
+    return initValues.defaultParams['startingUrls'];
 }
 
 // configure the links you will want to save when getting new links from a page
@@ -745,9 +745,11 @@ function configParams(args, defaultParams) {
     return defaultParams;
 }
 
+var initValues = require("./init.js");
+
 // get the program execution arguments
 const args = process.argv.slice(2);
-const params = configParams(args, defaultParams);
+const params = configParams(args, initValues.defaultParams);
 if (!params) {
     console.log("Execute with --help to view all valid options.");
     return 84;
