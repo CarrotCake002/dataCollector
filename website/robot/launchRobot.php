@@ -1,16 +1,33 @@
 
 <?php
+session_start();
 require_once '../views/header.php';
+require '../controllers/SessionController.php';
+
+use classes\SessionController;
+
 ?>
 <script>
     window.addEventListener("beforeunload", function (e) {
-            const xhttp = new XMLHttpRequest();
-            xhttp.open("GET", "deleteFiles.php", true);
-            xhttp.send();        
-        });
+        const xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "deleteFiles.php", true);
+        xhttp.send();        
+    });
 </script>
 <?php
 set_time_limit(0);
+
+$session = new SessionController(session_id());
+
+if (!$session->checkSessionFolderExists()) {
+    if (!$session->createSessionFolder())
+        echo "Couldn't create the directory";
+    else
+        echo "Directory created";
+} else
+    echo "Directory already exists";
+
+
 
 if (isset($_POST)) {
     if (isset($_POST['domain']) && $_POST['domain'] !== '') {
@@ -20,7 +37,9 @@ if (isset($_POST)) {
         return;
     }
     if (isset($_POST['savefile']) && $_POST['savefile'] !== '')
-        $query = $query . ' -f "' . $_POST['savefile'] . '" ';
+        $query = $query . ' -f "' . session_id() . '/' . $_POST['savefile'] . '" ';
+    else
+        $query = $query . ' -f "' . session_id() . '/default" ';
     if (isset($_POST['includeEntering']) && $_POST['includeEntering'] !== '')
         $query = $query . ' -i "' . $_POST['includeEntering'] . '" ';
     if (isset($_POST['excludeEntering']) && $_POST['excludeEntering'] !== '')
