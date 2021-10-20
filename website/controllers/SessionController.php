@@ -15,7 +15,7 @@
         }
 
         public function getSessionFolderPath() {
-            return $_SERVER["DOCUMENT_ROOT"] . '/savefiles/' . $this->session_id;
+            return $_SERVER["DOCUMENT_ROOT"] . '/savefiles/' . $this->getSessionFolderName();
         }
 
         public function checkSessionFolderExists() {
