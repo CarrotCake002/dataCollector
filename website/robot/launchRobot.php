@@ -6,15 +6,6 @@ require '../controllers/SessionController.php';
 
 use classes\SessionController;
 
-?>
-<script>
-    window.addEventListener("beforeunload", function (e) {
-        const xhttp = new XMLHttpRequest();
-        xhttp.open("GET", "deleteFiles.php", true);
-        xhttp.send();        
-    });
-</script>
-<?php
 set_time_limit(0);
 
 $session = new SessionController();
@@ -25,7 +16,6 @@ if (!$session->checkSessionFolderExists()) {
         return;
     }
 }
-
 
 if (isset($_POST)) {
     if (isset($_POST['domain']) && $_POST['domain'] !== '') {
