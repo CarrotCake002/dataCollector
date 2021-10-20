@@ -5,44 +5,7 @@ const { exit, config } = require('process');
 const { devNull } = require('os');
 
 
-// not enter links containing any string from the -x flag
-function notEnterLink(link, unwantedLinks) {
-    var j = 0;
-
-    while (j < unwantedLinks.length) {
-        if (link.includes(unwantedLinks[j])) {
-            return true;
-        }
-        j++;
-    }
-    return false;
-}
-
-// only enter links containing any string from the -i flag
-function enterLink(link, wantedLinks) {
-    var h = 0;
-
-    while (h < wantedLinks.length) {
-        if (link.includes(wantedLinks[h])) {
-            return true;
-        }
-        h++;
-    }
-    return false;
-}
-
-// skip all links set as undesired with the initial program arguments
-function skipLinks(iList, linkList, unwantedLinks, wantedLinks) {
-    while (linkList[iList] !== undefined) {
-        var link = linkList[iList][0];
-        if (enterLink(link, wantedLinks) && !notEnterLink(link, unwantedLinks) && linkList[iList][1] <= params['maxDepth']) {
-            return iList;
-        }
-        iList++;
-    }
-    return false;
-}
-
+const link = require("./link.js");
 const sitemap = require("./sitemap.js");
 
 
@@ -114,7 +77,7 @@ async function getContent(linkList, iList, linkEnteredCount) {
     var linkList = returnArray[0];
 
     iList++;
-    iList = skipLinks(iList, linkList, params['notEnterLinksWith'], params['onlyEnterLinksWith']);
+    iList = link.skipLinks(iList, linkList, params['notEnterLinksWith'], params['onlyEnterLinksWith'], params['maxDepth']);
     if (!iList) {
         console.log("Info: the program has sucessfully obtained all the links it could!");
         return returnArray;
@@ -221,3 +184,5 @@ if (returnArray == null || returnArray === false) {
     console.log("Error: an error has occured and the program closed unexpectedly.");
     return 84;
 }
+
+module.exports = { params };
