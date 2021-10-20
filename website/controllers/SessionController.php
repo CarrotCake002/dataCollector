@@ -6,11 +6,15 @@
 
         private $session_id;
 
-        public function __construct($session_id) {
-            $this->session_id = $session_id;
+        public function __construct() {
+            $this->session_id = session_id();
         }
 
-        private function getSessionFolderPath() {
+        public function getSessionFolderName() {
+            return $this->session_id;
+        }
+
+        public function getSessionFolderPath() {
             return $_SERVER["DOCUMENT_ROOT"] . '/savefiles/' . $this->session_id;
         }
 
