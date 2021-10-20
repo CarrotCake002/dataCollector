@@ -23,3 +23,5 @@ var defaultParams = {
     getCanonical: false,
     getTitle: false,
 }
+
+module.exports = { defaultParams };
