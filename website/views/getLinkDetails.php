@@ -1,7 +1,7 @@
 <?php
 
-    require_once __DIR__ . '/header.php';
-    require '../controllers/OpenFileController.php';
+    require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/header.php';
+    require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/OpenFileController.php';
 
     use classes\OpenFileController;
 
@@ -143,4 +143,4 @@
         return;
     endif;
 
-    require_once __DIR__ . '/footer.php';
+    require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/footer.php';
