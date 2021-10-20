@@ -5,11 +5,7 @@ savefiles/*.json
 savefiles/*.tmp
 
 # ignore images created during dev
-savefiles/images
-savefiles/*.jpeg
-savefiles/*.jpg
-savefiles/*.png
-savefiles/*.pdf
+savefiles/*
 
 # ignore node and puppeteer packages
 node_modules
@@ -20,3 +16,4 @@ website/vendor
 # keep the configuration .json files
 !package-lock.json
 !package.json
+!savefiles/.gitkeep
