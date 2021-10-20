@@ -3,6 +3,12 @@
 ?>
 
 
+<script>
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "deleteFiles.php", true);
+    xhttp.send();
+</script>
+
 <div>
     <div id="resultsh2">
         <br>
