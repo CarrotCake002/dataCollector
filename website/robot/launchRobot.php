@@ -1,8 +1,8 @@
 
 <?php
 session_start();
-require_once '../views/header.php';
-require '../controllers/SessionController.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/header.php';
+require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/SessionController.php';
 
 use classes\SessionController;
 
@@ -75,8 +75,9 @@ isset($_POST['savefile']) && $_POST['savefile'] !== '' ? $savefile = $session->g
 
 ?>
 <br><br>
-<a href="<?= "/savefiles/" . $savefile . ".json"; ?>" download="<?= $_POST['savefile'] ?>">Download your data!</a>
+<a href="<?= "/savefiles/" . $savefile . ".json"; ?>" download="<?= $_POST['savefile'] ?>">Download your data!</a><br>
+<a>(If you don't download the file now, you will lose it forever)</a>
 
 
 <?php
-require_once '../views/footer.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/footer.php';
