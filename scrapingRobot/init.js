@@ -24,4 +24,9 @@ var defaultParams = {
     getTitle: false,
 }
 
-module.exports = { defaultParams };
+// initialize starting arguments
+let iList = 0;
+let linkEnteredCount = 0;
+var linkList = [];
+
+module.exports = { defaultParams, iList, linkEnteredCount, linkList };
