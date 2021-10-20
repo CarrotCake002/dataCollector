@@ -17,16 +17,14 @@ use classes\SessionController;
 <?php
 set_time_limit(0);
 
-$session = new SessionController(session_id());
+$session = new SessionController();
 
 if (!$session->checkSessionFolderExists()) {
-    if (!$session->createSessionFolder())
-        echo "Couldn't create the directory";
-    else
-        echo "Directory created";
-} else
-    echo "Directory already exists";
-
+    if (!$session->createSessionFolder()) {
+        echo "Error: couldn't create the save files folder.";
+        return;
+    }
+}
 
 
 if (isset($_POST)) {
@@ -37,9 +35,9 @@ if (isset($_POST)) {
         return;
     }
     if (isset($_POST['savefile']) && $_POST['savefile'] !== '')
-        $query = $query . ' -f "' . session_id() . '/' . $_POST['savefile'] . '" ';
+        $query = $query . ' -f "' . $session->getSessionFolderName() . '/' . $_POST['savefile'] . '" ';
     else
-        $query = $query . ' -f "' . session_id() . '/default" ';
+        $query = $query . ' -f "' . $session->getSessionFolderName() . '/default" ';
     if (isset($_POST['includeEntering']) && $_POST['includeEntering'] !== '')
         $query = $query . ' -i "' . $_POST['includeEntering'] . '" ';
     if (isset($_POST['excludeEntering']) && $_POST['excludeEntering'] !== '')
@@ -78,16 +76,16 @@ if (isset($_POST)) {
         $query = $query . ' -gTitle ';
     $res = exec($query);
     echo $res;
-
 } else {
     echo "An unknown error has occured. Please, try again and if the problem persists contact the creator.";
+    return;
 }
 
-isset($_POST['savefile']) && $_POST['savefile'] !== '' ? $savefile = $_POST['savefile'] : $savefile = "default";
+isset($_POST['savefile']) && $_POST['savefile'] !== '' ? $savefile = $session->getSessionFolderName() . '/' . $_POST['savefile'] : $savefile = $session->getSessionFolderName() . "/default";
 
 ?>
 <br><br>
-<a href="<?= "/savefiles/" . $savefile . ".json"; ?>" download="<?= $savefile ?>">Download your data!</a>
+<a href="<?= "/savefiles/" . $savefile . ".json"; ?>" download="<?= $_POST['savefile'] ?>">Download your data!</a>
 
 
 <?php
