@@ -505,7 +505,7 @@ function configSavefile(args) {
 
     var i = 0;
     var savefile = args[args.indexOf("-f") + 1];
-    const forbidChars = `<>:"'\\|?*\n-!&`;
+    const forbidChars = `<>:"'\\|?*\n-!&.`;
 
     while (i < forbidChars.length) {
         if (savefile.includes(forbidChars[i])) {
