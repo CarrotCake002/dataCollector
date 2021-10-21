@@ -7,6 +7,7 @@ const { devNull } = require('os');
 
 const link = require("./link.js");
 const sitemap = require("./sitemap.js");
+const logs = require("./logs.js");
 
 
 // main loop of the program. Recursive function that open/closes browsers and gets all the information from every page
@@ -18,9 +19,9 @@ async function getContent(linkList, iList, linkEnteredCount) {
             return null;
     }
 
-    console.log("Iteration " + iList);
+    logs.iteration(iList)
     var formattedLink = link.formatEnteringLink(linkList[iList][0], params['domain']);
-    console.log(formattedLink + "\n");
+    logs.link(formattedLink);
     linkEnteredCount++;
 
     // open a new browser and page with the new url
@@ -49,13 +50,13 @@ async function getContent(linkList, iList, linkEnteredCount) {
     time = Date.now() - time;
 
     if (returnArray === undefined || returnArray === null) {
-        console.log("Error: something unexpected happened when collecting all the data from the current website.");
+        logs.errorData();
         return returnArray;
     }
 
     var siteStatus = response.status();
     if (siteStatus === null) {
-        console.log("Error: the current url cannot be scraped. Please add the corresponding filters.");
+        logs.errorStatus();
         return null;
     } else {
         returnArray = returnArray.concat(siteStatus);
@@ -69,7 +70,7 @@ async function getContent(linkList, iList, linkEnteredCount) {
     iList++;
     iList = link.skipLinks(iList, linkList, params['notEnterLinksWith'], params['onlyEnterLinksWith'], params['maxDepth']);
     if (!iList) {
-        console.log("Info: the program has sucessfully obtained all the links it could!");
+        logs.success();
         return returnArray;
     }
 
@@ -157,7 +158,7 @@ const configStart = require("./config.js");
 const args = process.argv.slice(2);
 const params = configStart.configParams(args, init.defaultParams);
 if (!params) {
-    console.log("Execute with --help to view all valid options.");
+    logs.options();
     return 84;
 }
 console.log(params);
