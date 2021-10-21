@@ -1,7 +1,5 @@
 // external libraries imports
 var events = require('events');
-const { exit, config } = require('process');
-const { devNull } = require('os');
 
 // my imported files
 const configStart = require("./../init/config.js");
