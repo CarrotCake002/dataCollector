@@ -36,18 +36,13 @@ async function getContent(linkList, iList, linkEnteredCount) {
     browser.close();
     time = Date.now() - time;
 
-    if (returnArray === undefined || returnArray === null) {
-        logs.errorData();
-        return returnArray;
-    }
-
-    if (response.status() === null) {
-        logs.errorStatus();
+    // --> page errors here
+    if (open.checkErrors(returnArray, response.status()) === false)
         return null;
-    }
+
     returnArray = returnArray.concat(response.status());
 
-    eventEmitter.emit('saveData', returnArray, iList, time, linkEnteredCount);
+    await save.saveFormData(returnArray, iList, time, linkEnteredCount, params);
 
     var linkList = returnArray[0];
 
@@ -60,20 +55,14 @@ async function getContent(linkList, iList, linkEnteredCount) {
 
     returnArray = null;
     returnArray = await getContent(linkList, iList, linkEnteredCount);
+    if (returnArray == null)
+        return null;
     linkEnteredCount--;
     if (linkEnteredCount === 0) {
         save.saveFinalData(returnArray[0], params);
     }
     return returnArray;
 }
-
-
-var eventEmitter = new events.EventEmitter();
-var dataHandler = async function (returnArray, iteration, time, linkEnteredCount) {
-    await save.saveFormData(returnArray, iteration, time, linkEnteredCount, params);
-}
-eventEmitter.on('saveData', dataHandler);
-
 
 // get the program execution arguments
 const args = process.argv.slice(2);
@@ -90,7 +79,7 @@ if (params['sitemapLink'] === null)
 write.writeInFile('{\n\t', params['savefile']);
 
 
-var returnArray = getContent(init.linkList, init.iList, init.linkEnteredCount);
+getContent(init.linkList, init.iList, init.linkEnteredCount);
 
 
 module.exports = { params };
