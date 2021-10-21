@@ -12,24 +12,14 @@ const sitemap = require("./sitemap.js");
 // main loop of the program. Recursive function that open/closes browsers and gets all the information from every page
 async function getContent(linkList, iList, linkEnteredCount) {
 
-    // format the next link it's going to enter, to avoid entering an unexistant link and crash it or getting lost in the web
-    function formatEnteringLink(link, domain) {
-        if (link.includes("https://") || link.includes("http://")) {
-            return link;
-        } else if (link.includes("https://") === false && link.includes("http://") === false && link[0] != '/') {
-            return domain + '/' + link;
-        }
-        return domain + link;
-    }
-
     if (iList === 0 && params['sitemapLink'] !== null && params['sitemapLink'].includes('/sitemap.xml')) {
         linkList = await sitemap.getSitemapUrls(linkList);
+        if (linkList.length < 1)
+            return null;
     }
-    if (linkList.length < 1)
-        return null;
 
     console.log("Iteration " + iList);
-    var formattedLink = formatEnteringLink(linkList[iList][0], params['domain']);
+    var formattedLink = link.formatEnteringLink(linkList[iList][0], params['domain']);
     console.log(formattedLink + "\n");
     linkEnteredCount++;
 
