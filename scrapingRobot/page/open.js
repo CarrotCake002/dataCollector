@@ -9,4 +9,17 @@ async function page(params, formattedLink) {
     return [browser, page, response];
 }
 
-module.exports = { page };
+function checkErrors(returnArray, status) {
+    if (returnArray === undefined || returnArray === null) {
+        logs.errorData();
+        return false;
+    }
+
+    if (status === null) {
+        logs.errorStatus();
+        return false;
+    }
+    return true;
+}
+
+module.exports = { page, checkErrors };
