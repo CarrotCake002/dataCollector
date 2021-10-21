@@ -161,7 +161,7 @@ if (!params) {
     logs.options();
     return 84;
 }
-console.log(params);
+logs.any(params);
 
 if (params['sitemapLink'] === null)
     init.linkList = params['startingUrls'];
