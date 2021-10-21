@@ -1,12 +1,18 @@
+// external libraries imports
 const puppeteer = require('puppeteer');
 var events = require('events');
 const { exit, config } = require('process');
 const { devNull } = require('os');
 
-
+// my imported files
 const link = require("./link.js");
 const sitemap = require("./sitemap.js");
 const logs = require("./logs.js");
+const init = require("./init.js");
+const configStart = require("./config.js");
+const click = require("./click.js");
+const eval = require("./evaluate.js");
+const write = require("./write.js");
 
 
 // main loop of the program. Recursive function that open/closes browsers and gets all the information from every page
@@ -31,10 +37,9 @@ async function getContent(linkList, iList, linkEnteredCount) {
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
 
     // --> click items here
-    const click = require("./click.js");
+    
     await click.clickItems(params['clickItems']);
 
-    const eval = require("./evaluate.js");
     var returnArray = await eval.evaluate(linkList, params, iList, page);
 
     browser.close();
@@ -75,7 +80,7 @@ async function getContent(linkList, iList, linkEnteredCount) {
     return returnArray;
 }
 
-const write = require("./write.js");
+
 
 // this function saves the data that was being updated in runtime and that could not be saved in the main file before
 function saveFinalData(linkList) {
@@ -136,10 +141,6 @@ var dataHandler = async function (returnArray, iteration, time, linkEnteredCount
 }
 
 eventEmitter.on('saveData', dataHandler);
-
-
-const init = require("./init.js");
-const configStart = require("./config.js");
 
 // get the program execution arguments
 const args = process.argv.slice(2);
