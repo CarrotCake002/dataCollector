@@ -22,10 +22,8 @@ async function getContent(linkList, iList, linkEnteredCount) {
     // open a new browser and page with the new url
     var time = Date.now();
     var openPage = await open.page(params, formattedLink)
-    const browser = openPage[0];
-    const page = openPage[1];
-    const response = openPage[2];
-    openPage = null; 
+    const [browser, page, response] = [openPage[0], openPage[1], openPage[2]];
+    openPage = null;
 
     await click.clickItems(params['clickItems']);
     var returnArray = await eval.evaluate(linkList, params, iList, page);
@@ -42,12 +40,8 @@ async function getContent(linkList, iList, linkEnteredCount) {
 
     var linkList = returnArray[0];
 
-    iList++;
-    iList = link.skipLinks(iList, linkList, params['notEnterLinksWith'], params['onlyEnterLinksWith'], params['maxDepth']);
-    if (!iList) {
-        logs.success();
+    if (iList = link.getNext(iList, linkList, params), iList === true)
         return returnArray;
-    }
 
     returnArray = null;
     returnArray = await getContent(linkList, iList, linkEnteredCount);
