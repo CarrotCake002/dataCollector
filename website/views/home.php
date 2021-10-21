@@ -9,7 +9,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/website/views/header.php";
         <h1>Scrape a new site!</h1>
     </div>
     <div>
-        <form action="/website/robot/launchRobot.php" method="post">
+        <form action="/website/launchRobot.php" method="post">
                 <p>Domain*<br>
                 (mandatory)</p>
                 <input class="home_inputs" type="text" name="domain" placeholder="https://example.com">
