@@ -26,4 +26,13 @@ async function getSitemapUrls(linkList) {
     return linkList;
 }
 
-module.exports = { getSitemapUrls };
+async function check(iList, linkList, params) {
+    if (iList === 0 && params['sitemapLink'] !== null && params['sitemapLink'].includes('/sitemap.xml')) {
+        linkList = await sitemap.getSitemapUrls(linkList);
+        if (linkList.length < 1)
+            return null;
+    }
+    return linkList;
+}
+
+module.exports = { getSitemapUrls, check };
