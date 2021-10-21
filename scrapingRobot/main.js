@@ -31,17 +31,9 @@ async function getContent(linkList, iList, linkEnteredCount) {
     await page.setViewport({ width: 1000, height: 926 });
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
 
-    // click items the user selected
-    if (params['clickItems'] !== null && params['clickItems'] !== undefined && params['clickItems'] !== '') {
-        await page.evaluate((clickItems) => {
-            for (var i = 0; i < clickItems.length; i++) {
-                document.querySelectorAll(clickItems[i]).forEach(item => {
-                    item.click();
-                })
-            }
-        }, params['clickItems']);
-        await page.waitFor(2000);
-    }
+    // --> click items here
+    const click = require("./click.js");
+    await click.clickItems(params['clickItems']);
 
     const eval = require("./evaluate.js");
     var returnArray = await eval.evaluate(linkList, params, iList, page);
