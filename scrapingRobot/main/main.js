@@ -19,7 +19,6 @@ async function getContent(linkList, iList, linkEnteredCount) {
 
     linkList = await sitemap.check(iList, linkList, params);
 
-    // --> formatting link here
     const formattedLink = link.getFormattedLink(iList, linkList[iList][0], params['domain']);
     linkEnteredCount++;
 
@@ -42,14 +41,11 @@ async function getContent(linkList, iList, linkEnteredCount) {
         return returnArray;
     }
 
-    var siteStatus = response.status();
-    if (siteStatus === null) {
+    if (response.status() === null) {
         logs.errorStatus();
         return null;
-    } else {
-        returnArray = returnArray.concat(siteStatus);
     }
-    siteStatus = null;
+    returnArray = returnArray.concat(response.status());
 
     eventEmitter.emit('saveData', returnArray, iList, time, linkEnteredCount);
 
@@ -62,8 +58,7 @@ async function getContent(linkList, iList, linkEnteredCount) {
         return returnArray;
     }
 
-    returnArray = returnArray.push(linkEnteredCount);
-    returnArray = [returnArray[0], null];
+    returnArray = null;
     returnArray = await getContent(linkList, iList, linkEnteredCount);
     linkEnteredCount--;
     if (linkEnteredCount === 0) {
@@ -72,13 +67,13 @@ async function getContent(linkList, iList, linkEnteredCount) {
     return returnArray;
 }
 
-var eventEmitter = new events.EventEmitter();
 
+var eventEmitter = new events.EventEmitter();
 var dataHandler = async function (returnArray, iteration, time, linkEnteredCount) {
     await save.saveFormData(returnArray, iteration, time, linkEnteredCount, params);
 }
-
 eventEmitter.on('saveData', dataHandler);
+
 
 // get the program execution arguments
 const args = process.argv.slice(2);
@@ -88,12 +83,14 @@ if (!params) {
     return 84;
 }
 logs.any(params);
-
 if (params['sitemapLink'] === null)
     init.linkList = params['startingUrls'];
 
+
 write.writeInFile('{\n\t', params['savefile']);
 
+
 var returnArray = getContent(init.linkList, init.iList, init.linkEnteredCount);
+
 
 module.exports = { params };
