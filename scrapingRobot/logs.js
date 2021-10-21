@@ -54,8 +54,72 @@ function help() {
     );
 }
 
-function any(arg) {
-    console.log(arg);
+function errorDomain() {
+    console.log("Error: you need to set a valid domain of the website you want to scrape.");
+}
+
+function errorSavefileName() {
+    console.log("Error: after '-f': no name was provided for the .json save file.");
+}
+
+function errorSavefileExtension() {
+    console.log("Error: after '-f': the file name should not contain an extension. It will automatically be a .json file.");
+}
+
+function errorSavefileForbidden() {
+    console.log("Error: after '-f': the save file name can't contain a forbidden character.");
+}
+
+function errorLinkExclude() {
+    console.log("Error: after -x: missing link exclusion arguments.");
+}
+
+function errorSelector() {
+    console.log("Error: after -s: missing selector argument.");
+}
+
+function errorLinkInclude() {
+    console.log("Error: after -i: missing link inclusion arguments.");
+}
+
+function errorClickItems() {
+    console.log("Error: after -c: missing clickable items.");
+}
+
+function errorSitemap() {
+    console.log("Error: after -m: missing sitemap url.");
+}
+
+function errorDepth() {
+    console.log("Error: after -d: you need to specify the maximum depth.");
+}
+
+function errorStartingUrlsFile() {
+    console.log("Error: after -uf: missing filepath.");
+}
+
+function errorStartingUrlsIncompatibleArgs() {
+    console.log("Error: only one starting url argument can be provided.");
+}
+
+function errorStartingUrlsMissingArg() {
+    console.log("Error: after -u: missing starting url.");
+}
+
+function errorSaveLinks() {
+    console.log("Error: after -sL: missing links to be saved.");
+}
+
+function errorNotSaveLinks() {
+    console.log("Error: after -nL: missing links to be saved.");
+}
+
+function errorData() {
+    console.log("Error: something unexpected happened when collecting all the data from the current website.");
+}
+
+function errorStatus() {
+    console.log("Error: the current url cannot be scraped. Please add the corresponding filters.");
 }
 
 function options() {
@@ -70,16 +134,15 @@ function link(link) {
     console.log(link + "\n");
 }
 
-function errorData() {
-    console.log("Error: something unexpected happened when collecting all the data from the current website.");
-}
-
-function errorStatus() {
-    console.log("Error: the current url cannot be scraped. Please add the corresponding filters.");
-}
-
 function success() {
     console.log("Info: the program has sucessfully obtained all the links it could!");
 }
 
-module.exports = { help, options, iteration, link, errorData, errorStatus, success, any };
+function any(arg) {
+    console.log(arg);
+}
+
+module.exports = { help, errorDomain, errorSavefileName, errorSavefileExtension, errorSavefileForbidden,
+    errorLinkExclude, errorSelector, errorLinkInclude, errorClickItems, errorSitemap, errorDepth,
+    errorStartingUrlsFile, errorStartingUrlsIncompatibleArgs, errorStartingUrlsMissingArg, errorSaveLinks,
+    errorNotSaveLinks, errorData, errorStatus, options, iteration, link,  success, any };
