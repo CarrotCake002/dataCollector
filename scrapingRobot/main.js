@@ -49,13 +49,13 @@ async function getContent(linkList, iList, linkEnteredCount) {
     time = Date.now() - time;
 
     if (returnArray === undefined || returnArray === null) {
-        console.log("Error: something unexpected happened when collecting all the data from the website '" + params['domain'] + "'.");
+        console.log("Error: something unexpected happened when collecting all the data from the current website.");
         return returnArray;
     }
 
     var siteStatus = response.status();
     if (siteStatus === null) {
-        console.log("Error: the current url '" + params['domain'] + "' cannot be scraped. Please add the corresponding filters.");
+        console.log("Error: the current url cannot be scraped. Please add the corresponding filters.");
         return null;
     } else {
         returnArray = returnArray.concat(siteStatus);
@@ -134,7 +134,6 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
         },
         "links": resultArray[2],
     };
-
     params['formattedSavefile'] ? jsonObj = JSON.stringify(jsonObj, null, 4) : jsonObj = JSON.stringify(jsonObj);
 
     jsonObj = '"' + linkEnteredCount + '": ' + jsonObj + ',\n\t';
@@ -169,10 +168,5 @@ if (params['sitemapLink'] === null)
 writeInFile('{\n\t');
 
 var returnArray = getContent(init.linkList, init.iList, init.linkEnteredCount);
-
-if (returnArray == null || returnArray === false) {
-    console.log("Error: an error has occured and the program closed unexpectedly.");
-    return 84;
-}
 
 module.exports = { params };
