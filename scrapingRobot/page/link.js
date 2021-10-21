@@ -1,3 +1,5 @@
+const logs = require('./../text/logs.js');
+
 // not enter links containing any string from the -x flag
 function notEnterLink(link, unwantedLinks) {
     var j = 0;
@@ -46,4 +48,11 @@ function formatEnteringLink(link, domain) {
     return domain + link;
 }
 
-module.exports = { skipLinks, formatEnteringLink };
+function getFormattedLink(iList, url, domain) {
+    logs.iteration(iList)
+    var formattedLink = formatEnteringLink(url, domain);
+    logs.link(formattedLink);
+    return formattedLink;
+}
+
+module.exports = { skipLinks, getFormattedLink };
