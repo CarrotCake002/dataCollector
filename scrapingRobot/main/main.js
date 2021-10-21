@@ -1,5 +1,4 @@
 // external libraries imports
-const puppeteer = require('puppeteer');
 var events = require('events');
 const { exit, config } = require('process');
 const { devNull } = require('os');
@@ -10,8 +9,9 @@ const sitemap = require("./../page/sitemap.js");
 const eval = require("./../page/evaluate.js");
 const click = require("./../page/click.js");
 const write = require("./../text/write.js");
-const link = require("./../page/link.js");
 const logs = require("./../text/logs.js");
+const link = require("./../page/link.js");
+const open = require("./../page/open.js");
 const init = require("./../init/init.js");
 const save = require("./../data/save.js");
 
@@ -19,11 +19,7 @@ const save = require("./../data/save.js");
 // main loop of the program. Recursive function that open/closes browsers and gets all the information from every page
 async function getContent(linkList, iList, linkEnteredCount) {
 
-    if (iList === 0 && params['sitemapLink'] !== null && params['sitemapLink'].includes('/sitemap.xml')) {
-        linkList = await sitemap.getSitemapUrls(linkList);
-        if (linkList.length < 1)
-            return null;
-    }
+    linkList = await sitemap.check(iList, linkList, params);
 
     logs.iteration(iList)
     var formattedLink = link.formatEnteringLink(linkList[iList][0], params['domain']);
@@ -32,10 +28,11 @@ async function getContent(linkList, iList, linkEnteredCount) {
 
     // open a new browser and page with the new url
     var time = Date.now();
-    var browser = await puppeteer.launch({ headless: params['headlessBrowser'], args: ['--ignore-certificate-errors'] });
-    const page = await browser.newPage();
-    await page.setViewport({ width: 1000, height: 926 });
-    const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
+    var openPage = await open.page(params, formattedLink)
+    const browser = openPage[0];
+    const page = openPage[1];
+    const response = openPage[2];
+    openPage = null; 
 
     await click.clickItems(params['clickItems']);
     var returnArray = await eval.evaluate(linkList, params, iList, page);
