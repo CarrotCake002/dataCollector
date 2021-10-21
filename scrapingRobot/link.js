@@ -36,4 +36,14 @@ function skipLinks(iList, linkList, unwantedLinks, wantedLinks, maxDepth) {
     return false;
 }
 
-module.exports = { skipLinks };
+// format the next link it's going to enter, to avoid entering an unexistant link and crash it or getting lost in the web
+function formatEnteringLink(link, domain) {
+    if (link.includes("https://") || link.includes("http://")) {
+        return link;
+    } else if (link.includes("https://") === false && link.includes("http://") === false && link[0] != '/') {
+        return domain + '/' + link;
+    }
+    return domain + link;
+}
+
+module.exports = { skipLinks, formatEnteringLink };
