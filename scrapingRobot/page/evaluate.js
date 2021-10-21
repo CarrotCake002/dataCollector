@@ -180,14 +180,9 @@ async function evaluate(linkList, params, iList, page) {
         }
 
         var linkResultArray = getNewLinks(linkList);
-        linkList = linkResultArray[0];
-        var newLinkArray = linkResultArray[1];
-        var linkArticle = linkResultArray[2];
-        linkResultArray = null;
+        var [linkList, newLinkArray, linkArticle, linkResultArray] = [linkResultArray[0], linkResultArray[1], linkResultArray[2], null];
         var linkTagArray = getLinkTagArrays();
-        var hreflangArray = linkTagArray[0];
-        var canonicalArray = linkTagArray[1];
-        linkTagArray = null;
+        var [hreflangArray, canonicalArray, linkTagArray] = [linkTagArray[0], linkTagArray[1], null];
         var metaArray = getMetaArray();
         var title = getTitle();
         var headsArray = getHeadsArray();
