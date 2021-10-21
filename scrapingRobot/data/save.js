@@ -1,26 +1,6 @@
 const write = require("./../text/write.js");
 const link = require("./../page/link.js");
 
-// this function saves the data that was being updated in runtime and that could not be saved in the main file before
-function saveFinalData(linkList, params) {
-    var saveData = [];
-    var i = 0;
-
-    while (i < linkList.length) {
-        if (i > 0)
-            i = link.skipLinks(i, linkList, params['notEnterLinksWith'], params['onlyEnterLinksWith'], params['maxDepth'])
-        if (i === false)
-            break;
-        saveData.push(linkList[i][2]);
-        i++;
-    }
-
-    params['formattedSavefile'] ? saveData = JSON.stringify(saveData) : saveData = JSON.stringify(saveData);
-    saveData = '"runtime": ' + saveData + '\n}';
-    write.writeInFile(saveData, params['savefile']);
-    saveData = null;
-}
-
 // save data that won't be modified and will be deleted in runtime for better optimization
 async function saveFormData(resultArray, iteration, time, linkEnteredCount, params) {
     var url = resultArray[0][iteration][0];
@@ -53,4 +33,33 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount, para
     write.writeInFile(jsonObj, params['savefile']);
 }
 
-module.exports = { saveFinalData, saveFormData };
+// this function saves the data that was being updated in runtime and that could not be saved in the main file before
+function saveFinalData(linkList, params) {
+    var saveData = [];
+    var i = 0;
+
+    while (i < linkList.length) {
+        if (i > 0)
+            i = link.skipLinks(i, linkList, params['notEnterLinksWith'], params['onlyEnterLinksWith'], params['maxDepth'])
+        if (i === false)
+            break;
+        saveData.push(linkList[i][2]);
+        i++;
+    }
+
+    params['formattedSavefile'] ? saveData = JSON.stringify(saveData) : saveData = JSON.stringify(saveData);
+    saveData = '"runtime": ' + saveData + '\n}';
+    write.writeInFile(saveData, params['savefile']);
+    saveData = null;
+}
+
+function end(returnArray, linkEnteredCount, params) {
+    if (returnArray == null)
+        return null;
+    if (linkEnteredCount === 0) {
+        saveFinalData(returnArray[0], params);
+    }
+    return returnArray;
+}
+
+module.exports = { saveFormData, end };
