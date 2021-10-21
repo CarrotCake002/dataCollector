@@ -1,5 +1,4 @@
 const puppeteer = require('puppeteer');
-const fs = require('fs');
 var events = require('events');
 const { exit, config } = require('process');
 const { devNull } = require('os');
@@ -76,11 +75,7 @@ async function getContent(linkList, iList, linkEnteredCount) {
     return returnArray;
 }
 
-// function to write a string in the specified file. If the file doesn't exist it will be created
-async function writeInFile(string) {
-    fs.writeFile(params['args'][1] + "/../../savefiles/" + params['savefile'] + '.json', string, { flag: 'a+' }, (err) => {
-    });
-}
+const write = require("./write.js");
 
 // this function saves the data that was being updated in runtime and that could not be saved in the main file before
 function saveFinalData(linkList) {
@@ -98,7 +93,7 @@ function saveFinalData(linkList) {
 
     params['formattedSavefile'] ? saveData = JSON.stringify(saveData) : saveData = JSON.stringify(saveData);
     saveData = '"runtime": ' + saveData + '\n}';
-    writeInFile(saveData);
+    write.writeInFile(params['args'][1], saveData, params['savefile']);
     saveData = null;
 }
 
@@ -131,7 +126,7 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount) {
 
     jsonObj = '"' + linkEnteredCount + '": ' + jsonObj + ',\n\t';
 
-    writeInFile(jsonObj);
+    write.writeInFile(params['args'][1], jsonObj, params['savefile']);
 }
 
 var eventEmitter = new events.EventEmitter();
@@ -158,7 +153,7 @@ logs.any(params);
 if (params['sitemapLink'] === null)
     init.linkList = params['startingUrls'];
 
-writeInFile('{\n\t');
+write.writeInFile(params['args'][1], '{\n\t', params['savefile']);
 
 var returnArray = getContent(init.linkList, init.iList, init.linkEnteredCount);
 
