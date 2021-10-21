@@ -1,3 +1,4 @@
+const { exit } = require('process');
 var init = require('./../init/init.js');
 const logs = require('./../text/logs.js');
 
