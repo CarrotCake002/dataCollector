@@ -13,7 +13,7 @@ function configHelp(args) {
 // check if the domain is correct and asign the variable's value
 function configDomain(args) {
     if (!args.includes("-D") || args[args.indexOf("-D") + 1] === undefined || !args[args.indexOf("-D") + 1].includes('http')) {
-        console.log("Error: you need to set a valid domain of the website you want to scrape.");
+        logs.errorDomain();
         return false;
     }
     var domain = args[args.indexOf("-D") + 1];
@@ -28,10 +28,10 @@ function configSavefile(args) {
     if (args.includes("-f") === false) {
         return init.defaultParams['savefile'];
     } if (args[args.indexOf("-f") + 1] === undefined) {
-        console.log("Error: after '-f': no name was provided for the .json save file.");
+        logs.errorSavefileName();
         return false;
     } if (args[args.indexOf("-f") + 1].includes(".")) {
-        console.log("Error: after '-f': the file name should not contain an extension. It will automatically be a .json file.")
+        logs.errorSavefileExtension();
         return false;
     }
 
@@ -41,7 +41,7 @@ function configSavefile(args) {
 
     while (i < forbidChars.length) {
         if (savefile.includes(forbidChars[i])) {
-            console.log("Error: after '-f': the save file name can't contain a forbidden character.");
+            logs.errorSavefileForbidden();
             return false;
         }
         i++;
@@ -54,7 +54,7 @@ function configStrLinkExclude(args) {
     if (args.includes("-x") === false) {
         return init.defaultParams['notEnterLinksWith'];
     } if (args[args.indexOf("-x") + 1] === undefined) {
-        console.log("Error: after -x: missing link exclusion arguments.");
+        logs.errorLinkExclude();
         return false;
     }
     var avoidLinks = args[args.indexOf("-x") + 1].trim().split(",");
@@ -66,7 +66,7 @@ function configQuerySelector(args) {
     if (args.includes("-s") === false) {
         return init.defaultParams['querySelector'];
     } if (args[args.indexOf("-s") + 1] === undefined) {
-        console.log("Error: after -s: missing selector argument.");
+        logs.errorSelector();
         return false;
     }
     var selectorArray = args[args.indexOf("-s") + 1].trim().split(",");
@@ -78,7 +78,7 @@ function configStrLinkInclude(args, defaultParams) {
     if (args.includes("-i") === false) {
         return ['/'];
     } if (args[args.indexOf("-i") + 1] === undefined) {
-        console.log("Error: after -i: missing link inclusion arguments.");
+        logs.errorLinkInclude();
         return false;
     }
     defaultParams['onlyEnterLinksWith'] = args[args.indexOf("-i") + 1].trim().split(",");
@@ -90,7 +90,7 @@ function configClickItems(args) {
     if (args.includes("-c") === false) {
         return null;
     } if (args[args.indexOf("-c") + 1] === undefined) {
-        console.log("Error: after -c: missing clickable items.");
+        logs.errorClickItems();
         return false;
     }
     init.defaultParams['clickItems'] = args[args.indexOf("-c") + 1].trim().split(",");
@@ -102,7 +102,7 @@ function configSitemapLink(args) {
     if (args.includes("-m") === false) {
         return null;
     } if (args[args.indexOf("-m") + 1] === undefined) {
-        console.log("Error: after -m: missing sitemap url.");
+        logs.errorSitemap();
         return false;
     }
     init.defaultParams['sitemapLink'] = args[args.indexOf("-m") + 1].trim();
@@ -114,7 +114,7 @@ function configMaxDepth(args) {
     if (args.includes("-d") === false)
         return 999;
     if (args[args.indexOf("-d") + 1] === undefined) {
-        console.log("Error: after -d: you need to specify the maximum depth.");
+        logs.errorDepth();
         return false;
     }
     init.defaultParams['maxDepth'] = parseInt(args[args.indexOf("-d") + 1]);
@@ -128,7 +128,7 @@ function configStartingUrlsFile(args) {
     if (args.includes("-uf") === false)
         return null;
     if (args[args.indexOf("-uf") + 1] === undefined) {
-        console.log("Error: after -uf: missing filepath.");
+        logs.errorStartingUrlsFile();
         return false;
     }
     init.defaultParams["startingUrlsFile"] = args[args.indexOf("-uf") + 1];
@@ -141,7 +141,7 @@ function readStartingUrls(filepath) {
     try {
         data = fs.readFileSync(filepath, 'utf8');
     } catch (err) {
-        console.log(err);
+        logs.any(err);
     }
     return data;
 }
@@ -151,7 +151,7 @@ function configStartingUrls(args, startingUrlFile) {
     if (args.includes("-u") === false && args.includes("-uf") === false)
         return [[init.defaultParams['domain'] + '/', 0, 1]];
     else if (args.includes("-u") && args.includes("-uf")) {
-        console.log("Error: only one starting url argument can be provided.");
+        logs.errorStartingUrlsIncompatibleArgs();
         return false;
     } else if (args.includes("-u") === false && args.includes("-uf"))
         var startingUrls = readStartingUrls(startingUrlFile).trim().split(",");
@@ -159,7 +159,7 @@ function configStartingUrls(args, startingUrlFile) {
         if (args[args.indexOf("-u") + 1] !== undefined)
             var startingUrls = args[args.indexOf("-u") + 1].trim().split(",");
         else {
-            console.log("Error: after -u: missing starting url.");
+            logs.errorStartingUrlsMissingArg();
             return false;
         }
     }
@@ -175,7 +175,7 @@ function configSaveLinksWith(args) {
     if (!args.includes("-sL"))
         return null;
     if (args[args.indexOf("-sL") + 1] === undefined) {
-        console.log("Error: after -sL: missing links to be saved.");
+        logs.errorSaveLinks();
         return false;
     }
     return (args[args.indexOf("-sL") + 1].trim().split(","));
@@ -186,7 +186,7 @@ function configNotSaveLinksWith(args) {
     if (!args.includes("-nL"))
         return null;
     if (args[args.indexOf("-nL") + 1] === undefined) {
-        console.log("Error: after -nL: missing links to be saved.");
+        logs.errorNotSaveLinks();
         return false;
     }
     return (args[args.indexOf("-nL") + 1].trim().split(","));
