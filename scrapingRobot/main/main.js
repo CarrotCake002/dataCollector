@@ -1,6 +1,3 @@
-// external libraries imports
-var events = require('events');
-
 // my imported files
 const configStart = require("./../init/config.js");
 const sitemap = require("./../page/sitemap.js");
@@ -36,7 +33,6 @@ async function getContent(linkList, iList, linkEnteredCount) {
     browser.close();
     time = Date.now() - time;
 
-    // --> page errors here
     if (open.checkErrors(returnArray, response.status()) === false)
         return null;
 
@@ -55,13 +51,8 @@ async function getContent(linkList, iList, linkEnteredCount) {
 
     returnArray = null;
     returnArray = await getContent(linkList, iList, linkEnteredCount);
-    if (returnArray == null)
-        return null;
     linkEnteredCount--;
-    if (linkEnteredCount === 0) {
-        save.saveFinalData(returnArray[0], params);
-    }
-    return returnArray;
+    return save.end(returnArray, linkEnteredCount, params);
 }
 
 // get the program execution arguments
