@@ -21,9 +21,8 @@ async function getContent(linkList, iList, linkEnteredCount) {
 
     linkList = await sitemap.check(iList, linkList, params);
 
-    logs.iteration(iList)
-    var formattedLink = link.formatEnteringLink(linkList[iList][0], params['domain']);
-    logs.link(formattedLink);
+    // --> formatting link here
+    const formattedLink = link.getFormattedLink(iList, linkList[iList][0], params['domain']);
     linkEnteredCount++;
 
     // open a new browser and page with the new url
