@@ -77,7 +77,7 @@ async function evaluate(linkList, params, iList, page) {
                     }
                 }
             } else {
-                console.log("Error: something unexpected happened when collecting new urls from '" + params['domain'] + "'.");
+                console.log("Error: something unexpected happened when collecting new urls form the current url.");
             }
             var linkResultArray = [linkList, newLinkArray, linkArticle];
             return linkResultArray;
@@ -92,7 +92,7 @@ async function evaluate(linkList, params, iList, page) {
                 return element.outerHTML;
             });
             if (metaArray === null || metaArray === undefined) {
-                console.log("Error: something unexpected happened when getting the <meta> selectors from '" + params['domain'] + "'.")
+                console.log("Error: something unexpected happened when getting the <meta> selectors from the current url.")
             }
             return metaArray;
         }
