@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 
+// starts the timer, opens new browser and page with the specified parameters and returns all these values
 async function startPage(params, formattedLink) {
     const time = Date.now();
     const browser = await puppeteer.launch({ headless: params['headlessBrowser'], args: ['--ignore-certificate-errors'] });
