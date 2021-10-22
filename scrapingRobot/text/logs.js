@@ -114,6 +114,7 @@ function errorStartingUrlsIncompatibleArgs() {
     console.log("Error: only one starting url argument can be provided.");
 }
 
+// logs an error when the starting url is missing
 function errorStartingUrlsMissingArg() {
     console.log("Error: after -u: missing starting url.");
 }
