@@ -292,7 +292,7 @@ function initParams(args) {
 }
 
 function setLinkList(params) {
-    write.writeInFile('{\n\t', params['savefile']);
+    params['formattedSavefile'] ? write.writeInFile('{\n\t', params['savefile']) : write.writeInFile('{', params['savefile']);
     
     if (params['sitemapLink'] === null)
         return params['startingUrls'];
