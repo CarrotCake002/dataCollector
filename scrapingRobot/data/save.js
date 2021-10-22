@@ -56,7 +56,7 @@ function saveFinalData(linkList, params) {
 function end(returnArray, linkEnteredCount, params) {
     if (returnArray == null)
         return null;
-    if (linkEnteredCount === 0) {
+    if (linkEnteredCount === 1) {
         saveFinalData(returnArray[0], params);
     }
     return returnArray;
