@@ -16,6 +16,7 @@ function endPage(browser, time) {
     return (Date.now() - time);
 }
 
+// cheks errors in the data returned by evaluate and the status of the website, and logs corresponding messages
 function checkErrors(returnArray, status) {
     if (returnArray === undefined || returnArray === null) {
         logs.errorData();
