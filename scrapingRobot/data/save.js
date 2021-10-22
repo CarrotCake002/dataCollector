@@ -53,8 +53,8 @@ function saveFinalData(linkList, params) {
         i++;
     }
 
-    params['formattedSavefile'] ? saveData = JSON.stringify(saveData) : saveData = JSON.stringify(saveData);
-    saveData = '"runtime": ' + saveData + '\n}';
+    saveData = JSON.stringify(saveData);
+    params['formattedSavefile'] ? saveData = '"runtime": ' + saveData + '\n}' : saveData = '"runtime":' + saveData + '}';
     write.writeInFile(saveData, params['savefile']);
     saveData = null;
 }
