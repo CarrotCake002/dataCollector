@@ -149,6 +149,7 @@ function iteration(iList) {
     console.log("Iteration " + iList);
 }
 
+// logs the current url
 function link(link) {
     console.log(link + "\n");
 }
