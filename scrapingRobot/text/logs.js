@@ -69,6 +69,7 @@ function errorSavefileExtension() {
     console.log("Error: after '-f': the file name should not contain an extension. It will automatically be a .json file.");
 }
 
+// logs an error message when the savefile contains forbidden charaters
 function errorSavefileForbidden() {
     console.log("Error: after '-f': the save file name can't contain a forbidden character.");
 }
