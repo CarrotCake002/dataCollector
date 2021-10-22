@@ -38,6 +38,7 @@ function skipLinks(iList, linkList, unwantedLinks, wantedLinks, maxDepth) {
     return false;
 }
 
+// calls skipLinks and logs the success message if the program has finished with al links
 function getNext(iList, linkList, params) {
     iList++;
     iList = skipLinks(iList, linkList, params['notEnterLinksWith'], params['onlyEnterLinksWith'], params['maxDepth']);
