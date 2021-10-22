@@ -59,6 +59,7 @@ function formatEnteringLink(link, domain) {
     return domain + link;
 }
 
+// returns the formatted link and prints the text printed in the terminal every iteration
 function getFormattedLink(iList, url, domain) {
     logs.iteration(iList)
     var formattedLink = formatEnteringLink(url, domain);
