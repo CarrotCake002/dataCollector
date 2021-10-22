@@ -17,11 +17,11 @@ async function getContent(linkList, iList, linkEnteredCount) {
 
     // open a new browser and page with the new url
     var time = Date.now();
-    var openPage = await imports.open.page(params, formattedLink)
-    const [browser, page, response] = [openPage[0], openPage[1], openPage[2]];
-    openPage = null;
+    //const openPage = await imports.open.page(params, formattedLink)
+    const [openPage, browser, page, response] = [await imports.open.page(params, formattedLink), openPage[0], openPage[1], openPage[2]];
 
-    await getPageData(linkList, iList, page);
+    if (returnArray = await getPageData(linkList, iList, page), returnArray === null)
+        return null;
 
     browser.close();
     time = Date.now() - time;
