@@ -54,6 +54,7 @@ function help() {
     );
 }
 
+// logs an error message when there has been an error in the domain
 function errorDomain() {
     console.log("Error: you need to set a valid domain of the website you want to scrape.");
 }
