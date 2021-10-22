@@ -1,34 +1,40 @@
 const write = require("./../text/write.js");
 const link = require("./../page/link.js");
 
-// save data that won't be modified and will be deleted in runtime for better optimization
-async function saveFormData(resultArray, iteration, time, linkEnteredCount, params) {
+function buildJsonObj(iteration, time, resultArray, domain) {
     var url = resultArray[0][iteration][0];
 
-    if (resultArray[0][iteration][0].includes('http://') === false && resultArray[0][iteration][0].includes('https://') === false) {
+    if (url.includes('http://') === false && url.includes('https://') === false) {
         url = params['domain'] + url;
     }
-    var jsonObj =
-    {
-        "Iteration": iteration,
-        "url": url,
-        "status": resultArray[9],
-        "urlDepth": resultArray[0][iteration][1],
-        "time": time / 1000,
-        "html": {
-            "title": resultArray[4],
-            "meta": resultArray[3],
-            "hreflang": resultArray[5],
-            "canonicals": resultArray[6],
-            "heads": resultArray[7],
-            "linkArticle": resultArray[8],
-            "userSelected": resultArray[1],
-        },
-        "links": resultArray[2],
-    };
-    params['formattedSavefile'] ? jsonObj = JSON.stringify(jsonObj, null, 4) : jsonObj = JSON.stringify(jsonObj);
+    return (
+        {
+            "Iteration": iteration,
+            "url": url,
+            "status": resultArray[9],
+            "urlDepth": resultArray[0][iteration][1],
+            "time": time / 1000,
+            "html": {
+                "title": resultArray[4],
+                "meta": resultArray[3],
+                "hreflang": resultArray[5],
+                "canonicals": resultArray[6],
+                "heads": resultArray[7],
+                "linkArticle": resultArray[8],
+                "userSelected": resultArray[1],
+            },
+            "links": resultArray[2],
+        }
+    );
+}
 
-    jsonObj = '"' + linkEnteredCount + '": ' + jsonObj + ',\n\t';
+// save data that won't be modified and will be deleted in runtime for better optimization
+async function saveFormData(resultArray, iteration, time, linkEnteredCount, params) {
+    var jsonObj = buildJsonObj(iteration, time, resultArray, params['domain']);
+
+    params['formattedSavefile'] ?
+    jsonObj = '"' + linkEnteredCount + '": ' + JSON.stringify(jsonObj, null, 4) + ',\n\t':
+    jsonObj = '"' + linkEnteredCount + '":' + JSON.stringify(jsonObj) + ',';
 
     write.writeInFile(jsonObj, params['savefile']);
 }
