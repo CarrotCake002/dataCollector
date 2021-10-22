@@ -74,6 +74,7 @@ function errorSavefileForbidden() {
     console.log("Error: after '-f': the save file name can't contain a forbidden character.");
 }
 
+// logs an error message when there is an error in the links to exclude
 function errorLinkExclude() {
     console.log("Error: after -x: missing link exclusion arguments.");
 }
