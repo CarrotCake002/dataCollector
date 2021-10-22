@@ -1,3 +1,4 @@
+// import all modules needed in getContent and export them in a single module so getContent only need to import 1 module 
 const configStart = require("./../init/config.js");
 const sitemap = require("./../page/sitemap.js");
 const eval = require("./../page/evaluate.js");
