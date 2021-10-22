@@ -1,6 +1,7 @@
 const { exit } = require('process');
-var init = require('./../init/init.js');
+const init = require('./../init/init.js');
 const logs = require('./../text/logs.js');
+const write = require('./../text/write.js');
 
 // display the help message and close the program
 function configHelp(args) {
@@ -290,4 +291,14 @@ function initParams(args) {
     return params;
 }
 
-module.exports = { initParams };
+function setLinkList(params) {
+    write.writeInFile('{\n\t', params['savefile']);
+    
+    if (params['sitemapLink'] === null)
+        return params['startingUrls'];
+    return [];
+}
+
+const params = initParams(init.args);
+
+module.exports = { setLinkList, params };
