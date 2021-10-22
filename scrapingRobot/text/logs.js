@@ -64,6 +64,7 @@ function errorSavefileName() {
     console.log("Error: after '-f': no name was provided for the .json save file.");
 }
 
+// logs an error message when an extension is provided for the savefile
 function errorSavefileExtension() {
     console.log("Error: after '-f': the file name should not contain an extension. It will automatically be a .json file.");
 }
