@@ -1,7 +1,7 @@
 // my imported files
 const imports = require("./imports.js");
 
-async function getPageData(linkList, iList, page) {
+async function getPageData(linkList, iList, page, response) {
     await imports.click.clickItems(params['clickItems']);
     var returnArray = await imports.eval.evaluate(linkList, params, iList, page);
     return (imports.open.checkErrors(returnArray, response.status()) ? returnArray : null);
@@ -17,11 +17,11 @@ async function getContent(linkList, iList, linkEnteredCount) {
 
     // open a new browser and page with the new url
     var time = Date.now();
-    const openPage = await imports.open.page(params, formattedLink)
+    var openPage = await imports.open.page(params, formattedLink)
     const [browser, page, response] = [openPage[0], openPage[1], openPage[2]];
     openPage = null;
 
-    if (returnArray = await getPageData(linkList, iList, page), returnArray === null)
+    if (returnArray = await getPageData(linkList, iList, page, response), returnArray === null)
         return null;
 
     browser.close();
