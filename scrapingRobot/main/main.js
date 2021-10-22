@@ -41,21 +41,13 @@ async function getContent(linkList, iList, linkEnteredCount) {
 }
 
 // get the program execution arguments
-const args = process.argv.slice(2);
-const params = imports.configStart.configParams(args, imports.init.defaultParams);
-if (!params) {
-    imports.logs.options();
-    return 84;
-}
-imports.logs.any(params);
+const params = imports.configStart.initParams(imports.init.args);
+
 if (params['sitemapLink'] === null)
     imports.init.linkList = params['startingUrls'];
 
-
 imports.write.writeInFile('{\n\t', params['savefile']);
 
-
 getContent(imports.init.linkList, imports.init.iList, imports.init.linkEnteredCount);
-
 
 module.exports = { params };
