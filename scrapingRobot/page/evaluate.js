@@ -1,3 +1,4 @@
+// navigates the already opened page to collect the needed data
 async function evaluate(linkList, params, iList, page) {
 
     var returnArray = await page.evaluate((linkList, params, iList) => {
