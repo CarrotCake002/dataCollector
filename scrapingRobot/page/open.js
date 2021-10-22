@@ -10,6 +10,7 @@ async function startPage(params, formattedLink) {
     return [browser, page, response, time];
 }
 
+// closes browser and returns stopped timer
 function endPage(browser, time) {
     browser.close();
     return (Date.now() - time);
