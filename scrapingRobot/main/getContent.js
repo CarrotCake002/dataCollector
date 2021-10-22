@@ -1,5 +1,6 @@
 const imports = require("./imports.js");
 
+// call all functions that will play a direct role in getting the data from the page
 async function getPageData(linkList, iList, page, response) {
     await imports.click.clickItems(imports.configStart.params['clickItems']);
     var returnArray = await imports.eval.evaluate(linkList, imports.configStart.params, iList, page);
