@@ -1,7 +1,6 @@
 const puppeteer = require('puppeteer');
 
 async function page(params, formattedLink) {
-
     const browser = await puppeteer.launch({ headless: params['headlessBrowser'], args: ['--ignore-certificate-errors'] });
     const page = await browser.newPage();
     await page.setViewport({ width: 1000, height: 926 });
@@ -14,7 +13,6 @@ function checkErrors(returnArray, status) {
         logs.errorData();
         return false;
     }
-
     if (status === null) {
         logs.errorStatus();
         return false;
