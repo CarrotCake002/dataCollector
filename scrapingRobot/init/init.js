@@ -28,8 +28,6 @@ var defaultParams = {
 // initialize starting arguments
 let iList = 0;
 let linkEnteredCount = 0;
-var linkList = [];
-
 const args = process.argv.slice(2);
 
-module.exports = { defaultParams, iList, linkEnteredCount, linkList, args };
+module.exports = { defaultParams, iList, linkEnteredCount, args };
