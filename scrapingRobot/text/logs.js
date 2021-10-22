@@ -129,6 +129,7 @@ function errorNotSaveLinks() {
     console.log("Error: after -nL: missing links to be saved.");
 }
 
+// logs an error message when there is an error collecting data from the evaluation
 function errorData() {
     console.log("Error: something unexpected happened when collecting all the data from the current website.");
 }
