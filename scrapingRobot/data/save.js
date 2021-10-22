@@ -59,6 +59,7 @@ function saveFinalData(linkList, params) {
     saveData = null;
 }
 
+// checks for errors before calling saveFinalData
 function end(returnArray, linkEnteredCount, params) {
     if (returnArray == null)
         return null;
