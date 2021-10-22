@@ -16,20 +16,18 @@ async function getContent(linkList, iList, linkEnteredCount) {
     linkEnteredCount++;
 
     // open a new browser and page with the new url
-    var time = Date.now();
-    var openPage = await imports.open.page(params, formattedLink)
-    const [browser, page, response] = [openPage[0], openPage[1], openPage[2]];
+    var openPage = await imports.open.startPage(params, formattedLink);
+    const [browser, page, response, startTime] = [openPage[0], openPage[1], openPage[2], openPage[3]];
     openPage = null;
 
     if (returnArray = await getPageData(linkList, iList, page, response), returnArray === null)
         return null;
 
-    browser.close();
-    time = Date.now() - time;
+    const endTime = imports.open.endPage(browser, startTime);
 
     returnArray = returnArray.concat(response.status());
 
-    await imports.save.saveFormData(returnArray, iList, time, linkEnteredCount, params);
+    await imports.save.saveFormData(returnArray, iList, endTime, linkEnteredCount, params);
 
     var linkList = returnArray[0];
 
