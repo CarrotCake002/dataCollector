@@ -154,6 +154,7 @@ function link(link) {
     console.log(link + "\n");
 }
 
+// logs a success message at the end of the program when all urls have been scraped
 function success() {
     console.log("Info: the program has sucessfully obtained all the links it could!");
 }
