@@ -59,6 +59,7 @@ function errorDomain() {
     console.log("Error: you need to set a valid domain of the website you want to scrape.");
 }
 
+// logs an error message when there is no savefile name provided
 function errorSavefileName() {
     console.log("Error: after '-f': no name was provided for the .json save file.");
 }
