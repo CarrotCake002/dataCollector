@@ -278,4 +278,16 @@ function configParams(args, defaultParams) {
     return defaultParams;
 }
 
-module.exports = { configParams };
+// this init function is in config because for some unknown reason it wouldn't work from init.js
+function initParams(args) {
+    const params = configParams(args, init.defaultParams);
+
+    if (!params) {
+        logs.options();
+        return 84;
+    }
+    logs.any(params);
+    return params;
+}
+
+module.exports = { initParams };
