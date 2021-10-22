@@ -139,6 +139,7 @@ function errorStatus() {
     console.log("Error: the current url cannot be scraped. Please add the corresponding filters.");
 }
 
+// logs a message with the help flag when there is an error
 function options() {
     console.log("Execute with --help to view all valid options.");
 }
