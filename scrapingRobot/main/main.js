@@ -31,12 +31,13 @@ async function getContent(linkList, iList, linkEnteredCount) {
 
     var linkList = returnArray[0];
 
-    if (iList = imports.link.getNext(iList, linkList, params), iList === true)
+    if (iList = imports.link.getNext(iList, linkList, params), iList === true) {
+        imports.save.end(returnArray, linkEnteredCount, params);
         return returnArray;
+    }
 
     returnArray = null;
     returnArray = await getContent(linkList, iList, linkEnteredCount);
-    linkEnteredCount--;
     return imports.save.end(returnArray, linkEnteredCount, params);
 }
 
