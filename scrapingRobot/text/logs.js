@@ -124,6 +124,7 @@ function errorSaveLinks() {
     console.log("Error: after -sL: missing links to be saved.");
 }
 
+// logs an error message when the not save links argument is missing
 function errorNotSaveLinks() {
     console.log("Error: after -nL: missing links to be saved.");
 }
