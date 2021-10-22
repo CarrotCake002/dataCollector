@@ -24,9 +24,12 @@ var defaultParams = {
     getTitle: false,
 }
 
+
 // initialize starting arguments
 let iList = 0;
 let linkEnteredCount = 0;
 var linkList = [];
 
-module.exports = { defaultParams, iList, linkEnteredCount, linkList };
+const args = process.argv.slice(2);
+
+module.exports = { defaultParams, iList, linkEnteredCount, linkList, args };
