@@ -104,6 +104,7 @@ function errorDepth() {
     console.log("Error: after -d: you need to specify the maximum depth.");
 }
 
+// logs an error message when there is an error with the starting urls file
 function errorStartingUrlsFile() {
     console.log("Error: after -uf: missing filepath.");
 }
