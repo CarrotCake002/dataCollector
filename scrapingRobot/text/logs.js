@@ -114,11 +114,12 @@ function errorStartingUrlsIncompatibleArgs() {
     console.log("Error: only one starting url argument can be provided.");
 }
 
-// logs an error when the starting url is missing
+// logs an error message when the starting url is missing
 function errorStartingUrlsMissingArg() {
     console.log("Error: after -u: missing starting url.");
 }
 
+// logs an error message when the save links argument is missing
 function errorSaveLinks() {
     console.log("Error: after -sL: missing links to be saved.");
 }
