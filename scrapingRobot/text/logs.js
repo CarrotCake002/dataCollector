@@ -144,6 +144,7 @@ function options() {
     console.log("Execute with --help to view all valid options.");
 }
 
+// logs the iteration number
 function iteration(iList) {
     console.log("Iteration " + iList);
 }
