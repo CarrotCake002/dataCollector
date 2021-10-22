@@ -109,6 +109,7 @@ function errorStartingUrlsFile() {
     console.log("Error: after -uf: missing filepath.");
 }
 
+// logs an error message when there is an error with incompatible starting url arguments
 function errorStartingUrlsIncompatibleArgs() {
     console.log("Error: only one starting url argument can be provided.");
 }
