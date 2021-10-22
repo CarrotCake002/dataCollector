@@ -84,10 +84,12 @@ function errorSelector() {
     console.log("Error: after -s: missing selector argument.");
 }
 
+// logs an error message when there is an error in the links to exclude
 function errorLinkInclude() {
     console.log("Error: after -i: missing link inclusion arguments.");
 }
 
+// logs an error message when there is an error in the click items
 function errorClickItems() {
     console.log("Error: after -c: missing clickable items.");
 }
