@@ -1,3 +1,4 @@
+// logs the help message when executing the program with the help flag
 function help() {
     console.log(
         `\n
