@@ -1,5 +1,5 @@
 // click items the user selected
-async function clickItems(clickItems) {
+async function clickItems(clickItems, page) {
     if (clickItems !== null && clickItems !== undefined && clickItems !== '') {
         await page.evaluate((clickItems) => {
             for (var i = 0; i < clickItems.length; i++) {
