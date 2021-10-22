@@ -79,6 +79,7 @@ function errorLinkExclude() {
     console.log("Error: after -x: missing link exclusion arguments.");
 }
 
+// logs an error message when the user selectors are missing after the flag
 function errorSelector() {
     console.log("Error: after -s: missing selector argument.");
 }
