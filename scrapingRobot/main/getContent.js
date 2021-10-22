@@ -1,4 +1,3 @@
-// my imported files
 const imports = require("./imports.js");
 
 async function getPageData(linkList, iList, page, response) {
@@ -22,13 +21,11 @@ async function getContent(linkList, iList, linkEnteredCount) {
     if (returnArray = await getPageData(linkList, iList, page, response), returnArray === null)
         return null;
 
-    const endTime = imports.open.endPage(browser, startTime);
-
     returnArray = returnArray.concat(response.status());
+    linkList = returnArray[0];
 
+    const endTime = imports.open.endPage(browser, startTime);
     await imports.save.saveFormData(returnArray, iList, endTime, linkEnteredCount, imports.configStart.params);
-
-    var linkList = returnArray[0];
 
     if (iList = imports.link.getNext(iList, linkList, imports.configStart.params), iList === true) {
         imports.save.end(returnArray, linkEnteredCount, imports.configStart.params);
