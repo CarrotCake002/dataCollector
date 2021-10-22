@@ -291,6 +291,7 @@ function initParams(args) {
     return params;
 }
 
+// configure the initial value of linkList to define the starting urls of the program
 function setLinkList(params) {
     params['formattedSavefile'] ? write.writeInFile('{\n\t', params['savefile']) : write.writeInFile('{', params['savefile']);
     
