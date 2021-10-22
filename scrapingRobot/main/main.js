@@ -1,6 +1,12 @@
 // my imported files
 const imports = require("./imports.js");
 
+async function getPageData(linkList, iList, page) {
+    await imports.click.clickItems(params['clickItems']);
+    var returnArray = await imports.eval.evaluate(linkList, params, iList, page);
+    return (imports.open.checkErrors(returnArray, response.status()) ? returnArray : null);
+}
+
 // main loop of the program. Recursive function that open/closes browsers and gets all the information from every page
 async function getContent(linkList, iList, linkEnteredCount) {
 
@@ -15,14 +21,10 @@ async function getContent(linkList, iList, linkEnteredCount) {
     const [browser, page, response] = [openPage[0], openPage[1], openPage[2]];
     openPage = null;
 
-    await imports.click.clickItems(params['clickItems']);
-    var returnArray = await imports.eval.evaluate(linkList, params, iList, page);
+    await getPageData(linkList, iList, page);
 
     browser.close();
     time = Date.now() - time;
-
-    if (imports.open.checkErrors(returnArray, response.status()) === false)
-        return null;
 
     returnArray = returnArray.concat(response.status());
 
