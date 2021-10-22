@@ -2,7 +2,6 @@
     require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/header.php';
 ?>
 
-
 <script>
     const xhttp = new XMLHttpRequest();
     xhttp.open("GET", "deleteFiles.php", true);
@@ -21,7 +20,6 @@
         </form>
     </div>
 </div>
-
 
 <?php
     require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/footer.php';

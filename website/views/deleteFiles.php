@@ -14,5 +14,3 @@ $files = glob($dir . '/' . '*.{json,tmp}', GLOB_BRACE);
 foreach($files as $file){
     unlink($file);
 }
-
-?>

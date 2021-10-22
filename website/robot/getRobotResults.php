@@ -11,7 +11,7 @@ use classes\SessionController;
 
 $session = new SessionController();
 
-if (isset($_FILES)) {
+if (isset($_FILES)):
     $json_data = null;
     if (isset($_FILES['openFile']) && isset($_FILES['openFile']['tmp_name'])) {
         if (!$session->checkSessionFolderExists()) {
@@ -95,6 +95,6 @@ if (isset($_FILES)) {
     </script>
 
 <?php
-}
+endif;
 
 require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/footer.php';

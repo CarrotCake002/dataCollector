@@ -143,4 +143,4 @@
         return;
     endif;
 
-    require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/footer.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/footer.php';
