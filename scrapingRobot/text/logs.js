@@ -94,6 +94,7 @@ function errorClickItems() {
     console.log("Error: after -c: missing clickable items.");
 }
 
+// logs an error message when there is an error with the sitemap
 function errorSitemap() {
     console.log("Error: after -m: missing sitemap url.");
 }
