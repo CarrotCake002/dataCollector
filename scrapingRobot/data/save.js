@@ -6,7 +6,7 @@ function buildJsonObj(iteration, time, resultArray, domain) {
     var url = resultArray[0][iteration][0];
 
     if (url.includes('http://') === false && url.includes('https://') === false) {
-        url = params['domain'] + url;
+        url = domain + url;
     }
     return (
         {
