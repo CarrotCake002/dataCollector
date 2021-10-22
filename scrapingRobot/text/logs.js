@@ -134,6 +134,7 @@ function errorData() {
     console.log("Error: something unexpected happened when collecting all the data from the current website.");
 }
 
+// logs an error message when there is an error with the status of the opened page
 function errorStatus() {
     console.log("Error: the current url cannot be scraped. Please add the corresponding filters.");
 }
