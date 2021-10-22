@@ -159,6 +159,7 @@ function success() {
     console.log("Info: the program has sucessfully obtained all the links it could!");
 }
 
+// logs anything sent as an argument
 function any(arg) {
     console.log(arg);
 }
