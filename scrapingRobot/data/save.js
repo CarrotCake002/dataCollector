@@ -1,6 +1,7 @@
 const write = require("./../text/write.js");
 const link = require("./../page/link.js");
 
+// builds the json object that will be saved with new data at every iteration
 function buildJsonObj(iteration, time, resultArray, domain) {
     var url = resultArray[0][iteration][0];
 
