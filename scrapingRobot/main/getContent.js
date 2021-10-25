@@ -27,14 +27,13 @@ async function getContent(linkList, iList, linkEnteredCount) {
     linkList = returnArray[0];
 
     const endTime = imports.open.endPage(browser, startTime);
-    await imports.save.saveFormData(returnArray, iList, endTime, linkEnteredCount, imports.configStart.params);
+    returnArray = await imports.save.saveFormData(returnArray, iList, endTime, linkEnteredCount, imports.configStart.params);
 
     if (iList = imports.link.getNext(iList, linkList, imports.configStart.params), iList === true) {
         imports.save.end(returnArray, linkEnteredCount, imports.configStart.params);
         return returnArray;
     }
 
-    returnArray = null;
     returnArray = await getContent(linkList, iList, linkEnteredCount);
     return imports.save.end(returnArray, linkEnteredCount, imports.configStart.params);
 }
