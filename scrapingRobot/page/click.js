@@ -8,7 +8,7 @@ async function clickItems(clickItems, page) {
                 })
             }
         }, clickItems);
-        await page.waitFor(2000);
+        await page.waitFor(1000);
     }
 }
 
