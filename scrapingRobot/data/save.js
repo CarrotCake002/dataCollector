@@ -38,6 +38,7 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount, para
     jsonObj = '"' + linkEnteredCount + '":' + JSON.stringify(jsonObj) + ',';
 
     write.writeInFile(jsonObj, params['savefile']);
+    return null;
 }
 
 // this function saves the data that was being updated in runtime and that could not be saved in the main file before
