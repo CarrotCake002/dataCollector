@@ -4,17 +4,32 @@
 # Entre particulares
     - node main/main.js -D "https://www.entreparticulares.com" -u "https://www.entreparticulares.com/resultados-de-busqueda/?property-state=3411&location=barcelona-barcelona&status=alquiler&type=pisos-apartamentos" -i "page/2,anuncio/" -f "entreparticularesPisos" -c "#phone_info > input" -s "#phone_info > h5:nth-child(1) > a" -F
 
-# Milanuncios get contacts and flat description (first step)
-    - node main/main.js -D "https://www.milanuncios.com" -u "https://www.milanuncios.com/alquiler-de-pisos-en-barcelona-barcelona/?fromSearch=1&demanda=n&vendedor=part" -i "?demanda=n&vendedor=part&pagina=,.htm" -f "milanunciosContactsOferta" -c "#ad-detail-contact > a.def-btn.phone-btn" -s "#cuerpo > div.pagAnuMainColumn > div.pagAnuDatosBox > p,#ifrw" -F
+# Milanuncios
+{
+    # Milanuncios get contacts and flat description (first step)
+        - node main/main.js -D "https://www.milanuncios.com" -u "https://www.milanuncios.com/alquiler-de-pisos-en-barcelona-barcelona/?fromSearch=1&demanda=n&vendedor=part" -i "?demanda=n&vendedor=part&pagina=,.htm" -f "milanunciosContactsOferta" -c "#ad-detail-contact > a.def-btn.phone-btn" -s "#cuerpo > div.pagAnuMainColumn > div.pagAnuDatosBox > p,#ifrw" -F
 
-# Milanuncios get tels (last step)
-    - node main/main.js -D "https://www.milanuncios.com" -uf "milanunciosContactList.txt" -i "datos-contacto/" -f "milanunciosContacts" -s "body > div.plaincontenido > div > div.texto > div.telefonos" -d 0 -F
+    # Milanuncios get tels (last step)
+        - node main/main.js -D "https://www.milanuncios.com" -uf "milanunciosContactList.txt" -i "datos-contacto/" -f "milanunciosContacts" -s "body > div.plaincontenido > div > div.texto > div.telefonos" -d 0 -F
+}
 
 # Pisos.com
     - node main/main.js -D "https://www.pisos.com" -u "https://www.pisos.com/alquiler-residencial/pisos-barcelona_capital/" -i "https://www.pisos.com/alquiler-residencial/pisos-barcelona_capital/,/alquilar/" -x "facebook,twitter,whatsapp,linkedin,pinterest,youtube,google,/ca/,/en/" -nL "/en/,/ca/" -c "#ownerDetail > div > div > div.owner-details-info > div.owner-details-extra > div > a" -f "pisosPuntoCom" -s "#dvFormContactar > div.floatcontact-phone.phone > span.number.one,#descriptionBody" -F
 
-# Tablondeanuncios obtener pisos
-    - node main/main.js -D "https://www.tablondeanuncios.com" -u "https://www.tablondeanuncios.com/alquiler-pisos-en-barcelona/" -i "https://www.tablondeanuncios.com/alquiler-pisos-en-barcelona/,.htm" -x "otros-inmuebles,facebook,twitter,whatsapp,linkedin,pinterest,youtube,google" -s "#main-content > div > div.medium-12.columns > p, #main-content > div > div.medium-12.columns > p > a" -c "#main-content > div.row > div.medium-8.columns > ul > li:nth-child(1) > span" -f "tablondeanuncios" -F
+# Tablondeanuncios (slower and harder)
+{
+    # Tablondeanuncios obtener pisos (first step)
+        - node main/main.js -D "https://www.tablondeanuncios.com" -u "https://www.tablondeanuncios.com/alquiler-pisos-en-barcelona/" -i "https://www.tablondeanuncios.com/alquiler-pisos-en-barcelona/,.htm" -x "otros-inmuebles,facebook,twitter,whatsapp,linkedin,pinterest,youtube,google" -s "#main-content > div > div.medium-12.columns > p, #main-content > div > div.medium-12.columns > p > a" -c "#main-content > div.row > div.medium-8.columns > ul > li:nth-child(1) > span" -f "tablondeanuncios" -F
 
-# Tablondeanuncios obtener datos usuario
-    - node main/main.js -D "https://www.tablondeanuncios.com" -f "tablonContactInfo" -u "https://www.tablondeanuncios.com/tablon-de-anuncios-de-caterina-3078083?l=tdaavtotda" -s "#data > div > div > p > a" -d 0 -F
+    # Tablondeanuncios obtener datos usuario (last step)
+        - node main/main.js -D "https://www.tablondeanuncios.com" -f "tablonContactInfo" -u "https://www.tablondeanuncios.com/tablon-de-anuncios-de-caterina-3078083?l=tdaavtotda" -s "#data > div > div > p > a" -d 0 -F
+}
+
+# Tablondeanuncios (alternative, faster and easier)
+{
+    # Tablondeanuncios obtener pisos (first step)
+        - node main/main.js -D "https://www.tablondeanuncios.com" -u "https://www.tablondeanuncios.com/alquiler-pisos-en-barcelona/" -i "https://www.tablondeanuncios.com/alquiler-pisos-en-barcelona/,.htm" -x "otros-inmuebles,facebook,twitter,whatsapp,linkedin,pinterest,youtube,google" -s "#boxf" -c "#main-content > div.row > div.medium-8.columns > ul > li:nth-child(1) > span" -f "tablondeanuncios" -F
+
+    # Tablondeanuncios obtener datos usuario (last step)
+        - node main/main.js -D "https://www.tablondeanuncios.com" -f "tablonContactInfo2"  -u "https://www.tablondeanuncios.com/solicitar_info_p_lite.php?anuncio=4675060" -s "body > fieldset > ul > li:nth-child(1) > a:nth-child(1) > b, body > fieldset > ul > li:nth-child(3) > strong" -d 0 -F
+}
