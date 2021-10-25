@@ -1,4 +1,3 @@
-const { exit } = require("process");
 const imports = require("./imports.js");
 
 // call all functions that will play a direct role in getting the data from the page
