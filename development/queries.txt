@@ -28,8 +28,8 @@
 # Tablondeanuncios (alternative, faster and easier)
 {
     # Tablondeanuncios obtener pisos (first step)
-        - node main/main.js -D "https://www.tablondeanuncios.com" -u "https://www.tablondeanuncios.com/alquiler-pisos-en-barcelona/" -i "https://www.tablondeanuncios.com/alquiler-pisos-en-barcelona/,.htm" -x "otros-inmuebles,facebook,twitter,whatsapp,linkedin,pinterest,youtube,google" -s "#boxf" -c "#main-content > div.row > div.medium-8.columns > ul > li:nth-child(1) > span" -f "tablondeanuncios" -F
+        - node main/main.js -D "https://www.tablondeanuncios.com" -u "https://www.tablondeanuncios.com/alquiler-pisos-en-barcelona/" -i "https://www.tablondeanuncios.com/alquiler-pisos-en-barcelona/,.htm" -x "otros-inmuebles,/alquiler-pisos/,facebook,twitter,whatsapp,linkedin,pinterest,youtube,google" -s "#boxf" -c "#main-content > div.row > div.medium-8.columns > ul > li:nth-child(1) > span" -f "tablondeanunciosFichasPisos" -F
 
     # Tablondeanuncios obtener datos usuario (last step)
-        - node main/main.js -D "https://www.tablondeanuncios.com" -f "tablonContactInfo2"  -u "https://www.tablondeanuncios.com/solicitar_info_p_lite.php?anuncio=4675060" -s "body > fieldset > ul > li:nth-child(1) > a:nth-child(1) > b, body > fieldset > ul > li:nth-child(3) > strong" -d 0 -F
+        - node main/main.js -D "https://www.tablondeanuncios.com" -f "tablonContactInfo2"  -u "[urls probably in a file]" -s "body > fieldset > ul > li:nth-child(1) > a:nth-child(1) > b, body > fieldset > ul > li:nth-child(3) > strong" -d 0 -F
 }
