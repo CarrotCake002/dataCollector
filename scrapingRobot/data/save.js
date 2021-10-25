@@ -38,7 +38,6 @@ async function saveFormData(resultArray, iteration, time, linkEnteredCount, para
     jsonObj = '"' + linkEnteredCount + '":' + JSON.stringify(jsonObj) + ',';
 
     write.writeInFile(jsonObj, params['savefile']);
-    return null;
 }
 
 // this function saves the data that was being updated in runtime and that could not be saved in the main file before
@@ -63,7 +62,7 @@ function saveFinalData(linkList, params) {
 
 // checks for errors before calling saveFinalData
 function end(returnArray, linkEnteredCount, params) {
-    if (returnArray == null)
+    if (returnArray == null || returnArray[0] == null)
         return null;
     if (linkEnteredCount === 1) {
         saveFinalData(returnArray[0], params);
