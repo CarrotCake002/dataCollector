@@ -11,7 +11,10 @@
     - node main/main.js -D "https://www.milanuncios.com" -uf "milanunciosContactList.txt" -i "datos-contacto/" -f "milanunciosContacts" -s "body > div.plaincontenido > div > div.texto > div.telefonos" -d 0 -F
 
 # Pisos.com
-    - node main/main.js -D "https://www.pisos.com" -u "https://www.pisos.com/alquiler-residencial/pisos-barcelona_capital/" -i "https://www.pisos.com/alquiler-residencial/pisos-barcelona_capital/,/alquilar/" -c "#ownerDetail > div > div > div.owner-details-info > div.owner-details-extra > div > a" -f "pisosPuntoCom" -s "#dvFormContactar > div.floatcontact-phone.phone > span.number.one,#descriptionBody" -F
+    - node main/main.js -D "https://www.pisos.com" -u "https://www.pisos.com/alquiler-residencial/pisos-barcelona_capital/" -i "https://www.pisos.com/alquiler-residencial/pisos-barcelona_capital/,/alquilar/" -x "facebook,twitter,whatsapp,linkedin,pinterest,youtube,google" -c "#ownerDetail > div > div > div.owner-details-info > div.owner-details-extra > div > a" -f "pisosPuntoCom" -s "#dvFormContactar > div.floatcontact-phone.phone > span.number.one,#descriptionBody" -F
 
-# Tablondeanuncios
-    - node main/main.js -D "https://www.tablondeanuncios.com" -u "https://www.tablondeanuncios.com/alquiler-pisos-en-barcelona/" -i "https://www.tablondeanuncios.com/alquiler-pisos-en-barcelona/,.htm" -x "otros-inmuebles" -s "body > fieldset > ul > li:nth-child(1) > a:nth-child(1) > b,body > fieldset > ul > li:nth-child(3) > strong,#main-content > div > div.medium-12.columns > p" -c "#main-content > div.row > div.medium-8.columns > ul > li:nth-child(1) > span" -f "tablondeanuncios" -F
+# Tablondeanuncios obtener pisos
+    - node main/main.js -D "https://www.tablondeanuncios.com" -u "https://www.tablondeanuncios.com/alquiler-pisos-en-barcelona/" -i "https://www.tablondeanuncios.com/alquiler-pisos-en-barcelona/,.htm" -x "otros-inmuebles,facebook,twitter,whatsapp,linkedin,pinterest,youtube,google" -s "#main-content > div > div.medium-12.columns > p, #main-content > div > div.medium-12.columns > p > a" -c "#main-content > div.row > div.medium-8.columns > ul > li:nth-child(1) > span" -f "tablondeanuncios" -F
+
+# Tablondeanuncios obtener datos usuario
+    - node main/main.js -D "https://www.tablondeanuncios.com" -f "tablonContactInfo" -u "https://www.tablondeanuncios.com/tablon-de-anuncios-de-caterina-3078083?l=tdaavtotda" -s "#data > div > div > p > a" -d 0 -F
