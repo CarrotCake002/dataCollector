@@ -1,14 +1,14 @@
 // click items the user selected
 async function clickItems(clickItems, page) {
     if (clickItems !== null && clickItems !== undefined && clickItems !== '') {
-        await page.evaluate((clickItems) => {
-            for (var i = 0; i < clickItems.length; i++) {
-                document.querySelectorAll(clickItems[i]).forEach(item => {
+        for (var i = 0; i < clickItems.length; i++) {
+            await page.evaluate((clickItems) => {
+                document.querySelectorAll(clickItems).forEach(item => {
                     item.click();
                 })
-            }
-        }, clickItems);
-        await page.waitFor(1000);
+            }, clickItems[i]);
+            await page.waitFor(5000);
+        }
     }
 }
 
