@@ -54,9 +54,11 @@ async function evaluate(linkList, params, iList, page) {
             if (general !== null && general !== undefined) {
                 for (var i = 0; i < general.length; i++) {
                     var link = general[i].getAttribute('href');
-                    if (link != null && params['domain'].includes("milanuncios") && link.indexOf("?demanda=n&vendedor=part&pagina=") === 0) {
+                    if (link != null && params['domain'].includes("milanuncios") && !link.includes("http") && link.indexOf("?demanda=n&vendedor=part&pagina=") === 0) {
                         link = params['domain'] + "/alquiler-de-pisos-en-barcelona-barcelona/" + link;
-                    } else if (link != null && params['domain'].includes("milanuncios") && link.includes(".htm")) {
+                    } else if (link != null && params['domain'].includes("milanuncios") && link.indexOf("/alquiler-de-pisos-en-") === 0 && link.includes(".htm")) {
+                        link = params['domain'] + link;
+                    } else if (link != null && params['domain'].includes("milanuncios") && !link.includes("http") && link.includes(".htm")) {
                         link = params['domain'] + "/alquiler-de-pisos-en-barcelona-barcelona/" + link;
                     } else if (link != null && link.charAt(0) === '/') {
                         link = params['domain'] + link;
