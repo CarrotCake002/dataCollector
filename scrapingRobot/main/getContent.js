@@ -19,6 +19,13 @@ async function getContent(linkList, iList, linkEnteredCount) {
     const [browser, page, response, startTime] = [openPage[0], openPage[1], openPage[2], openPage[3]];
     openPage = null;
 
+    if (linkList[iList][0].includes("?demanda=n&vendedor=part&pagina=")) {
+        for (var i = 0; i < 20; i++) {
+            await page.mouse.wheel({ deltaY: 550 });
+            await page.waitFor(250);
+        }
+    }
+
     if (returnArray = await getPageData(linkList, iList, page, response), returnArray === null)
         return null;
 
