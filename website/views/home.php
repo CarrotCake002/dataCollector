@@ -16,6 +16,9 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/website/views/header.php";
                 <p>Starting Urls<br>
                 (default: same as domain)</p>
                 <input class="home_inputs" type="text" name="startingUrl" placeholder="https://site1.com,https://site2.com">
+                <p>Starting urls file<br>
+                (not compatible with the input above)</p>
+                <input id="startingUrlFile" type="file" name="startingUrlFile">
                 <p class="home_p" >Save file name<br>
                 (default: "default.json")</p>
                 <input class="home_inputs" type="text" name="savefile" placeholder="saveFile">

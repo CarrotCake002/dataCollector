@@ -16,6 +16,11 @@ if (!$session->checkSessionFolderExists()) {
     }
 }
 
+if (isset($_FILES)) {
+    var_dump("Files isset");die;
+}
+
+
 if (isset($_POST)) {
     if (isset($_POST['domain']) && $_POST['domain'] !== '') {
     $query = 'node ../scrapingRobot/main/main.js -D "' . $_POST['domain'] . '" ';
