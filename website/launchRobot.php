@@ -2,7 +2,19 @@
 session_start();
 require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/header.php';
 require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/SessionController.php';
+?>
 
+<script>
+    window.addEventListener('beforeunload', function (e) {
+        e.preventDefault();
+        e.returnValue = '';
+        alert("Bye");
+    });
+</script>
+
+<div style="text-align: left;" onunload="beforeClose()">
+
+<?php
 use classes\SessionController;
 
 set_time_limit(0);
@@ -107,3 +119,7 @@ if (isset($_POST['getRobotLogs']) && $_POST['getRobotLogs'] === 'on') {
     for ($i = 0; $i < count($output); $i++)
         echo $output[$i] . '<br>';
 }
+
+?>
+
+</div>
