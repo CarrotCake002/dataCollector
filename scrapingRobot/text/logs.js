@@ -26,7 +26,9 @@ function help() {
             [...] -i "blog item beach"\n
             The bot will save every link, but will skip any link that does not contain any of the words 'blog', 'item', or 'beach'.\n
             The flags '-x' and '-i' can be used together to get a better filter, but the flag '-i' has the highest priority.\n\n\n
-
+            -sL: this flag works in a similar way of -i but instead of define which url the program will enter, it defines which ones will be saved.\n
+            By extension, any url that isn't saved can not be entered.\n\n\n
+        
         -s: allows you to choose which html selectors you want to get from the website in every url.\n
             This includes any Class or Id. View example below:\n
             block example: [...] -s "div"   -->     will get the first <div> block.\n
