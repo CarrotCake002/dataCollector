@@ -4,6 +4,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/header.php';
 require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/OpenFileController.php';
 
 use classes\OpenFileController;
+use classes\SpreadsheetController;
 
 if (isset($_GET)) :
     if (isset($_GET['filename'])) {
@@ -21,7 +22,8 @@ if (isset($_GET)) :
     } else {
         echo "The program encountered an error while opening the data file. Make sure you didn't delete the saved data.";
     }
-    $tels = true;
+
+    $sheet = new SpreadsheetController('allLinkDetails');
 ?>
 
     <div id="table_container">
@@ -41,9 +43,7 @@ if (isset($_GET)) :
                 <th>Nb hreflang</th>
                 <th>Canonical</th>
                 <th>Nb links</th>
-                <?php if ($tels === true): ?>
-                    <th>Tel nb</th>
-                <?php endif; ?>
+                <th>Tel nb</th>
             </tr>
 
             <?php for ($objectNb = 1; $objectNb < $openFile->getObjectCount() - 1; $objectNb++): ?>
@@ -64,9 +64,7 @@ if (isset($_GET)) :
                     <td><?= $openFile->getAllHreflangSize($objectNb) ?></td>
                     <td><?= $openFile->displayAllCanonicals($objectNb) ?></td>
                     <td><?= $openFile->getAllLinksSize($objectNb) ?></td>
-                    <?php if ($tels === true): ?>
-                        <td><?= $openFile->getTelNb($objectNb) ?></td>
-                    <?php endif; ?>
+                    <td><?= $openFile->getTelNb($objectNb) ?></td>
                 </tr>
                 <?php endfor; ?>
         </table>
