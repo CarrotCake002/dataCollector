@@ -13,8 +13,12 @@ node_modules
 # ingnore composer packages
 website/vendor
 
+# ignore excel format files
+*.xlsx
+
 # tests and others
 demoExcel.php
+
 
 # keep the configuration .json files
 !package-lock.json
