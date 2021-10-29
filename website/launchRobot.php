@@ -11,13 +11,27 @@ $session = new SessionController();
 
 if (!$session->checkSessionFolderExists()) {
     if (!$session->createSessionFolder()) {
-        echo "Error: couldn't create the save files folder.";
+        echo "Error: couldn't create the savefiles folder.";
         return;
     }
 }
 
-if (isset($_FILES)) {
-    var_dump("Files isset");die;
+function getStartingUrlFile($session) {
+    if (isset($_FILES)):
+        if (isset($_FILES['startingUrlFile']) && isset($_FILES['startingUrlFile']['tmp_name'])) {
+            if (!$session->checkSessionFolderExists()) {
+                if (!$session->createSessionFolder()) {
+                    echo "Error: the session folder couldn't be created.";
+                    return;
+                }
+            }
+            $filePath = $session->getSessionFolderPath() . '/' . basename($_FILES['startingUrlFile']['tmp_name']);
+            if (move_uploaded_file($_FILES['startingUrlFile']['tmp_name'], $filePath) === false) {
+                echo "There has been an error moving the file.";
+                return;
+            }
+        }
+    endif;
 }
 
 
