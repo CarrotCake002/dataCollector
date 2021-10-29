@@ -10,6 +10,8 @@ function help() {
         -D: define the url you want to scrap right after this flag. This flag is mandatory. View example below:\n
             [...] -D "https://example.com"\n\n\n
         -u: Define the first set of urls the program will enter. Bare in mind that filters will not apply to the first url, but they will apply to the rest of urls.\n\n\n
+        -uf: this flag allows you you save the list of starting urls inside a .txt file and send the file as a paramete instead.
+            This is necessary for long lists of urls which node doesn't support because the program argument length is too high.\n\n\n
         -f: define the name of the .json file in which you want to save all the information collected.\n
             The default name for this file will be formData. If a .json file with the same name already exists, the new data will be appended.\n
             If no file with that name exists, it will automatically be created with read and write permission.\n
