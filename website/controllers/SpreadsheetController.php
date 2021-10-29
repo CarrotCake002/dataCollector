@@ -10,9 +10,9 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class SpreadsheetController {
 
-    private $sheetName;
     private $savePath;
     private $spreadsheet;
+    public $sheetName;
     public $sheet;
 
     public function __construct($sheetName) {
