@@ -2,6 +2,7 @@
 
 require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/header.php';
 require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/OpenFileController.php';
+require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/SpreadsheetController.php';
 
 use classes\OpenFileController;
 use classes\SpreadsheetController;
@@ -30,20 +31,20 @@ if (isset($_GET)) :
         <button class="copyTableButton" onclick="copyDetailsTable()">Copy Table contents</button>
         <table id="details_table">
             <tr>
-                <th>Id</th>
-                <th>Iteration</th>
-                <th>URL</th>
-                <th>Depth</th>
-                <th>Times URL found</th>
-                <th>Predecessor</th>
-                <th>Status</th>
-                <th>Load time (sec)</th>
-                <th>Title <?= $openFile->addTabsToSizeCols(15) ?></th>
-                <th>Title size</th>
-                <th>Nb hreflang</th>
-                <th>Canonical</th>
-                <th>Nb links</th>
-                <th>Tel nb</th>
+                <th>Id<?= $sheet->setCellValue('A1', 'Id') ?></th>
+                <th>Iteration<?= $sheet->setCellValue('B1', 'Iteration') ?></th>
+                <th>URL<?= $sheet->setCellValue('C1', 'Url') ?></th>
+                <th>Depth<?= $sheet->setCellValue('D1', 'Depth') ?></th>
+                <th>Times URL found<?= $sheet->setCellValue('E1', 'Times Url found') ?></th>
+                <th>Predecessor<?= $sheet->setCellValue('F1', 'Predecessor') ?></th>
+                <th>Status<?= $sheet->setCellValue('G1', 'Status') ?></th>
+                <th>Load time (sec)<?= $sheet->setCellValue('H1', 'Load time (sec)') ?></th>
+                <th>Title <?= $openFile->addTabsToSizeCols(15); $sheet->setCellValue('I1', 'Title') ?></th>
+                <th>Title size<?= $sheet->setCellValue('J1', 'Title size') ?></th>
+                <th>Nb hreflang<?= $sheet->setCellValue('K1', 'Nb hreflang') ?></th>
+                <th>Canonical<?= $sheet->setCellValue('L1', 'Canonical') ?></th>
+                <th>Nb links<?= $sheet->setCellValue('M1', 'Nb links') ?></th>
+                <th>First selector<?= $sheet->setCellValue('N1', 'First selector') ?></th>
             </tr>
 
             <?php for ($objectNb = 1; $objectNb < $openFile->getObjectCount() - 1; $objectNb++): ?>
@@ -80,6 +81,7 @@ if (isset($_GET)) :
     </script>
 
 <?php
+    $sheet->saveSpreadSheet($_SERVER['DOCUMENT_ROOT'] . '/website/');
 else :
     echo "There has been an error while processing your request.
         Please try again and if the problem presists, contact the creator.";
