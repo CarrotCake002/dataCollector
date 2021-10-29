@@ -86,9 +86,6 @@ if (isset($_POST)) {
     if (isset($_POST['getTitle']) && $_POST['getTitle'] === 'on')
         $query = $query . ' -gTitle ';
     exec($query, $output);
-    for ($i = 0; $i < count($output); $i++) {
-        echo $output[$i] . '<br>';
-    }
 } else {
     echo "An unknown error has occured. Please, try again and if the problem persists contact the creator.";
     return;
@@ -101,6 +98,12 @@ isset($_POST['savefile']) && $_POST['savefile'] !== '' ? $savefile = $session->g
 <a href="<?= "/savefiles/" . $savefile . ".json"; ?>" download="<?= $_POST['savefile'] ?>">Download your data!</a><br>
 <a>(If you don't download the file now, you will lose it forever)</a>
 
-
 <?php
+
 require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/footer.php';
+
+if ($_POST['getRobotLogs'] && $_POST['getRobotLogs'] === 'on') {
+    for ($i = 0; $i < count($output); $i++) {
+        echo $output[$i] . '<br>';
+    }
+}
