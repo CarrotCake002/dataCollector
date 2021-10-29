@@ -9,7 +9,7 @@ function help() {
         --help: display a console message with all information on the program.\n\n\n
         -D: define the url you want to scrap right after this flag. This flag is mandatory. View example below:\n
             [...] -D "https://example.com"\n\n\n
-        -u: Define the first set of urls the program will enter. Bare in mind that filters will not apply to the first url, but they will apply to the rest of urls.\n\n\n
+        -u: define the first set of urls the program will enter. Bare in mind that filters will not apply to the first url, but they will apply to the rest of urls.\n\n\n
         -uf: this flag allows you you save the list of starting urls inside a .txt file and send the file as a paramete instead.
             This is necessary for long lists of urls which node doesn't support because the program argument length is too high.\n\n\n
         -f: define the name of the .json file in which you want to save all the information collected.\n
@@ -44,6 +44,7 @@ function help() {
             This flag takes no arguments.\n\n\n
         -o: use this flag if you want to get the first selector of each type in every site instead of all selectors.\n
             This flag takes no arguments.\n\n\n
+        -d: allows you to choose the maximum depth the progam will enter. The depth set in this flag will be entered but not the next one.\n\n\n
         
     Other direct access flags:\n
         -gArticle: gets the <a> tag from every url found.\n\n
