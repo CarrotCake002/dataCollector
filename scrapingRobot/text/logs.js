@@ -10,7 +10,7 @@ function help() {
         -D: define the url you want to scrap right after this flag. This flag is mandatory. View example below:\n
             [...] -D "https://example.com"\n\n\n
         -u: define the first set of urls the program will enter. Bare in mind that filters will not apply to the first url, but they will apply to the rest of urls.\n\n\n
-        -uf: this flag allows you you save the list of starting urls inside a .txt file and send the file as a paramete instead.
+        -uf: this flag allows you you save the list of starting urls inside a .txt file and send the file as a paramete instead.\n
             This is necessary for long lists of urls which node doesn't support because the program argument length is too high.\n\n\n
         -f: define the name of the .json file in which you want to save all the information collected.\n
             The default name for this file will be formData. If a .json file with the same name already exists, the new data will be appended.\n
@@ -26,6 +26,7 @@ function help() {
             [...] -i "blog item beach"\n
             The bot will save every link, but will skip any link that does not contain any of the words 'blog', 'item', or 'beach'.\n
             The flags '-x' and '-i' can be used together to get a better filter, but the flag '-i' has the highest priority.\n\n\n
+
         -s: allows you to choose which html selectors you want to get from the website in every url.\n
             This includes any Class or Id. View example below:\n
             block example: [...] -s "div"   -->     will get the first <div> block.\n
