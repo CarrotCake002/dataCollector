@@ -17,23 +17,21 @@ if (!$session->checkSessionFolderExists()) {
 }
 
 function getStartingUrlFile($session) {
-    if (isset($_FILES)):
-        if (isset($_FILES['startingUrlFile']) && isset($_FILES['startingUrlFile']['tmp_name'])) {
-            if (!$session->checkSessionFolderExists()) {
-                if (!$session->createSessionFolder()) {
-                    echo "Error: the session folder couldn't be created.";
-                    return;
-                }
-            }
-            $filePath = $session->getSessionFolderPath() . '/' . basename($_FILES['startingUrlFile']['tmp_name']);
-            if (move_uploaded_file($_FILES['startingUrlFile']['tmp_name'], $filePath) === false) {
-                echo "There has been an error moving the file.";
-                return;
+    if (isset($_FILES['startingUrlFile']['tmp_name'])) {
+        if (!$session->checkSessionFolderExists()) {
+            if (!$session->createSessionFolder()) {
+                echo "Error: the session folder couldn't be created.";
+                return false;
             }
         }
-    endif;
+        $filePath = $session->getSessionFolderPath() . '/' . basename($_FILES['startingUrlFile']['tmp_name']);
+        if (move_uploaded_file($_FILES['startingUrlFile']['tmp_name'], $filePath) === false) {
+            echo "There has been an error moving the file.";
+            return false;
+        }
+    }
+    return true;
 }
-
 
 if (isset($_POST)) {
     if (isset($_POST['domain']) && $_POST['domain'] !== '') {
@@ -41,6 +39,11 @@ if (isset($_POST)) {
     } else {
         echo "Error: you need to specify a domain to scrape.";
         return;
+    }
+    if (isset($_FILES) && isset($_FILES['startingUrlFile']) && $_FILES['startingUrlFile']['size'] !== 0) {
+        if (!getStartingUrlFile($session))
+            return;
+        $query = $query . ' -uf "' . $session->getSessionFolderPath() . '/' . basename($_FILES['startingUrlFile']['tmp_name']) . '" ';
     }
     if (isset($_POST['savefile']) && $_POST['savefile'] !== '')
         $query = $query . ' -f "' . $session->getSessionFolderName() . '/' . $_POST['savefile'] . '" ';
@@ -82,8 +85,10 @@ if (isset($_POST)) {
         $query = $query . ' -gCanonical ';
     if (isset($_POST['getTitle']) && $_POST['getTitle'] === 'on')
         $query = $query . ' -gTitle ';
-    $res = exec($query);
-    echo $res;
+    exec($query, $output);
+    for ($i = 0; $i < count($output); $i++) {
+        echo $output[$i] . '<br>';
+    }
 } else {
     echo "An unknown error has occured. Please, try again and if the problem persists contact the creator.";
     return;
