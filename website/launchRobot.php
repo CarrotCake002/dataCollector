@@ -102,8 +102,7 @@ isset($_POST['savefile']) && $_POST['savefile'] !== '' ? $savefile = $session->g
 
 require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/footer.php';
 
-if ($_POST['getRobotLogs'] && $_POST['getRobotLogs'] === 'on') {
-    for ($i = 0; $i < count($output); $i++) {
+if (isset($_POST['getRobotLogs']) && $_POST['getRobotLogs'] === 'on') {
+    for ($i = 0; $i < count($output); $i++)
         echo $output[$i] . '<br>';
-    }
 }
