@@ -2,7 +2,7 @@
 
 namespace classes;
 
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -12,16 +12,17 @@ class SpreadsheetController {
 
     private $sheetName;
     private $savePath;
+    private $spreadsheet;
     public $sheet;
 
     public function __construct($sheetName) {
         $this->sheetName = $sheetName;
-        $spreadSheet = new Spreadsheet();
-        $this->sheet = $spreadSheet->getActiveSheet();
+        $this->spreadsheet = new Spreadsheet();
+        $this->sheet = $this->spreadsheet->getActiveSheet();
     }
 
     public function setCellValue($cell, $value) {
-        $this->sheet = $this->sheet->setCellValue($cell, $value);
+        $this->sheet->setCellValue($cell, $value);
     }
 
     public function saveSpreadSheet($path) {
@@ -30,7 +31,7 @@ class SpreadsheetController {
         $writer->save($path . $this->sheetName . '.xlsx');
     }
 
-    public function downloadSpreadSheet($path) {
+    public function downloadSpreadSheet() {
         header("Location: " . $this->savePath . $this->sheetName . '.xlsx');
     }
 }
