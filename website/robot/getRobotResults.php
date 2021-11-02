@@ -11,6 +11,8 @@ use classes\OpenFileController;
 use classes\SessionController;
 use classes\SpreadsheetController;
 
+set_time_limit(0);
+
 $session = new SessionController();
 
 if (isset($_FILES)):
