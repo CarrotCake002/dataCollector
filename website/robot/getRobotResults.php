@@ -36,11 +36,11 @@ if (isset($_FILES)):
             echo "The savefile format is not correct. Make sure there are no errors in the syntax.";
             return;
         }
+        $openFile = new OpenFileController($json_data);
     } else {
         echo "There has been a problem with the file's name.";
         return;
     }
-    $openFile = new OpenFileController($json_data);
 ?>
 
 
