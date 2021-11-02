@@ -9,7 +9,7 @@ use classes\SessionController;
 $session = new SessionController();
 
 $dir = $session->getSessionFolderPath();
-$files = glob($dir . '/' . '*.{json,tmp}', GLOB_BRACE);
+$files = glob($dir . '/' . '*.{json,tmp,xlsx}', GLOB_BRACE);
 
 foreach($files as $file){
     unlink($file);
