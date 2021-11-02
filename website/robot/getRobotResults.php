@@ -56,14 +56,15 @@ if (isset($_FILES)):
             <input type="submit" name="submit" value="Get all link details">
         </form>
         <button class="copyTableButton" onclick="copyLinksTable()">Copy Table contents</button>
+        <a href="<?= '/savefiles/' . $session->getSessionFolderName() . '/' . $sheet->sheetName . '.xlsx' ?>" download="<?= $sheet->sheetName ?>" class="downloadDataExcel" ><br><br>Download an excel with all data!</a>
         <table id="allLinksTable">
             <tr>
-                <th>Id</th>
-                <th>Iteration</th>
-                <th>URL</th>
-                <th>Depth</th>
-                <th>Status</th>
-                <th>Nb links found</th>
+                <th>Id<?= $sheet->setCellValue('A1', 'Id') ?></th>
+                <th>Iteration<?= $sheet->setCellValue('B1', 'Iteration') ?></th>
+                <th>URL<?= $sheet->setCellValue('C1', 'Url') ?></th>
+                <th>Depth<?= $sheet->setCellValue('D1', 'Depth') ?></th>
+                <th>Status<?= $sheet->setCellValue('E1', 'Status') ?></th>
+                <th>Nb links found<?= $sheet->setCellValue('F1', 'Nb links found') ?></th>
                 <th>More details</th>
             </tr>
 
@@ -77,12 +78,12 @@ if (isset($_FILES)):
                 for ($i = 1; $i < $objectCount; $i++): ?>
 
             <tr>
-                <td><?= $i ?></td>
-                <td><?= $openFile->getIteration($i) ?></td>
-                <td><a href="<?= $openFile->getURl($i) ?>"><?= $openFile->getUrl($i) ?></a></td>
-                <td><?= $openFile->getUrlDepth($i) ?></td>
-                <td><?= $openFile->getStatus($i) ?></td>
-                <td><?= $openFile->getAllLinksSize($i) ?></td>
+                <td><?= $i; $sheet->setCellValue('A' . $i + 1, $i) ?></td>
+                <td><?= $openFile->getIteration($i); $sheet->setCellValue('B' . $i + 1, $openFile->getIteration($i)) ?></td>
+                <td><a href="<?= $openFile->getURl($i) ?>"><?= $openFile->getUrl($i); $sheet->setCellValue('C' . $i + 1, $openFile->getUrl($i)) ?></a></td>
+                <td><?= $openFile->getUrlDepth($i); $sheet->setCellValue('D' . $i + 1, $openFile->getUrlDepth($i)) ?></td>
+                <td><?= $openFile->getStatus($i); $sheet->setCellValue('E' . $i + 1, $openFile->getStatus($i)) ?></td>
+                <td><?= $openFile->getAllLinksSize($i); $sheet->setCellValue('F' . $i + 1, $openFile->getAllLinksSize($i)) ?></td>
                 <td><a href="<?= '/website/views/getLinkDetails.php/?object=' . $i . '&filename=' . $filePath ?>">Click for more details</a></td>
             </tr>
             <?php
@@ -101,6 +102,7 @@ if (isset($_FILES)):
     </script>
 
 <?php
+$sheet->saveSpreadSheet($session->getSessionFolderPath() . '/');
 endif;
 
 require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/footer.php';
