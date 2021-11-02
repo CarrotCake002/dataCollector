@@ -37,7 +37,7 @@ if (isset($_GET)) :
 
     <div id="table_container">
         <button class="copyTableButton" onclick="copyDetailsTable()">Copy Table contents</button>
-        <a href=" <?php $session->getSessionFolderPath() . '/' . $sheet->sheetName ?>" download="<?php $sheet->sheetName ?>" class="downloadDataExcel" >Download an excel with all data!</a>
+        <a href="<?= '/savefiles/' . $session->getSessionFolderName() . '/' . $sheet->sheetName . '.xlsx' ?>" download="<?= $sheet->sheetName ?>" class="downloadDataExcel" >Download an excel with all data!</a>
         <table id="details_table">
             <tr>
                 <th>Id<?= $sheet->setCellValue('A1', 'Id') ?></th>
