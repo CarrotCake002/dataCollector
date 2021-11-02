@@ -14,3 +14,6 @@ $files = glob($dir . '/' . '*.{json,tmp,xlsx}', GLOB_BRACE);
 foreach($files as $file){
     unlink($file);
 }
+
+if (!rmdir($session->getSessionFolderPath()))
+    echo "An error has occured deleting the session folder";die;
