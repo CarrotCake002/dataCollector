@@ -37,7 +37,7 @@ if (isset($_GET)) :
 
     <div id="table_container">
         <button class="copyTableButton" onclick="copyDetailsTable()">Copy Table contents</button>
-        <a href="<?= '/savefiles/' . $session->getSessionFolderName() . '/' . $sheet->sheetName . '.xlsx' ?>" download="<?= $sheet->sheetName ?>" class="downloadDataExcel" >Download an excel with all data!</a>
+        <a href="<?= '/savefiles/' . $session->getSessionFolderName() . '/' . $sheet->sheetName . '.xlsx' ?>" download="<?= $sheet->sheetName ?>" class="downloadDataExcel" ><br><br>Download an excel with all data!</a>
         <table id="details_table">
             <tr>
                 <th>Id<?= $sheet->setCellValue('A1', 'Id') ?></th>
@@ -56,7 +56,7 @@ if (isset($_GET)) :
                 <th>First selector<?= $sheet->setCellValue('N1', 'First selector') ?></th>
             </tr>
 
-            <?php for ($objectNb = 1; $objectNb < $openFile->getObjectCount() - 1; $objectNb++): ?>
+            <?php for ($objectNb = 1; $objectNb < $openFile->getObjectCount(); $objectNb++): ?>
                 <tr>
                     <td><?= $objectNb; $sheet->setCellValue('A' . $objectNb + 1, $objectNb)?></td>
                     <td><?= $openFile->getIteration($objectNb); $sheet->setCellValue('B' . $objectNb + 1, $openFile->getIteration($objectNb)) ?></td>
