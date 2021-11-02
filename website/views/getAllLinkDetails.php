@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/header.php';
 require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/OpenFileController.php';
 require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/SpreadsheetController.php';
