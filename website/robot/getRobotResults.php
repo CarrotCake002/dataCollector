@@ -5,9 +5,11 @@ session_start();
 require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/header.php';
 require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/OpenFileController.php';
 require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/SessionController.php';
+require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/SpreadsheetController.php';
 
 use classes\OpenFileController;
 use classes\SessionController;
+use classes\SpreadsheetController;
 
 $session = new SessionController();
 
@@ -41,6 +43,8 @@ if (isset($_FILES)):
         echo "There has been a problem with the file's name.";
         return;
     }
+
+    $sheet = new SpreadsheetController('robotResults');
 ?>
 
 
