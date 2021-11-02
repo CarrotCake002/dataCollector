@@ -15,7 +15,7 @@ class SessionController {
     }
 
     public function getSessionFolderPath() {
-        return $_SERVER["DOCUMENT_ROOT"] . '/savefiles/' . $this->getSessionFolderName();
+        return ($_SERVER["DOCUMENT_ROOT"] . '/savefiles/' . $this->getSessionFolderName());
     }
 
     public function checkSessionFolderExists() {
