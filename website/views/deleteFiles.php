@@ -15,5 +15,4 @@ foreach($files as $file){
     unlink($file);
 }
 
-if (!rmdir($session->getSessionFolderPath()))
-    echo "An error has occured deleting the session folder";die;
+rmdir($session->getSessionFolderPath());
