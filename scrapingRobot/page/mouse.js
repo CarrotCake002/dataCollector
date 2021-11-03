@@ -19,4 +19,4 @@ async function wheelScroll(page, params) {
     }
 }
 
-module.exports = { clickItems };
+module.exports = { clickItems, wheelScroll };
