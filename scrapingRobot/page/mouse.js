@@ -12,4 +12,11 @@ async function clickItems(clickItems, page) {
     }
 }
 
+async function wheelScroll(page, params) {
+    for (var i = 0; i < 20; i++) {
+        await page.mouse.wheel({ deltaY: 550 });
+        await page.waitFor(250);
+    }
+}
+
 module.exports = { clickItems };
