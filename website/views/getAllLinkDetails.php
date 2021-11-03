@@ -56,7 +56,7 @@ if (isset($_GET)) :
                 <th>First selector<?= $sheet->setCellValue('N1', 'First selector') ?></th>
             </tr>
 
-            <?php for ($objectNb = 1; $objectNb < $openFile->getObjectCount(); $objectNb++): ?>
+            <?php for ($objectNb = 1; $objectNb <= $openFile->getObjectCount(); $objectNb++): ?>
                 <tr>
                     <td><?= $objectNb; $sheet->setCellValue('A' . $objectNb + 1, $objectNb)?></td>
                     <td><?= $openFile->getIteration($objectNb); $sheet->setCellValue('B' . $objectNb + 1, $openFile->getIteration($objectNb)) ?></td>
