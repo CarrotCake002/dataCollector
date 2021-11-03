@@ -2,7 +2,8 @@ const imports = require("./imports.js");
 
 // call all functions that will play a direct role in getting the data from the page
 async function getPageData(linkList, iList, page, response) {
-    await imports.click.clickItems(imports.configStart.params['clickItems'], page);
+    await imports.mouse.wheelScroll(page, imports.configStart.params);
+    await imports.mouse.clickItems(imports.configStart.params['clickItems'], page);
     var returnArray = await imports.eval.evaluate(linkList, imports.configStart.params, iList, page);
     return (imports.open.checkErrors(returnArray, response.status()) ? returnArray : null);
 }
@@ -18,13 +19,6 @@ async function getContent(linkList, iList, linkEnteredCount) {
     var openPage = await imports.open.startPage(imports.configStart.params, formattedLink);
     const [browser, page, response, startTime] = [openPage[0], openPage[1], openPage[2], openPage[3]];
     openPage = null;
-
-    if (linkList[iList][0].includes("?demanda=n&vendedor=part&pagina=")) {
-        for (var i = 0; i < 20; i++) {
-            await page.mouse.wheel({ deltaY: 550 });
-            await page.waitFor(250);
-        }
-    }
 
     if (returnArray = await getPageData(linkList, iList, page, response), returnArray === null)
         return null;
