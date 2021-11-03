@@ -60,7 +60,10 @@ if (isset($_GET)) :
                 <tr>
                     <td><?= $objectNb; $sheet->setCellValue('A' . $objectNb + 1, $objectNb)?></td>
                     <td><?= $openFile->getIteration($objectNb); $sheet->setCellValue('B' . $objectNb + 1, $openFile->getIteration($objectNb)) ?></td>
-                    <td><a href="<?= $openFile->getUrl($objectNb) ?>"><?= $openFile->getUrl($objectNb); $sheet->setCellValue('C' . $objectNb + 1, $openFile->getUrl($objectNb)) ?></a></td>
+                    <td>
+                        <a href="<?= $openFile->getUrl($objectNb) ?>"><?= $openFile->getUrl($objectNb); $sheet->setCellValue('C' . $objectNb + 1, $openFile->getUrl($objectNb)) ?></a>
+                        (<a href="<?= '/website/views/getLinkDetails.php/?object=' . $objectNb . '&filename=' . $_GET['filename']?>">details</a>)
+                    </td>
                     <td><?= $openFile->getUrlDepth($objectNb); $sheet->setCellValue('D' . $objectNb + 1, $openFile->getUrlDepth($objectNb)) ?></td>
                     <td><?= $openFile->getTimesUrlFound($objectNb); $sheet->setCellValue('E' . $objectNb + 1, $openFile->getTimesUrlFound($objectNb)) ?></td>
                     <td>
