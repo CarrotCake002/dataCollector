@@ -75,7 +75,7 @@ if (isset($_FILES)):
                     echo "<br><br><b>There is no data to display. Make sure you acessed the correct file </b>";
                     die;
                 }
-                for ($i = 1; $i < $objectCount; $i++): ?>
+                for ($i = 1; $i <= $objectCount; $i++): ?>
 
             <tr>
                 <td><?= $i; $sheet->setCellValue('A' . $i + 1, $i) ?></td>
