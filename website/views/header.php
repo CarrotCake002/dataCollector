@@ -12,7 +12,7 @@
     <header>
         <nav>
             <ul>
-                <li><a href="/website/index.php">Home</a></li>
+                <li><a href="/website/home.php">Home</a></li>
                 <li><a href="/website/views/openFile.php">Open</a></li>
             </ul>
         </nav>
