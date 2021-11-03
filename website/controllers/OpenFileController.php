@@ -15,7 +15,10 @@ class OpenFileController {
     }
 
     public function getObjectCount() {
-        return (count($this->jsonData));
+        if (!isset($this->jsonData['runtime'])) {
+            return count($this->jsonData);
+        }
+        return (count($this->jsonData) - 1);
     }
 
     public function getObjectFromUrl($url) {
