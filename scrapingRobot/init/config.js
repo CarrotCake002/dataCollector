@@ -200,13 +200,14 @@ function configScrollX(args) {
     if (!args.includes("-sX"))
         return null;
     if (args[args.indexOf("-sX") + 1] === undefined) {
-        // log missing args error
+        logs.scrollXArgError();
         return false;
     }
-
     var scroll = args[args.indexOf("-sX") + 1].trim().split(",");
-    if (scroll.length > 3)
+    if (scroll.length > 3) {
+        logs.scrollXArgCount();
         return false;
+    }
     if (scroll.length === 1)
         scroll.push(500);
     if (scroll.length === 2)
@@ -214,17 +215,19 @@ function configScrollX(args) {
     return scroll;
 }
 
+// times to scroll, size of scroll, time between scrolls (ms)
 function configScrollY(args) {
     if (!args.includes("-sY"))
         return null;
     if (args[args.indexOf("-sY") + 1] === undefined) {
-        // log missing args error
+        logs.scrollYArgError();
         return false;
     }
-
     var scroll = args[args.indexOf("-sY") + 1].trim().split(",");
-    if (scroll.length > 3)
+    if (scroll.length > 3) {
+        logs.scrollYArgCount();
         return false;
+    }
     if (scroll.length === 1)
         scroll.push(500);
     if (scroll.length === 2)
