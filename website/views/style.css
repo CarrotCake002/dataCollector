@@ -111,6 +111,7 @@ button {
 table, th, td {
     border: 1px solid black;
     text-align: center;
+    vertical-align: top;
 }
 
 table {
