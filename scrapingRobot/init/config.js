@@ -60,7 +60,10 @@ function configStrLinkExclude(args) {
         logs.errorLinkExclude();
         return false;
     }
-    var avoidLinks = args[args.indexOf("-x") + 1].trim().split(",");
+    var avoidLinks = args[args.indexOf("-x") + 1].split(",");
+    for (var i = 0; i < avoidLinks.length; i++) {
+        avoidLinks[i] = avoidLinks[i].trim();
+    }
     return init.defaultParams['notEnterLinksWith'].concat(avoidLinks);
 }
 
@@ -72,7 +75,10 @@ function configQuerySelector(args) {
         logs.errorSelector();
         return false;
     }
-    var selectorArray = args[args.indexOf("-s") + 1].trim().split(",");
+    var selectorArray = args[args.indexOf("-s") + 1].split(",");
+    for (var i = 0; i < selectorArray.length; i++) {
+        selectorArray[i] = selectorArray[i].trim();
+    }
     return init.defaultParams['querySelector'].concat(selectorArray);
 }
 
@@ -84,7 +90,10 @@ function configStrLinkInclude(args, defaultParams) {
         logs.errorLinkInclude();
         return false;
     }
-    defaultParams['onlyEnterLinksWith'] = args[args.indexOf("-i") + 1].trim().split(",");
+    defaultParams['onlyEnterLinksWith'] = args[args.indexOf("-i") + 1].split(",");
+    for (var i = 0; i < defaultParams['onlyEnterLinksWith'].length; i++) {
+        defaultParams['onlyEnterLinksWith'][i] = defaultParams['onlyEnterLinksWith'][i].trim();
+    }
     return defaultParams['onlyEnterLinksWith'];
 }
 
@@ -96,7 +105,10 @@ function configClickItems(args) {
         logs.errorClickItems();
         return false;
     }
-    init.defaultParams['clickItems'] = args[args.indexOf("-c") + 1].trim().split(",");
+    init.defaultParams['clickItems'] = args[args.indexOf("-c") + 1].split(",");
+    for (var i = 0; i < init.defaultParams['clickItems'].length; i++) {
+        init.defaultParams['clickItems'][i] = init.defaultParams['clickItems'][i].trim();
+    }
     return init.defaultParams['clickItems'];
 }
 
@@ -157,10 +169,10 @@ function configStartingUrls(args, startingUrlFile) {
         logs.errorStartingUrlsIncompatibleArgs();
         return false;
     } else if (args.includes("-u") === false && args.includes("-uf"))
-        var startingUrls = readStartingUrls(startingUrlFile).trim().split(",");
+        var startingUrls = readStartingUrls(startingUrlFile).split(",");
     else {
         if (args[args.indexOf("-u") + 1] !== undefined)
-            var startingUrls = args[args.indexOf("-u") + 1].trim().split(",");
+            var startingUrls = args[args.indexOf("-u") + 1].split(",");
         else {
             logs.errorStartingUrlsMissingArg();
             return false;
@@ -168,7 +180,7 @@ function configStartingUrls(args, startingUrlFile) {
     }
     init.defaultParams['startingUrls'] = [];
     for (var i = 0; i < startingUrls.length; i++) {
-        init.defaultParams['startingUrls'].push([startingUrls[i], 0, 1]);
+        init.defaultParams['startingUrls'].push([startingUrls[i].trim(), 0, 1]);
     }
     return init.defaultParams['startingUrls'];
 }
@@ -181,7 +193,11 @@ function configSaveLinksWith(args) {
         logs.errorSaveLinks();
         return false;
     }
-    return (args[args.indexOf("-sL") + 1].trim().split(","));
+    var links = args[args.indexOf("-sL") + 1].split(",");
+    for (var i = 0; i < links.length; i++) {
+        links[i] = links[i].trim();
+    }
+    return links;
 }
 
 // configure the links you will not want to save when getting new links from a page
@@ -192,7 +208,11 @@ function configNotSaveLinksWith(args) {
         logs.errorNotSaveLinks();
         return false;
     }
-    return (args[args.indexOf("-nL") + 1].trim().split(","));
+    var links = args[args.indexOf("-nL") + 1].split(",");
+    for (var i = 0; i < links.length; i++) {
+        links[i] = links[i].trim();
+    }
+    return links;
 }
 
 // times to scroll, size of scroll, time between scrolls (ms)
@@ -203,7 +223,7 @@ function configScrollX(args) {
         logs.scrollXArgError();
         return false;
     }
-    var scroll = args[args.indexOf("-sX") + 1].trim().split(",");
+    var scroll = args[args.indexOf("-sX") + 1].split(",");
     if (scroll.length > 3) {
         logs.scrollXArgCount();
         return false;
@@ -230,7 +250,7 @@ function configScrollY(args) {
         logs.scrollYArgError();
         return false;
     }
-    var scroll = args[args.indexOf("-sY") + 1].trim().split(",");
+    var scroll = args[args.indexOf("-sY") + 1].split(",");
     if (scroll.length > 3) {
         logs.scrollYArgCount();
         return false;
