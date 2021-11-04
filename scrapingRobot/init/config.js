@@ -208,6 +208,13 @@ function configScrollX(args) {
         logs.scrollXArgCount();
         return false;
     }
+    for (var i = 0; i < scroll.length; i++) {
+        scroll[i] = parseInt(scroll[i]);
+        if (isNaN(scroll[i])) {
+            logs.notANumber();
+            return false;
+        }
+    }
     if (scroll.length === 1)
         scroll.push(500);
     if (scroll.length === 2)
@@ -227,6 +234,13 @@ function configScrollY(args) {
     if (scroll.length > 3) {
         logs.scrollYArgCount();
         return false;
+    }
+    for (var i = 0; i < scroll.length; i++) {
+        scroll[i] = parseInt(scroll[i]);
+        if (isNaN(scroll[i])) {
+            logs.notANumber();
+            return false;
+        }
     }
     if (scroll.length === 1)
         scroll.push(500);
