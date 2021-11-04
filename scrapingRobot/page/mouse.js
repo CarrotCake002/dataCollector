@@ -14,10 +14,12 @@ async function clickItems(clickItems, page) {
 
 // function to simulate a user wheel scroll in the X and Y axis
 async function wheelScroll(page, params) {
-    var scroll = params['scrollX'];
-    for (var i = 0; i < scroll[0]; i++) {
-        await page.mouse.wheel({ deltaY: scroll[1] });
-        await page.waitFor(scroll[2]);
+    if (params['scrollX']) {
+        var scroll = params['scrollX'];
+        for (var i = 0; i < scroll[0]; i++) {
+            await page.mouse.wheel({ deltaY: scroll[1] });
+            await page.waitFor(scroll[2]);
+        }
     }
 }
 
