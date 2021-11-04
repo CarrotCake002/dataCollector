@@ -24,7 +24,7 @@ async function wheelScroll(page, params) {
     if (params['scrollX']) {
         scroll = params['scrollX'];
         for (var i = 0; i < scroll[0]; i++) {
-            await page.mouse.wheel({ deltaY: scroll[1] });
+            await page.mouse.wheel({ deltaX: scroll[1] });
             await page.waitFor(scroll[2]);
         }
     }
