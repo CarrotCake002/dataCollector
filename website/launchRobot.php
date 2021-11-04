@@ -73,6 +73,10 @@ if (isset($_POST)) {
         $query = $query . ' -s "' . $_POST['userSelectors'] . '" ';
     if (isset($_POST['maxDepth']) && $_POST['maxDepth'] !== '')
         $query = $query . ' -d "' . $_POST['maxDepth'] . '" ';
+    if (isset($_POST['scrollX']) && $_POST['scrollX'] !== '')
+        $query = $query . ' -sX "' . $_POST['scrollX'] . '" ';
+    if (isset($_POST['scrollY']) && $_POST['scrollY'] !== '')
+        $query = $query . ' -sY "' . $_POST['scrollY'] . '" ';
     if (isset($_POST['clickItems']) && $_POST['clickItems'] !== '')
         $query = $query . ' -c "' . $_POST['clickItems'] . '" ';
     if (isset($_POST['sitemapLink']) && $_POST['sitemapLink'] !== '')
