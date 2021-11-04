@@ -180,6 +180,7 @@ function scrollYArgCount() {
     console.log("Error: after -sY: too many arguments.");
 }
 
+// logs error for NaN error handling
 function notANumber() {
     console.log("Error: the provided argument is not a number.");
 }
