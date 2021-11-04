@@ -199,7 +199,7 @@ function configNotSaveLinksWith(args) {
 function configScrollX(args) {
     if (!args.includes("-sX"))
         return null;
-    if (args[args.indexOf("-sX") + 1] === undefined) {
+    if (args[args.indexOf("-sX") + 1] === undefined || args[args.indexOf("-sX") + 1] === '') {
         logs.scrollXArgError();
         return false;
     }
@@ -219,7 +219,7 @@ function configScrollX(args) {
 function configScrollY(args) {
     if (!args.includes("-sY"))
         return null;
-    if (args[args.indexOf("-sY") + 1] === undefined) {
+    if (args[args.indexOf("-sY") + 1] === undefined || args[args.indexOf("-sY") + 1] === '') {
         logs.scrollYArgError();
         return false;
     }
@@ -330,7 +330,7 @@ function initParams(args) {
 
     if (!params) {
         logs.options();
-        return 84;
+        return false;
     }
     logs.any(params);
     return params;
@@ -338,6 +338,8 @@ function initParams(args) {
 
 // configure the initial value of linkList to define the starting urls of the program
 function setLinkList(params) {
+    if (!params)
+        return null;
     params['formattedSavefile'] ? write.writeInFile('{\n\t', params['savefile']) : write.writeInFile('{', params['savefile']);
     
     if (params['sitemapLink'] === null)
