@@ -195,6 +195,43 @@ function configNotSaveLinksWith(args) {
     return (args[args.indexOf("-nL") + 1].trim().split(","));
 }
 
+// times to scroll, size of scroll, time between scrolls (ms)
+function configScrollX(args) {
+    if (!args.includes("-sX"))
+        return null;
+    if (args[args.indexOf("-sX") + 1] === undefined) {
+        // log missing args error
+        return false;
+    }
+
+    var scroll = args[args.indexOf("-sX") + 1].trim().split(",");
+    if (scroll.length > 3)
+        return false;
+    if (scroll.length === 1)
+        scroll.push(500);
+    if (scroll.length === 2)
+        scroll.push(250);
+    return scroll;
+}
+
+function configScrollY(args) {
+    if (!args.includes("-sY"))
+        return null;
+    if (args[args.indexOf("-sY") + 1] === undefined) {
+        // log missing args error
+        return false;
+    }
+
+    var scroll = args[args.indexOf("-sY") + 1].trim().split(",");
+    if (scroll.length > 3)
+        return false;
+    if (scroll.length === 1)
+        scroll.push(500);
+    if (scroll.length === 2)
+        scroll.push(250);
+    return scroll;
+}
+
 // config if the data file should be formatted. A simple format will be present even if this flag is set as false
 function configSaveFormat(args) {
     return args.includes("-F") ? true : false;
@@ -266,6 +303,10 @@ function configParams(args, defaultParams) {
     } if (defaultParams['onlySaveLinksWith'] = configSaveLinksWith(args), defaultParams['onlySaveLinksWith'] === false) {
         return false;
     } if (defaultParams['notSaveLinksWith'] = configNotSaveLinksWith(args), defaultParams['notSaveLinksWith'] === false) {
+        return false;
+    } if (defaultParams['scrollX'] = configScrollX(args), defaultParams['scrollX'] === false) {
+        return false;
+    } if (defaultParams['scrollY'] = configScrollY(args), defaultParams['scrollY'] === false) {
         return false;
     }
     defaultParams['getOneSelector'] = configGetAllHtml(args);
