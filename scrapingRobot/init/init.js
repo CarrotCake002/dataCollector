@@ -12,6 +12,8 @@ var defaultParams = {
     headlessBrowser: false,
     args: process.argv,
     clickItems: null,
+    scrollX: null,
+    scrollY: null,
     sitemapLink: null,
     startingUrls: null,
     startingUrlsFile: null,
