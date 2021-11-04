@@ -28,7 +28,7 @@ async function getSitemapUrls(linkList) {
 
 // checks if there is a sitemap to be scraped and returns the result if there was, or errors if there were any
 async function check(iList, linkList, params) {
-    if (iList === 0 && params['sitemapLink'] !== null && params['sitemapLink'].includes('/sitemap.xml')) {
+    if (iList === 0 && params['sitemapLink'] != null && params['sitemapLink'].includes('/sitemap.xml')) {
         linkList = await sitemap.getSitemapUrls(linkList);
         if (linkList.length < 1)
             return null;
