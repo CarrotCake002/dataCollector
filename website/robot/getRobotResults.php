@@ -103,6 +103,24 @@ if (isset($_FILES)):
                 <td><a href="<?= '/website/views/getLinkDetails.php/?object=' . $i . '&filename=' . $filePath ?>">Click for more details</a></td>
             </tr>
             <?php
+                fputcsv($stream,[
+                    $i,
+                    $openFile->getIteration($i),
+                    $openFile->getUrl($i),
+                    $openFile->getUrlDepth($i),
+                    $openFile->getTimesUrlFound($i),
+                    $openFile->getUrlPredecessor($i),
+                    $openFile->getStatus($i),
+                    $openFile->getResponseTime($i),
+                    $openFile->getTitle($i), $openFile->getTitleSize($i),
+                    $openFile->getAllMetaSize($i), $openFile->getMetaDescription($i), $openFile->getMetaDescriptionCharSize($i),
+                    $openFile->getAllMetaInStr($i), $openFile->getAllMetaSizesInStr($i), 'Meta index', 'Meta follow', 'Meta sponsored', 'Meta ugc', 'Meta noopener',
+                    'Nb hreflang', 'Hreflang',
+                    'Canonical',
+                    'Nb links', 'Links', 'Link <a> tags', 'Link target=blank',
+                    'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+                    'Custom selectors'
+                ]);
                 endfor;
             ?>
         </table>
