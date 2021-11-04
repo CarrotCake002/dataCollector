@@ -11,6 +11,8 @@ async function getPageData(linkList, iList, page, response) {
 // main loop of the program. Recursive function that open/closes browsers and gets all the information from every page
 async function getContent(linkList, iList, linkEnteredCount) {
 
+    if (!linkList)
+        return 84;
     linkList = await imports.sitemap.check(iList, linkList, imports.configStart.params);
 
     const formattedLink = imports.link.getFormattedLink(iList, linkList[iList][0], imports.configStart.params['domain']);
