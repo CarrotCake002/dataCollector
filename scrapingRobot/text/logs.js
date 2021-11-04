@@ -160,18 +160,22 @@ function link(link) {
     console.log(link + "\n");
 }
 
+// logs error if missing arg after scrollX flag
 function scrollXArgError() {
     console.log("Error: after -sX: missing scroll params.");
 }
 
+// logs error if too many arguments for scrollX
 function scrollXArgCount() {
     console.log("Error: after -sX: too many arguments.");
 }
 
+// logs error if missing arg after scrollY flag
 function scrollYArgError() {
     console.log("Error: after -sY: missing scroll params.");
 }
 
+// logs error if too many arguments for scrollY
 function scrollYArgCount() {
     console.log("Error: after -sY: too many arguments.");
 }
