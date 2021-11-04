@@ -160,6 +160,22 @@ function link(link) {
     console.log(link + "\n");
 }
 
+function scrollXArgError() {
+    console.log("Error: after -sX: missing scroll params");
+}
+
+function scrollXArgCount() {
+    console.log("Error: after -sX: too many arguments")
+}
+
+function scrollYArgError() {
+    console.log("Error: after -sY: missing scroll params");
+}
+
+function scrollYArgCount() {
+    console.log("Error: after -sY: too many arguments")
+}
+
 // logs a success message at the end of the program when all urls have been scraped
 function success() {
     console.log("Info: the program has sucessfully obtained all the links it could!");
@@ -173,4 +189,4 @@ function any(arg) {
 module.exports = { help, errorDomain, errorSavefileName, errorSavefileExtension, errorSavefileForbidden,
     errorLinkExclude, errorSelector, errorLinkInclude, errorClickItems, errorSitemap, errorDepth,
     errorStartingUrlsFile, errorStartingUrlsIncompatibleArgs, errorStartingUrlsMissingArg, errorSaveLinks,
-    errorNotSaveLinks, errorData, errorStatus, options, iteration, link,  success, any };
+    errorNotSaveLinks, errorData, errorStatus, options, iteration, link, scrollXArgError, scrollXArgCount, scrollYArgError, scrollYArgCount, success, any };
