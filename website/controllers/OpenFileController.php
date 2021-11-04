@@ -118,11 +118,33 @@ class OpenFileController {
         }
     }
 
+    public function getAllMetaInStr($ObjectNb) {
+        $metaSize = $this->getAllMetaSize($ObjectNb);
+        if ($metaSize < 1)
+            return '';
+        $query = $this->getSingleMetaTag($ObjectNb, 0);
+        for ($i = 1; $i < $metaSize; $i++) {
+            $query = $query . ',' . $this->getSingleMetaTag($ObjectNb, $i);
+        }
+        return $query;
+    }
+
     public function displayAllMetaCharSizes($ObjectNb) {
         $metaSize = $this->getAllMetaSize($ObjectNb);
         for ($i = 0; $i < $metaSize; $i++) {
             echo $this->getSingleMetaCharSize($ObjectNb, $i) . "<br>";
         }
+    }
+
+    public function getAllMetaSizesInStr($ObjectNb) {
+        $metaSize = $this->getAllMetaSize($ObjectNb);
+        if ($metaSize < 1)
+            return '';
+        $query = $this->getSingleMetaCharSize($ObjectNb, 0);
+        for ($i = 1; $i < $metaSize; $i++) {
+            $query = $query . ',' . $this->getSingleMetaCharSize($ObjectNb, $i);
+        }
+        return $query;
     }
 
     public function getMetaDescription($ObjectNb) {
@@ -149,6 +171,19 @@ class OpenFileController {
                 echo 'N';
             echo '<br>';
         }
+    }
+
+    public function getMetaIndexInStr($ObjectNb) {
+        $allMetaSize = $this->getAllMetaSize($ObjectNb);
+        $query = '';
+        for ($i = 0; $i < $allMetaSize; $i++) {
+            if (strpos($this->getSingleMetaTag($ObjectNb, $i), "noindex") === false)
+                $query = $query . 'Y' . ',';
+            else
+                $query = $query . 'N' . ',';
+        }
+        $query = substr_replace($query, '', -1);
+        return $query;
     }
 
     public function getMetaFollow($ObjectNb) {
