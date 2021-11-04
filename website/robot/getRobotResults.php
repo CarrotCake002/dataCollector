@@ -47,8 +47,8 @@ if (isset($_FILES)):
     }
 
     $sheet = new SpreadsheetController('robotResults');
+    $stream = fopen($session->getSessionFolderPath() . '/allDetailsData.csv', 'w');
 ?>
-
 
 <div id="tableBlock">
         <form action="../views/getAllLinkDetails.php" method="GET">
@@ -69,10 +69,26 @@ if (isset($_FILES)):
             </tr>
 
             <?php
+                fputcsv($stream, ['Id',
+                'Iteration',
+                'URL',
+                'Depth',
+                'Times URL found',
+                'Predecessor',
+                'Status',
+                'Load time',
+                'Title', 'Title size',
+                'Nb Meta tags', 'Meta description', 'Meta description size',
+                'Meta tags', 'Meta tags sizes', 'Meta index', 'Meta follow', 'Meta sponsored', 'Meta ugc', 'Meta noopener',
+                'Nb hreflang', 'Hreflang',
+                'Canonical',
+                'Nb links', 'Links', 'Link <a> tags', 'Link target=blank',
+                'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+                'Custom selectors']);
                 $objectCount = $openFile->getObjectCount();
 
                 if ($objectCount < 1) {
-                    echo "<br><br><b>There is no data to display. Make sure you acessed the correct file </b>";
+                    echo "<br><br><b>There is no data to display. Make sure you accessed the correct file </b>";
                     die;
                 }
                 for ($i = 1; $i <= $objectCount; $i++): ?>
