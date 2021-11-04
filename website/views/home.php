@@ -38,6 +38,12 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/website/views/header.php";
                 <p>Maximum depth<br>
                 (default: 999)</p>
                 <input class="home_inputs" type="text" name="maxDepth" placeholder="3">
+                <p>Wheel scroll X axis<br>
+                (scroll times -> no default, scroll size -> def: 500, pause between scrolls in miliseconds -> def: 250)</p>
+                <input class="home_inputs" type="text" name="scrollX" placeholder="10, 500, 250">
+                <p>Wheel scroll Y axis<br>
+                (scroll times -> no default, scroll size -> def: 500, pause between scrolls in miliseconds -> def: 250)</p>
+                <input class="home_inputs" type="text" name="scrollY" placeholder="200, 50">
                 <p>Click items<br>
                 (paste the JS path)</p>
                 <input class="home_inputs" type="text" name="clickItems" placeholder="div.itemClass > div, #itemId">
