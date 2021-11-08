@@ -2,10 +2,11 @@
 
 session_start();
 
-require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/header.php';
-require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/OpenFileController.php';
-require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/SpreadsheetController.php';
-require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/SessionController.php';
+require_once 'header.php';
+require_once 'footer.php';
+require '../controllers/OpenFileController.php';
+require '../controllers/SpreadsheetController.php';
+require '../controllers/SessionController.php';
 
 use classes\OpenFileController;
 use classes\SpreadsheetController;
@@ -37,7 +38,7 @@ if (isset($_GET)) :
 
     <div id="table_container">
         <button class="copyTableButton" onclick="copyDetailsTable()">Copy Table contents</button>
-        <a href="<?= '/savefiles/' . $session->getSessionFolderName() . '/' . $sheet->sheetName . '.xlsx' ?>" download="<?= $sheet->sheetName ?>" class="downloadDataExcel" ><br><br>Download an excel with all data!</a>
+        <a href="<?= '../../savefiles/' . $session->getSessionFolderName() . '/' . $sheet->sheetName . '.xlsx' ?>" download="<?= $sheet->sheetName ?>" class="downloadDataExcel" ><br><br>Download an excel with all data!</a>
         <table id="details_table">
             <tr>
                 <th>Id<?= $sheet->setCellValue('A1', 'Id') ?></th>
@@ -62,13 +63,13 @@ if (isset($_GET)) :
                     <td><?= $openFile->getIteration($objectNb); $sheet->setCellValue('B' . $objectNb + 1, $openFile->getIteration($objectNb)) ?></td>
                     <td>
                         <a href="<?= $openFile->getUrl($objectNb) ?>"><?= $openFile->getUrl($objectNb); $sheet->setCellValue('C' . $objectNb + 1, $openFile->getUrl($objectNb)) ?></a>
-                        (<a href="<?= '/website/views/getLinkDetails.php/?object=' . $objectNb . '&filename=' . $_GET['filename']?>">details</a>)
+                        (<a href="<?= '/getLinkDetails.php/?object=' . $objectNb . '&filename=' . $_GET['filename']?>">details</a>)
                     </td>
                     <td><?= $openFile->getUrlDepth($objectNb); $sheet->setCellValue('D' . $objectNb + 1, $openFile->getUrlDepth($objectNb)) ?></td>
                     <td><?= $openFile->getTimesUrlFound($objectNb); $sheet->setCellValue('E' . $objectNb + 1, $openFile->getTimesUrlFound($objectNb)) ?></td>
                     <td>
                         <a href="<?= $openFile->getUrlPredecessor($objectNb) ?>"><?= $openFile->getUrlPredecessor($objectNb); $sheet->setCellValue('F' . $objectNb + 1, $openFile->getUrlPredecessor($objectNb)) ?></a>
-                        (<a href="<?= '/website/views/getLinkDetails.php/?object=' . $openFile->getObjectFromUrl($openFile->getUrlPredecessor($objectNb)) . '&filename=' . $_GET['filename'] ?>">details</a>)
+                        (<a href="<?= '/getLinkDetails.php/?object=' . $openFile->getObjectFromUrl($openFile->getUrlPredecessor($objectNb)) . '&filename=' . $_GET['filename'] ?>">details</a>)
                     </td>
                     <td><?= $openFile->getStatus($objectNb); $sheet->setCellValue('G' . $objectNb + 1, $openFile->getStatus($objectNb)) ?></td>
                     <td><?= $openFile->getResponseTime($objectNb); $sheet->setCellValue('H' . $objectNb + 1, $openFile->getResponseTime($objectNb)) ?></td>
@@ -99,5 +100,3 @@ else :
         Please try again and if the problem presists, contact the creator.";
     return;
 endif;
-
-require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/footer.php';
