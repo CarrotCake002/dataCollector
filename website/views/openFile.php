@@ -1,5 +1,6 @@
 <?php
-    require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/header.php';
+    require_once 'header.php';
+    require_once 'footer.php';
 ?>
 
 <script>
@@ -22,5 +23,4 @@
 </div>
 
 <?php
-    require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/footer.php';
 ?>
