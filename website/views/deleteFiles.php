@@ -2,7 +2,7 @@
 
 session_start();
 
-require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/SessionController.php';
+require '../controllers/SessionController.php';
 
 use classes\SessionController;
 
@@ -16,10 +16,10 @@ foreach($files as $file){
 rmdir($session->getSessionFolderPath());
 
 
-$savefilesData = scandir($_SERVER['DOCUMENT_ROOT'] . "/savefiles/");
+$savefilesData = scandir("../../savefiles/");
 
 for ($i = 0; $i < count($savefilesData); $i++) {
-    $folderPath = $_SERVER['DOCUMENT_ROOT'] . "/savefiles/" . $savefilesData[$i];
+    $folderPath = "../../savefiles/" . $savefilesData[$i];
     if (is_dir($folderPath) && !strpos($folderPath, ".")) {
         $dirDate = date_create(date("d-m-y G:i:s", filemtime($folderPath)));
         $dateInterval = date_diff(date_create(date("d-m-y G:i:s")), $dirDate);
