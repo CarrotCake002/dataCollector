@@ -2,10 +2,11 @@
 
 session_start();
 
-require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/header.php';
-require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/OpenFileController.php';
-require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/SessionController.php';
-require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/SpreadsheetController.php';
+require_once 'header.php';
+require_once 'footer.php';
+require '../controllers/OpenFileController.php';
+require '../controllers/SessionController.php';
+require '../controllers/SpreadsheetController.php';
 
 use classes\OpenFileController;
 use classes\SessionController;
@@ -56,7 +57,7 @@ if (isset($_FILES)):
             <input type="submit" name="submit" value="Get all link details">
         </form>
         <button class="copyTableButton" onclick="copyLinksTable()">Copy Table contents</button>
-        <a href="<?= '/savefiles/' . $session->getSessionFolderName() . '/' . $sheet->sheetName . '.xlsx' ?>" download="<?= $sheet->sheetName ?>" class="downloadDataExcel" ><br><br>Download an excel with all data!</a>
+        <a href="<?= '../../savefiles/' . $session->getSessionFolderName() . '/' . $sheet->sheetName . '.xlsx' ?>" download="<?= $sheet->sheetName ?>" class="downloadDataExcel" ><br><br>Download an excel with all data!</a>
         <table id="allLinksTable">
             <tr>
                 <th>Id<?= $sheet->setCellValue('A1', 'Id') ?></th>
@@ -100,7 +101,7 @@ if (isset($_FILES)):
                 <td><?= $openFile->getUrlDepth($i); $sheet->setCellValue('D' . $i + 1, $openFile->getUrlDepth($i)) ?></td>
                 <td><?= $openFile->getStatus($i); $sheet->setCellValue('E' . $i + 1, $openFile->getStatus($i)) ?></td>
                 <td><?= $openFile->getAllLinksSize($i); $sheet->setCellValue('F' . $i + 1, $openFile->getAllLinksSize($i)) ?></td>
-                <td><a href="<?= '/website/views/getLinkDetails.php/?object=' . $i . '&filename=' . $filePath ?>">Click for more details</a></td>
+                <td><a href="<?= '/getLinkDetails.php/?object=' . $i . '&filename=' . $filePath ?>">Click for more details</a></td>
             </tr>
             <?php
                 fputcsv($stream,[
@@ -138,5 +139,3 @@ if (isset($_FILES)):
 <?php
 $sheet->saveSpreadSheet($session->getSessionFolderPath() . '/');
 endif;
-
-require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/footer.php';
