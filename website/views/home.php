@@ -1,6 +1,7 @@
 <?php
 
-require_once $_SERVER["DOCUMENT_ROOT"] . "/website/views/header.php";
+require_once "header.php";
+require_once "footer.php";
 
 ?>
 
@@ -9,7 +10,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/website/views/header.php";
         <h1>Scrape a new site!</h1>
     </div>
     <div>
-        <form action="/website/launchRobot.php" method="post" enctype="multipart/form-data">
+        <form action="../launchRobot.php" method="post" enctype="multipart/form-data">
                 <p>Domain*<br>
                 (mandatory)</p>
                 <input class="home_inputs" type="text" name="domain" placeholder="https://example.com">
@@ -105,7 +106,3 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/website/views/header.php";
         </form>
     </div>
 </div>
-
-<?php
-
-require_once $_SERVER["DOCUMENT_ROOT"] . "/website/views/footer.php";
