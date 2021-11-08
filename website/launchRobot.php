@@ -1,7 +1,8 @@
 <?php
 session_start();
-require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/header.php';
-require $_SERVER["DOCUMENT_ROOT"] . '/website/controllers/SessionController.php';
+require_once 'header.php';
+require_once 'footer.php';
+require '../controllers/SessionController.php';
 ?>
 
 <script>
@@ -111,12 +112,10 @@ isset($_POST['savefile']) && $_POST['savefile'] !== '' ? $savefile = $session->g
 
 ?>
 <br><br>
-<a href="<?= "/savefiles/" . $savefile . ".json"; ?>" download="<?= $_POST['savefile'] ?>">Download your data!</a><br>
+<a href="<?= "../../savefiles/" . $savefile . ".json"; ?>" download="<?= $_POST['savefile'] ?>">Download your data!</a><br>
 <a>(If you don't download the file now, you will lose it forever)</a>
 
 <?php
-
-require_once $_SERVER["DOCUMENT_ROOT"] . '/website/views/footer.php';
 
 if (isset($_POST['getRobotLogs']) && $_POST['getRobotLogs'] === 'on') {
     echo "<b style='font-size: 20px'>Robopol's logs:</b><br><br>";
