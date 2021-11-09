@@ -120,6 +120,7 @@ if (isset($_POST['getRobotLogs']) && $_POST['getRobotLogs'] === 'on') {
     echo "<b style='font-size: 20px'>Robopol's logs:</b><br><br>";
     for ($i = 0; $i < count($output); $i++)
         echo $output[$i] . '<br>';
+    echo '<br><br><br>';
 }
 
 ?>
