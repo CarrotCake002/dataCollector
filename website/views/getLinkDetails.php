@@ -1,8 +1,7 @@
 <?php
 
-    require_once 'header.php';
-    require_once 'footer.php';
-    require '../controllers/OpenFileController.php';
+    require_once './header.php';
+    require './../controllers/OpenFileController.php';
 
     use classes\OpenFileController;
 
@@ -85,7 +84,7 @@
                     <td><?= $openFile->getTimesUrlFound($objectNb) ?></td>
                     <td>
                         <a href="<?= $openFile->getUrlPredecessor($objectNb)?>"><?= $openFile->getUrlPredecessor($objectNb)?></a><br>
-                        (<a href="<?= '/getLinkDetails.php/?object=' . $openFile->getObjectFromUrl($openFile->getUrlPredecessor($objectNb)) . '&filename=' . $_GET['filename']?>">details</a>)
+                        (<a href="<?= '/website/views/getLinkDetails.php/?object=' . $openFile->getObjectFromUrl($openFile->getUrlPredecessor($objectNb)) . '&filename=' . $_GET['filename']?>">details</a>)
                     </td>
                     <td><?= $openFile->getStatus($objectNb) ?></td>
                     <td><?= $openFile->getResponseTime($objectNb) ?></td>
@@ -143,3 +142,5 @@
                 Please try again and if the problem presists, contact the creator.";
         return;
     endif;
+
+    require_once './footer.php';

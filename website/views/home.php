@@ -1,6 +1,6 @@
 <?php
 
-require_once "header.php";
+require_once "website/views/header.php";
 
 ?>
 
@@ -9,7 +9,7 @@ require_once "header.php";
         <h1>Scrape a new site!</h1>
     </div>
     <div>
-        <form action="../launchRobot.php" method="post" enctype="multipart/form-data">
+        <form action="/website/launchRobot.php" method="post" enctype="multipart/form-data">
                 <p>Domain*<br>
                 (mandatory)</p>
                 <input class="home_inputs" type="text" name="domain" placeholder="https://example.com">
@@ -108,4 +108,4 @@ require_once "header.php";
 
 <?php
 
-require_once "footer.php";
+require_once "website/views/footer.php";

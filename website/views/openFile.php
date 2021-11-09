@@ -1,6 +1,5 @@
 <?php
     require_once 'header.php';
-    require_once 'footer.php';
 ?>
 
 <script>
@@ -15,7 +14,7 @@
         <h2>Which file do you want to open?</h2>
     </div>
     <div>
-        <form action="../robot/getRobotResults.php" method="post" enctype="multipart/form-data">
+        <form action="./../robot/getRobotResults.php" method="post" enctype="multipart/form-data">
             <input id="openFile" type="file" name="openFile">
             <input type="submit" name="submit">
         </form>
@@ -23,4 +22,5 @@
 </div>
 
 <?php
-?>
+
+require_once 'footer.php';
