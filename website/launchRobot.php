@@ -29,7 +29,7 @@ if (isset($_POST)) {
     $session = new SessionController($session_id);
 
     if ($session->error) {
-        echo "Error: the token you sent is invalid.<br>If you don't have a valid token, launch the scraping without it and a token will automatically be provided to you";
+        echo "Error: the token you sent is invalid.<br>If you don't have a valid token, launch the scraping without it and a token will automatically be provided to you.";
         return;
     }
 
