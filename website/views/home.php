@@ -99,11 +99,6 @@ require_once "website/views/header.php";
                     <input type="checkbox" name="headless">
                     <div class="slider round"></div>
                 </label>
-                <p class="home_p">Get Robopol logs</p>
-                <label class="switch">
-                    <input type="checkbox" name="getRobotLogs">
-                    <div class="slider round"></div>
-                </label>
             <button type="submit">Submit</button>
         </form>
     </div>
