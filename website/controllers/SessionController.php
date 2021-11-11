@@ -4,10 +4,17 @@ namespace classes;
 
 class SessionController {
 
-    private $session_id;
+    public $session_id;
+    public $error = false;
 
-    public function __construct() {
-        $this->session_id = session_id();
+    public function __construct($session_id = false) {
+        if ($session_id !== false) {
+            session_id($session_id);
+            $this->session_id = session_id();
+            if (!$this->checkSessionFolderExists())
+                $this->error = true;
+        } else
+            $this->session_id = session_id();
     }
 
     public function getSessionFolderName() {
