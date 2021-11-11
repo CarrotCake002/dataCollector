@@ -129,23 +129,12 @@ if (isset($_POST)) {
     return;
 }
 
-isset($_POST['savefile']) && $_POST['savefile'] !== '' ? $savefile = $session->getSessionFolderName() . '/' . $_POST['savefile'] : $savefile = $session->getSessionFolderName() . "/default";
-
 ?>
-<br><br>
-<a href="<?= "/savefiles/" . $savefile . ".json"; ?>" download="<?= $_POST['savefile'] ?>">Download your data!</a><br>
-<a>(If you don't download the file now, you will lose it forever)</a>
 
-<?php
-
-if (isset($_POST['getRobotLogs']) && $_POST['getRobotLogs'] === 'on') {
-    echo "<b style='font-size: 20px'>Robopol's logs:</b><br><br>";
-    for ($i = 0; $i < count($output); $i++)
-        echo $output[$i] . '<br>';
-    echo '<br><br><br>';
-}
-
-?>
+<br>
+<h3>The robot started scraping the site you specified!</h3><br>
+<p>You can now check your data anytime with this token: <b style="font-size: 20px;"><?= $session->getSessionFolderName() ?></b><br><br>
+Remember: If you lose your token you will lose all your data, so keep it safe!</p>
 
 </div>
 
