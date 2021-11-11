@@ -10,6 +10,9 @@ require_once "website/views/header.php";
     </div>
     <div>
         <form action="/website/launchRobot.php" method="post" enctype="multipart/form-data">
+                <p>Token<br>
+                (if you have one)</p>
+                <input class="home_inputs" type="text" name="token" placeholder="">
                 <p>Domain*<br>
                 (mandatory)</p>
                 <input class="home_inputs" type="text" name="domain" placeholder="https://example.com">
