@@ -58,7 +58,7 @@ if (isset($_POST)) {
     }
 
     if (isset($_POST['domain']) && $_POST['domain'] !== '') {
-    $query = 'node ../../scrapingRobot/main/main.js -D "' . $_POST['domain'] . '"';
+    $query = 'node ../scrapingRobot/main/main.js -D "' . $_POST['domain'] . '"';
     } else {
         echo "Error: you need to specify a domain to scrape.";
         return;
@@ -114,13 +114,18 @@ if (isset($_POST)) {
         $query = $query . ' -gTitle';
     $params = "?query=" . $query;
     $params = str_replace(' ', '%20', $params);
-    $url = "views/execRobotQuery.php";
+    $url = "execRobotQuery.php";
     ?>
     <script>
         url = `<?=$url?><?=$params?>`;
         console.log(url);
         const xhttp = new XMLHttpRequest();
         xhttp.open("GET", url, true);
+        /*xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                alert(xhttp.responseText);
+            }
+        }*/
         xhttp.send();
     </script>
     <?php
