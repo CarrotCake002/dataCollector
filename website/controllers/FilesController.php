@@ -75,4 +75,17 @@ class FilesController {
             return "Active";
         }
     }
+
+    public function deleteTemporalFiles() {
+        $listSize = $this->getFileListSize();
+
+        for ($i = 0; $i < $listSize; $i++) {
+            if (strpos($this->file_list[$i], '.json') === false) {
+                unlink($this->getFileRelativePath($i));
+                unset($this->file_list[$i]);
+            }
+        }
+        $this->file_list = array_values($this->file_list);
+    }
+
 }
