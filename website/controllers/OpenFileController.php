@@ -310,7 +310,20 @@ class OpenFileController {
     }
 
     public function getSingleHreflang($ObjectNb, $hreflangNb) {
-        return ($this->getAllHtml($ObjectNb)['hreflang'][$hreflangNb]);
+        return ($this->getAllHreflang($ObjectNb)[$hreflangNb]);
+    }
+
+    public function getAllHreflangInStr($ObjectNb) {
+        $allHreflangSize = $this->getAllHreflangSize($ObjectNb);
+
+        $query = '';
+        if ($allHreflangSize < 1)
+            return $query;
+        for ($i = 0; $i < $allHreflangSize; $i++) {
+            $query = $query . $this->getSingleHreflang($ObjectNb, $i) . ',';
+        }
+        $query = substr_replace($query, '', -1);
+        return $query;
     }
 
     public function getSingleHreflangCharSize($ObjectNb, $hreflangNb) {
