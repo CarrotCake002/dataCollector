@@ -368,6 +368,19 @@ class OpenFileController {
         }
     }
 
+    public function getAllCanonicalsInStr($ObjectNb) {
+        $allCanonicalSize = $this->getAllCanonicalsSize($ObjectNb);
+
+        $query = '';
+        if ($allCanonicalSize < 1)
+            return $query;
+        for ($i = 0; $i < $allCanonicalSize; $i++) {
+            $query = $query . $this->getSingleCanonical($ObjectNb, $i) . ',';
+        }
+        $query = substr_replace($query, '', -1);
+        return $query;
+    }
+
     public function displayAllCanonicalSizes($ObjectNb) {
         $allCanonicalsSize = $this->getAllCanonicalsSize($ObjectNb);
 
