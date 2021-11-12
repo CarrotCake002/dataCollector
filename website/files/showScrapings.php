@@ -45,16 +45,31 @@ $files = new FilesController($session->session_id);
                 <img src="../../assets/download_button.png" alt="download" style="width: 25px;">
             </a>
         </td>
-        <td><img src="../../assets/delete_red_bin.png" alt="delete" style="width: 25px;"></td>
+        <td><img src="../../assets/delete_red_bin.png" alt="delete" onclick='deleteFile(<?=$fileNb?>,"<?=$files->folder?>")' style="width: 25px;"></td>
     </tr>
     <?php endfor; ?>
 </table>
 
 
 <script>
-    function deleteFile(file) {
-        filepath = '../../savefiles/<?=$session->getSessionFolderName()?>/' + file;
-        console.log(filepath);
+    function deleteFile(fileNb, token) {
+        console.log(fileNb);
+        console.log(token);
+        $.ajax({
+            method: "POST",
+            type: "POST",
+            url: 'deleteFile.php',
+            data: {
+                'fileNb' : fileNb,
+                'token': token
+            },
+            success: function (response) {
+                location.reload();
+            },
+            error: function () {
+                alert("There was an error deleting the file. Please try again later.");
+            }
+        });
     }
 </script>
 
