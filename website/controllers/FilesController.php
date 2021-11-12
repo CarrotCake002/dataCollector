@@ -4,8 +4,8 @@ namespace classes;
 
 class FilesController {
 
-    private $folder;
-    private $file_list;
+    public $folder;
+    public $file_list;
 
     public function __construct($folder_name) {
         $this->folder = $folder_name;
