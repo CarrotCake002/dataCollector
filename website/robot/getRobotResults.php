@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 require_once './../views/header.php';
 require './../controllers/OpenFileController.php';
 require './../controllers/SessionController.php';
@@ -13,16 +11,21 @@ use classes\SpreadsheetController;
 
 set_time_limit(0);
 
-$session = new SessionController();
+if (isset($_POST) && isset($_POST['token']) && $_POST['token'] != '') {
+    $session = new SessionController($_POST['token']);
+} else {
+    echo "Error: make sure you've set your personal token";
+    return;
+}
+
+session_start();
 
 if (isset($_FILES)):
     $json_data = null;
     if (isset($_FILES['openFile']) && isset($_FILES['openFile']['tmp_name'])) {
         if (!$session->checkSessionFolderExists()) {
-            if (!$session->createSessionFolder()) {
-                echo "Error: the session folder couldn't be created.";
-                return;
-            }
+            echo "Error: The token you sent is invalid.";
+            return;
         }
         $filePath = $session->getSessionFolderPath() . '/' . basename($_FILES['openFile']['tmp_name']);
         $move = move_uploaded_file($_FILES['openFile']['tmp_name'], $filePath);
