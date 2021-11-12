@@ -11,9 +11,8 @@ if (isset($_POST) && isset($_POST['token'])) {
     $files = new FilesController($session->session_id);
 
     for ($fileNb = 0; $fileNb < $files->getFileListSize(); $fileNb++) {
-        if (unlink($files->getFileRelativePath($_POST['fileNb'])) === false) {
-            echo 'Error: couldn\'t delete the file you specified.';
-            return;
+        if ($files->getFileStatus($fileNb) === "Stopped") {
+            unlink($files->getFileRelativePath($fileNb));
         }
     }
 } else {
