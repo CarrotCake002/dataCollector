@@ -22,39 +22,22 @@ $files = new FilesController($session->session_id);
 
 ?>
 
-
-<h1 style="text-align: center; font-size: 48px">Here you can see all your files</h1>
-
-<table>
-    <tr>
-        <th>File name</th>
-        <th>Size (kB)</th>
-        <th>Last updated</th>
-        <th>Status</th>
-        <th>Download</th>
-        <th>Delete</th>
-    </tr>
-    <?php for ($fileNb = 0; $fileNb < $files->getFileListSize(); $fileNb++): ?>
-    <tr>
-        <td><?= $files->getFileName($fileNb) ?></td>
-        <td><?= $files->getFileSize($fileNb) ?></td>
-        <td><?= $files->getFileLastUpdate($fileNb) ?></td>
-        <td></td>
-        <td>
-            <a href="<?=$files->getFileRelativePath($fileNb)?>" download="<?=$files->file_list[$fileNb]?>">
-                <img src="../../assets/download_button.png" alt="download" style="width: 25px;">
-            </a>
-        </td>
-        <td><img src="../../assets/delete_red_bin.png" alt="delete" onclick='deleteFile(<?=$fileNb?>,"<?=$files->folder?>")' style="width: 25px;"></td>
-    </tr>
-    <?php endfor; ?>
-</table>
-
-
 <script>
+
+    function changeStatusColor(fileNb, status) {
+        console.log("Active");
+        if (status === "Active") {
+            document.getElementById("fileStatus" + fileNb).style.color = "blue";
+        } else if (status === "Stopped") {
+            document.getElementById("fileStatus" + fileNb).style.color = "red";
+        } else if (status === "Finished") {
+            document.getElementById("fileStatus" + fileNb).style.color = "#31d313";
+        } else {
+            document.getElementById("fileStatus" + fileNb).style.color = "black";
+        }
+    }
+
     function deleteFile(fileNb, token) {
-        console.log(fileNb);
-        console.log(token);
         $.ajax({
             method: "POST",
             type: "POST",
@@ -73,6 +56,32 @@ $files = new FilesController($session->session_id);
     }
 </script>
 
+<h1 style="text-align: center; font-size: 48px">Here you can see all your files</h1>
+
+<table>
+    <tr>
+        <th>File name</th>
+        <th>Size (kB)</th>
+        <th>Last updated</th>
+        <th>Status</th>
+        <th>Download</th>
+        <th>Delete</th>
+    </tr>
+    <?php for ($fileNb = 0; $fileNb < $files->getFileListSize(); $fileNb++): ?>
+    <tr>
+        <td><?= $files->getFileName($fileNb) ?></td>
+        <td><?= $files->getFileSize($fileNb) ?></td>
+        <td><?= $files->getFileLastUpdate($fileNb) ?></td>
+        <td id="fileStatus<?= $fileNb?>"><?= $files->getFileStatus($fileNb) ?><script>changeStatusColor(<?=$fileNb?>, "<?=$files->getFileStatus($fileNb)?>");</script></td>
+        <td>
+            <a href="<?=$files->getFileRelativePath($fileNb)?>" download="<?=$files->file_list[$fileNb]?>">
+                <img src="../../assets/download_button.png" alt="download" style="width: 25px;">
+            </a>
+        </td>
+        <td><img src="../../assets/delete_red_bin.png" alt="delete" onclick='deleteFile(<?=$fileNb?>,"<?=$files->folder?>")' style="width: 25px;"></td>
+    </tr>
+    <?php endfor; ?>
+</table>
 
 <?php
 //onclick='deleteFile("<?= $files->file_list[$fileNb] ")'
