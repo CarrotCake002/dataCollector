@@ -191,8 +191,8 @@ class OpenFileController {
 
     public function getSingleMetaFollow($ObjectNb, $metaNb) {
         if (strpos($this->getSingleMetaTag($ObjectNb, $metaNb), "nofollow") === false)
-                return 'Y';
-            return 'N';
+            return 'Y';
+        return 'N';
     }
 
     public function getMetaFollow($ObjectNb) {
@@ -219,8 +219,8 @@ class OpenFileController {
 
     public function getSingleMetaSponsored($ObjectNb, $metaNb) {
         if (strpos($this->getSingleMetaTag($ObjectNb, $metaNb), "sponsored") === false)
-                return 'N';
-            return 'Y';
+            return 'N';
+        return 'Y';
     }
 
     public function getMetaSponsored($ObjectNb) {
@@ -245,16 +245,32 @@ class OpenFileController {
         return $query;
     }
 
+    public function getSingleMetaUgc($ObjectNb, $metaNb) {
+        if (strpos($this->getSingleMetaTag($ObjectNb, $metaNb), "ugc") === false)
+            return 'N';
+        return 'Y';
+    }
+
     public function getMetaUgc($ObjectNb) {
         $allMetaSize = $this->getAllMetaSize($ObjectNb);
 
         for ($i = 0; $i < $allMetaSize; $i++) {
-            if (strpos($this->getSingleMetaTag($ObjectNb, $i), "ugc") === false)
-                echo 'N';
-            else
-                echo 'Y';
+            echo $this->getSingleMetaUgc($ObjectNb, $i);
             echo '<br>';
         }
+    }
+
+    public function getMetaUgcInStr($ObjectNb) {
+        $allMetaSize = $this->getAllMetaSize($ObjectNb);
+
+        $query = '';
+        if ($allMetaSize < 1)
+            return $query;
+        for ($i = 0; $i < $allMetaSize; $i++) {
+            $query = $query . $this->getSingleMetaUgc($ObjectNb, $i) . ',';
+        }
+        $query = substr_replace($query, '', -1);
+        return $query;
     }
 
     public function getMetaNoopener($ObjectNb) {
