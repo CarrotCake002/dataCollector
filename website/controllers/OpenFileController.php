@@ -165,22 +165,25 @@ class OpenFileController {
         $allMetaSize = $this->getAllMetaSize($ObjectNb);
 
         for ($i = 0; $i < $allMetaSize; $i++) {
-            if (strpos($this->getSingleMetaTag($ObjectNb, $i), "noindex") === false)
-                echo 'Y';
-            else
-                echo 'N';
+            echo $this->getSingleMetaIndex($ObjectNb, $i);
             echo '<br>';
         }
     }
 
+    public function getSingleMetaIndex($ObjectNb, $metaNb) {
+        if (strpos($this->getSingleMetaTag($ObjectNb, $metaNb), "noindex") === false)
+            return 'Y';
+        return 'N';
+    }
+
     public function getMetaIndexInStr($ObjectNb) {
         $allMetaSize = $this->getAllMetaSize($ObjectNb);
+
         $query = '';
+        if ($allMetaSize < 1)
+            return $query;
         for ($i = 0; $i < $allMetaSize; $i++) {
-            if (strpos($this->getSingleMetaTag($ObjectNb, $i), "noindex") === false)
-                $query = $query . 'Y' . ',';
-            else
-                $query = $query . 'N' . ',';
+            $query = $query . $this->getSingleMetaIndex($ObjectNb, $i) . ',';
         }
         $query = substr_replace($query, '', -1);
         return $query;
