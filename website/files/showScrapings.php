@@ -18,6 +18,7 @@ if (isset($_POST) && isset($_POST['submit']) && isset($_POST['token'])) {
 }
 session_start();
 $files = new FilesController($session->session_id);
+$files->deleteTemporalFiles();
 $totalSize = 0;
 ?>
 
