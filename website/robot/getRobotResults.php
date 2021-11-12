@@ -115,7 +115,7 @@ if (isset($_FILES)):
                     $openFile->getTitle($i), $openFile->getTitleSize($i),
                     $openFile->getAllMetaSize($i), $openFile->getMetaDescription($i), $openFile->getMetaDescriptionCharSize($i),
                     $openFile->getAllMetaInStr($i), $openFile->getAllMetaSizesInStr($i), $openFile->getMetaIndexInStr($i), $openFile->getMetaFollowInStr($i),
-                    $openFile->getMetaSponsoredInStr($i), $openFile->getMetaUgcInStr($i), 'Meta noopener',
+                    $openFile->getMetaSponsoredInStr($i), $openFile->getMetaUgcInStr($i), $openFile->getMetaNoopenerInStr($i),
                     'Nb hreflang', 'Hreflang',
                     'Canonical',
                     'Nb links', 'Links', 'Link <a> tags', 'Link target=blank',
