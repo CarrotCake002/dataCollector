@@ -120,7 +120,7 @@ if (isset($_FILES)):
                     $openFile->getAllLinksSize($i), $openFile->getAllLinksInStr($i), $openFile->getAllLinkArticleInStr($i), $openFile->getAllLinkTargetBlankInStr($i),
                     $openFile->getAllHeadsTypeInStr($i, 0), $openFile->getAllHeadsTypeInStr($i, 1), $openFile->getAllHeadsTypeInStr($i, 2),
                     $openFile->getAllHeadsTypeInStr($i, 3), $openFile->getAllHeadsTypeInStr($i, 4), $openFile->getAllHeadsTypeInStr($i, 5),
-                    'Custom selectors'
+                    $openFile->getAllUserSelectorsInStr($i)
                 ]);
                 endfor;
             ?>
