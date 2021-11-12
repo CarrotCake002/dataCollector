@@ -46,4 +46,33 @@ class FilesController {
     public function deleteFile($fileNb) {
         return unlink($this->getFileRelativePath($fileNb));
     }
+
+    private function isFileCorrect($fileNb) {
+        $filePath = $this->getFileRelativePath($fileNb);
+        @ $json_data = file_get_contents($filePath);
+        if ($json_data === false) {
+            return null;
+        }
+        $json_data = json_decode($json_data, true);
+        if ($json_data === null) {
+            return false;
+        }
+        return true;
+    }
+
+    public function getFileStatus($fileNb) {
+        $fileDate = date_create(date("d-m-y G:i:s", filemtime($this->getFileRelativePath($fileNb))));
+        $dateInterval = date_diff(date_create(date("d-m-y G:i:s")), $fileDate);
+        $fileCorrect = $this->isFileCorrect($fileNb);
+        if ($fileCorrect === null)
+            return "Error";
+
+        if ($fileCorrect === true) {
+            return "Finished";
+        } else if (($dateInterval->y > 0 || $dateInterval->m > 0 || $dateInterval->d > 0 || $dateInterval->h > 0 || $dateInterval->i > 1) && $fileCorrect === false) {
+            return "Stopped";
+        } else {
+            return "Active";
+        }
+    }
 }
