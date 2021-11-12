@@ -150,3 +150,15 @@ th, td {
 .table_container {
     z-index: 10;
 }
+
+#deleteAllStopped {
+    clear: both;
+}
+
+.filesTableCell {
+    vertical-align: middle;
+}
+
+.deleteFile:hover {
+    cursor: pointer;
+}
