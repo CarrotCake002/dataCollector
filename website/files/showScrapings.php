@@ -25,7 +25,6 @@ $totalSize = 0;
 <script>
 
     function changeStatusColor(fileNb, status) {
-        console.log("Active");
         if (status === "Active") {
             document.getElementById("fileStatus" + fileNb).style.color = "blue";
         } else if (status === "Stopped") {
@@ -82,6 +81,7 @@ $totalSize = 0;
         <th>Size (kB)</th>
         <th>Last updated</th>
         <th>Status</th>
+        <th>Force stop</th>
         <th>Download</th>
         <th>Delete</th>
     </tr>
@@ -91,6 +91,7 @@ $totalSize = 0;
         <td><?php echo $files->getFileSize($fileNb); $totalSize += $files->getFileSize($fileNb) ?></td>
         <td><?= $files->getFileLastUpdate($fileNb) ?></td>
         <td id="fileStatus<?= $fileNb?>"><?= $files->getFileStatus($fileNb) ?><script>changeStatusColor(<?=$fileNb?>, "<?=$files->getFileStatus($fileNb)?>");</script></td>
+        <td>Stop</td>
         <td>
             <a href="<?=$files->getFileRelativePath($fileNb)?>" download="<?=$files->file_list[$fileNb]?>">
                 <img src="../../assets/download_button.png" alt="download" style="width: 25px;">
@@ -104,6 +105,7 @@ $totalSize = 0;
         <td class="filesTableCell"><b><?= $totalSize ?> kB</b></td>
         <td class="filesTableCell"><b>-</b></td>
         <td class="filesTableCell"><b>-</b></td>
+        <td class="filesTableCell">Stop all active</td>
         <td class="filesTableCell"><b>-</b></td>
         <td class="filesTableCell" style="text-align: center">
             <div>
