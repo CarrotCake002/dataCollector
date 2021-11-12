@@ -419,7 +419,7 @@ class OpenFileController {
     }
 
     public function displayTypeHead($ObjectNb, $typeNb) {
-        $sizeTypeHead = $this->getTypeHeadSize($ObjectNb, $typeNb);            
+        $sizeTypeHead = $this->getTypeHeadSize($ObjectNb, $typeNb);
 
         if ($sizeTypeHead === 0) {
             echo '-';
@@ -518,7 +518,7 @@ class OpenFileController {
             echo '<a href="' . $this->getSingleLink($ObjectNb, $i) . '">' . $this->getSingleLink($ObjectNb, $i) . '</a><br>';
         }
     }
-    
+
     public function displayAllLinkCharSizes($ObjectNb) {
         $link_size = $this->getAllLinksSize($ObjectNb);
         for ($i = 0; $i < $link_size; $i++) {
@@ -537,7 +537,7 @@ class OpenFileController {
         }
         $query = substr_replace($query, '', -1);
         return $query;
-    }    
+    }
 
     public function getAllLinkArticles($ObjectNb) {
         return ($this->getAllHtml($ObjectNb)['linkArticle']);
@@ -571,6 +571,25 @@ class OpenFileController {
         }
     }
 
+    public function getAllLinkArticleInStr($ObjectNb) {
+        $allLinkArticlesSize = $this->getAllLinkArticlesSize($ObjectNb);
+
+        $query = '';
+        if ($allLinkArticlesSize < 1)
+            return $query;
+        for ($i = 0; $i < $allLinkArticlesSize; $i++) {
+            $query = $query . $this->getSingleLinkArticle($ObjectNb, $i) . ',';
+        }
+        $query = substr_replace($query, '', -1);
+        return $query;
+    }
+
+    public function getSingleLinkTargetBlank($ObjectNb, $linkNb) {
+        if (strpos($this->getSingleLinkArticle($ObjectNb, $linkNb), "target=\"_blank\"") === false)
+            return 'N';
+        return 'Y';
+    }
+
     public function getLinkTargetBlank($ObjectNb) {
         $linkArticleSize = $this->getAllLinkArticlesSize($ObjectNb);
 
@@ -579,12 +598,22 @@ class OpenFileController {
             return;
         }
         for ($i = 0; $i < $linkArticleSize; $i++) {
-            if (strpos($this->getSingleLinkArticle($ObjectNb, $i), "target=\"_blank\"") === false)
-                echo 'N';
-            else
-                echo 'Y';
-            echo '<br>';    
+            echo $this->getSingleLinkTargetBlank($ObjectNb, $i);
+            echo '<br>';
         }
+    }
+
+    public function getAllLinkTargetBlankInStr($ObjectNb) {
+        $allLinkArticlesSize = $this->getAllLinkArticlesSize($ObjectNb);
+
+        $query = '';
+        if ($allLinkArticlesSize < 1)
+            return $query;
+        for ($i = 0; $i < $allLinkArticlesSize; $i++) {
+            $query = $query . $this->getSingleLinkTargetBlank($ObjectNb, $i) . ',';
+        }
+        $query = substr_replace($query, '', -1);
+        return $query;
     }
 
     public function getAllImg($ObjectNb) {
