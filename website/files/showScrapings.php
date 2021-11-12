@@ -20,7 +20,6 @@ if (isset($_POST) && isset($_POST['submit']) && isset($_POST['token'])) {
 
 $files = new FilesController($session->session_id);
 
-
 ?>
 
 
@@ -41,14 +40,25 @@ $files = new FilesController($session->session_id);
         <td><?= $files->getFileSize($fileNb) ?></td>
         <td><?= $files->getFileLastUpdate($fileNb) ?></td>
         <td></td>
-        <td><img src="../../assets/download_button.png" alt="download" style="width: 25px;"></td>
+        <td>
+            <a href="<?=$files->getFileRelativePath($fileNb)?>" download="<?=$files->file_list[$fileNb]?>">
+                <img src="../../assets/download_button.png" alt="download" style="width: 25px;">
+            </a>
+        </td>
         <td><img src="../../assets/delete_red_bin.png" alt="delete" style="width: 25px;"></td>
     </tr>
     <?php endfor; ?>
 </table>
 
 
+<script>
+    function deleteFile(file) {
+        filepath = '../../savefiles/<?=$session->getSessionFolderName()?>/' + file;
+        console.log(filepath);
+    }
+</script>
+
 
 <?php
-
+//onclick='deleteFile("<?= $files->file_list[$fileNb] ")'
 require_once './../views/footer.php';
