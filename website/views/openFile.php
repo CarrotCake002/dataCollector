@@ -2,12 +2,6 @@
     require_once 'header.php';
 ?>
 
-<script>
-    const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "deleteFiles.php", true);
-    xhttp.send();
-</script>
-
 <div>
     <div id="resultsh2">
         <br>
@@ -15,7 +9,9 @@
     </div>
     <div>
         <form action="./../robot/getRobotResults.php" method="post" enctype="multipart/form-data">
-            <input id="openFile" type="file" name="openFile">
+            <p style="margin-top: 100px;">Token</p>
+            <input type="text" name="token">
+            <input id="openFile" type="file" name="openFile"><br>
             <input type="submit" name="submit">
         </form>
     </div>
