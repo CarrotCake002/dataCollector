@@ -440,6 +440,19 @@ class OpenFileController {
         }
     }
 
+    public function getAllHeadsTypeInStr($ObjectNb, $type) {
+        $allHeadsSize = $this->getAllCanonicalsSize($ObjectNb);
+
+        $query = '';
+        if ($allHeadsSize < 1)
+            return $query;
+        for ($i = 0; $i < $allHeadsSize; $i++) {
+            $query = $query . $this->getSingleHead($ObjectNb, $type, $i) . ',';
+        }
+        $query = substr_replace($query, '', -1);
+        return $query;
+    }
+
     public function getAllUserSelectors($ObjectNb) {
         return ($this->getAllHtml($ObjectNb)['userSelected']);
     }
