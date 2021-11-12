@@ -273,16 +273,32 @@ class OpenFileController {
         return $query;
     }
 
+    public function getSingleMetaNoopener($ObjectNb, $metaNb) {
+        if (strpos($this->getSingleMetaTag($ObjectNb, $metaNb), "noopener") === false)
+            return 'N';
+        return 'Y';
+    }
+
     public function getMetaNoopener($ObjectNb) {
         $allMetaSize = $this->getAllMetaSize($ObjectNb);
 
         for ($i = 0; $i < $allMetaSize; $i++) {
-            if (strpos($this->getSingleMetaTag($ObjectNb, $i), "noopener") === false)
-                echo 'N';
-            else
-                echo 'Y';
+            echo $this->getSingleMetaNoopener($ObjectNb, $i);
             echo '<br>';
         }
+    }
+
+    public function getMetaNoopenerInStr($ObjectNb) {
+        $allMetaSize = $this->getAllMetaSize($ObjectNb);
+
+        $query = '';
+        if ($allMetaSize < 1)
+            return $query;
+        for ($i = 0; $i < $allMetaSize; $i++) {
+            $query = $query . $this->getSingleMetaNoopener($ObjectNb, $i) . ',';
+        }
+        $query = substr_replace($query, '', -1);
+        return $query;
     }
 
     public function getAllHreflang($ObjectNb) {
