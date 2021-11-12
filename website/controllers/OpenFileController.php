@@ -505,7 +505,7 @@ class OpenFileController {
     }
 
     public function getSingleLink($ObjectNb, $LinkNb) {
-        return ($this->jsonData[$ObjectNb]['links'][$LinkNb]);
+        return ($this->getAllLinks($ObjectNb)[$LinkNb]);
     }
 
     public function getSingleLinkCharSize($ObjectNb, $LinkNb) {
@@ -525,6 +525,19 @@ class OpenFileController {
             echo $this->getSingleLinkCharSize($ObjectNb, $i) . '<br>';
         }
     }
+
+    public function getAllLinksInStr($ObjectNb) {
+        $allLinksSize = $this->getAllLinksSize($ObjectNb);
+
+        $query = '';
+        if ($allLinksSize < 1)
+            return $query;
+        for ($i = 0; $i < $allLinksSize; $i++) {
+            $query = $query . $this->getSingleLink($ObjectNb, $i) . ',';
+        }
+        $query = substr_replace($query, '', -1);
+        return $query;
+    }    
 
     public function getAllLinkArticles($ObjectNb) {
         return ($this->getAllHtml($ObjectNb)['linkArticle']);
