@@ -161,6 +161,12 @@ class OpenFileController {
         return (strlen($this->getMetaDescription($ObjectNb)));
     }
 
+    public function getSingleMetaIndex($ObjectNb, $metaNb) {
+        if (strpos($this->getSingleMetaTag($ObjectNb, $metaNb), "noindex") === false)
+            return 'Y';
+        return 'N';
+    }
+
     public function getMetaIndex($ObjectNb) {
         $allMetaSize = $this->getAllMetaSize($ObjectNb);
 
@@ -168,12 +174,6 @@ class OpenFileController {
             echo $this->getSingleMetaIndex($ObjectNb, $i);
             echo '<br>';
         }
-    }
-
-    public function getSingleMetaIndex($ObjectNb, $metaNb) {
-        if (strpos($this->getSingleMetaTag($ObjectNb, $metaNb), "noindex") === false)
-            return 'Y';
-        return 'N';
     }
 
     public function getMetaIndexInStr($ObjectNb) {
@@ -189,28 +189,60 @@ class OpenFileController {
         return $query;
     }
 
+    public function getSingleMetaFollow($ObjectNb, $metaNb) {
+        if (strpos($this->getSingleMetaTag($ObjectNb, $metaNb), "nofollow") === false)
+                return 'Y';
+            return 'N';
+    }
+
     public function getMetaFollow($ObjectNb) {
         $allMetaSize = $this->getAllMetaSize($ObjectNb);
 
         for ($i = 0; $i < $allMetaSize; $i++) {
-            if (strpos($this->getSingleMetaTag($ObjectNb, $i), "nofollow") === false)
-                echo 'Y';
-            else
-                echo 'N';
+            echo $this->getSingleMetaFollow($ObjectNb, $i);
             echo '<br>';
         }
+    }
+
+    public function getMetaFollowInStr($ObjectNb) {
+        $allMetaSize = $this->getAllMetaSize($ObjectNb);
+
+        $query = '';
+        if ($allMetaSize < 1)
+            return $query;
+        for ($i = 0; $i < $allMetaSize; $i++) {
+            $query = $query . $this->getSingleMetaFollow($ObjectNb, $i) . ',';
+        }
+        $query = substr_replace($query, '', -1);
+        return $query;
+    }
+
+    public function getSingleMetaSponsored($ObjectNb, $metaNb) {
+        if (strpos($this->getSingleMetaTag($ObjectNb, $metaNb), "sponsored") === false)
+                return 'N';
+            return 'Y';
     }
 
     public function getMetaSponsored($ObjectNb) {
         $allMetaSize = $this->getAllMetaSize($ObjectNb);
 
         for ($i = 0; $i < $allMetaSize; $i++) {
-            if (strpos($this->getSingleMetaTag($ObjectNb, $i), "sponsored") === false)
-                echo 'N';
-            else
-                echo 'Y';
+            echo $this->getSingleMetaSponsored($ObjectNb, $i);
             echo '<br>';
         }
+    }
+
+    public function getMetaSponsoredInStr($ObjectNb) {
+        $allMetaSize = $this->getAllMetaSize($ObjectNb);
+
+        $query = '';
+        if ($allMetaSize < 1)
+            return $query;
+        for ($i = 0; $i < $allMetaSize; $i++) {
+            $query = $query . $this->getSingleMetaSponsored($ObjectNb, $i) . ',';
+        }
+        $query = substr_replace($query, '', -1);
+        return $query;
     }
 
     public function getMetaUgc($ObjectNb) {
