@@ -31,4 +31,6 @@ for ($i = 0; $i < count($savefilesData); $i++) {
             rmdir($folderPath);
         }
     }
-}*/
+}
+
+session_destroy();*/

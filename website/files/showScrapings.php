@@ -119,3 +119,5 @@ $totalSize = 0;
 <?php
 
 require_once './../views/footer.php';
+
+session_destroy();

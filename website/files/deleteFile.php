@@ -18,3 +18,5 @@ if (isset($_POST) && isset($_POST['token']) && isset($_POST['fileNb'])) {
     echo 'Error: something happened when processing your request. Please try again.';
     return;
 }
+
+session_destroy();

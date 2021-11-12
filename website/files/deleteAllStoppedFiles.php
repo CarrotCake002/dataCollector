@@ -19,3 +19,5 @@ if (isset($_POST) && isset($_POST['token'])) {
     echo 'Error: something happened when processing your request. Please try again.';
     return;
 }
+
+session_destroy();

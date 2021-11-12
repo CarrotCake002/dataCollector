@@ -146,3 +146,5 @@ Remember: If you lose your token you will lose all your data, so keep it safe!</
 <?php
 
 require_once './views/footer.php';
+
+session_destroy();

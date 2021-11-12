@@ -141,3 +141,5 @@ $sheet->saveSpreadSheet($session->getSessionFolderPath() . '/');
 endif;
 
 require_once './../views/footer.php';
+
+session_destroy();

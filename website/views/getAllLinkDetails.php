@@ -101,3 +101,5 @@ else :
 endif;
 
 require_once './footer.php';
+
+session_destroy();

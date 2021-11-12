@@ -511,14 +511,15 @@ class OpenFileController {
 
     public function getAllUserSelectorsInStr($ObjectNb) {
         $allSelectorsSize = $this->getAllUserSelectorsSize($ObjectNb);
-
         $query = '';
         if ($allSelectorsSize < 1)
             return $query;
         for ($typeNb = 0; $typeNb < $allSelectorsSize; $typeNb++) {
             $typeSize = $this->getTypeUserSelectorsSize($ObjectNb, $typeNb);
+            if ($typeSize < 1)
+                return $query;
             for ($selectorNb = 0; $selectorNb < $typeSize; $selectorNb++) {
-                $query = $query . $this->getSingleHead($ObjectNb, $typeNb, $selectorNb) . ',';
+                $query = $query . $this->getSingleTypeUserSelector($ObjectNb, $typeNb, $selectorNb) . ',';
             }
         }
         $query = substr_replace($query, '', -1);
