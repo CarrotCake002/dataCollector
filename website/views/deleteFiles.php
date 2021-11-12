@@ -1,5 +1,5 @@
 <?php
-
+/*
 session_start();
 
 require './../controllers/SessionController.php';
@@ -31,4 +31,4 @@ for ($i = 0; $i < count($savefilesData); $i++) {
             rmdir($folderPath);
         }
     }
-}
+}*/
