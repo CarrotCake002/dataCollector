@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once './../views/header.php';
 require '../controllers/SessionController.php';
 require '../controllers/FilesController.php';
@@ -17,7 +16,7 @@ if (isset($_POST) && isset($_POST['submit']) && isset($_POST['token'])) {
     echo "Error: a problem occured while fetching the data, please try again.";
     return;
 }
-
+session_start();
 $files = new FilesController($session->session_id);
 $totalSize = 0;
 ?>
