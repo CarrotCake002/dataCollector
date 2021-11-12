@@ -42,4 +42,8 @@ class FilesController {
             return false;
         return date("d/m/y H:i:s", filemtime($filepath));
     }
+
+    public function deleteFile($fileNb) {
+        return unlink($this->getFileRelativePath($fileNb));
+    }
 }
