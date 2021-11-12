@@ -116,7 +116,7 @@ if (isset($_FILES)):
                     $openFile->getAllMetaSize($i), $openFile->getMetaDescription($i), $openFile->getMetaDescriptionCharSize($i),
                     $openFile->getAllMetaInStr($i), $openFile->getAllMetaSizesInStr($i), $openFile->getMetaIndexInStr($i), $openFile->getMetaFollowInStr($i),
                     $openFile->getMetaSponsoredInStr($i), $openFile->getMetaUgcInStr($i), $openFile->getMetaNoopenerInStr($i),
-                    $openFile->getAllHreflangSize($i), $openFile->getAllHreflangInStr($i), 'Canonical',
+                    $openFile->getAllHreflangSize($i), $openFile->getAllHreflangInStr($i), $openFile->getAllCanonicalsInStr($i),
                     'Nb links', 'Links', 'Link <a> tags', 'Link target=blank',
                     'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
                     'Custom selectors'
