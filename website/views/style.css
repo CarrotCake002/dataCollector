@@ -161,3 +161,26 @@ th, td {
 .deleteFile:hover {
     cursor: pointer;
 }
+
+.fileCheckSelector {
+    margin: auto;
+    width: 30px;
+    box-shadow: none;
+}
+
+#sendSelectedFiles{
+    width: initial;
+    height: initial;
+    background-color: initial;
+    color: initial;
+    position: initial;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    margin-left: 5px;
+}
+
+#selectedFilesOption {
+    margin-right: 10px;
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
