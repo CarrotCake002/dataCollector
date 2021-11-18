@@ -23,7 +23,7 @@
 
 
 # Pisos.com
-    - node main/main.js -D "https://www.pisos.com" -u "https://www.pisos.com/alquiler-residencial/pisos-barcelona_capital/" -i "https://www.pisos.com/alquiler-residencial/pisos-barcelona_capital/,/alquilar/" -x "facebook,twitter,whatsapp,linkedin,pinterest,youtube,google,/ca/,/en/" -nL "/en/,/ca/" -c "#ownerDetail > div > div > div.owner-details-info > div.owner-details-extra > div > a" -f "pisosPuntoCom" -s "#dvFormContactar > div.floatcontact-phone.phone > span.number.one,#descriptionBody" -F
+    - node main/main.js -D "https://www.pisos.com" -u "https://www.pisos.com/alquiler-residencial/pisos-barcelona_capital/" -i "https://www.pisos.com/alquiler-residencial/pisos-barcelona_capital/,/alquilar/" -x "facebook,twitter,whatsapp,linkedin,pinterest,youtube,google,/ca/,/en/" -nL "/en/,/ca/" -c "#ownerDetail > div > div > div.owner-details-info > div.owner-details-extra > div > a" -f "pisosPuntoCom" -s "#dvFormContactar > div.floatcontact-phone.phone > span.number.one,#descriptionBody,body > div.body > div.detail > div.maindata > div > div.maindata-box > div.priceBox > div > div > span,body > div.body > div.detail > div.generic-block > div > div.container-right > div.owner-data > div.owner-data-info > a" -F
 
 
 
