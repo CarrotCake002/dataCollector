@@ -118,13 +118,12 @@ if (isset($_FILES)):
                     $openFile->getTitle($i), $openFile->getTitleSize($i),
                     $openFile->getAllMetaSize($i), $openFile->getMetaDescription($i), $openFile->getMetaDescriptionCharSize($i),
                     $openFile->getAllMetaInStr($i), $openFile->getAllMetaSizesInStr($i), $openFile->getMetaIndexInStr($i), $openFile->getMetaFollowInStr($i),
-                    $openFile->getMetaSponsoredInStr($i), $openFile->getMetaUgcInStr($i), $openFile->getMetaNoopenerInStr($i),
-                    $openFile->getAllHreflangSize($i), $openFile->getAllHreflangInStr($i), $openFile->getAllCanonicalsInStr($i),
-                    $openFile->getAllLinksSize($i), $openFile->getAllLinksInStr($i), $openFile->getAllLinkArticleInStr($i), $openFile->getAllLinkTargetBlankInStr($i),
-                    $openFile->getAllHeadsTypeInStr($i, 0), $openFile->getAllHeadsTypeInStr($i, 1), $openFile->getAllHeadsTypeInStr($i, 2),
-                    $openFile->getAllHeadsTypeInStr($i, 3), $openFile->getAllHeadsTypeInStr($i, 4), $openFile->getAllHeadsTypeInStr($i, 5),
-                    $openFile->getAllUserSelectorsInStr($i)
-                ]);
+                    $openFile->getMetaSponsoredInStr($i), $openFile->getMetaUgcInStr($i), $openFile->getMetaNoopenerInStr($i), $openFile->getAllHreflangSize($i),
+                    $openFile->getAllHreflangInStr($i), $openFile->getAllCanonicalsInStr($i), $openFile->getAllLinksSize($i), $openFile->getAllLinksInStr($i),
+                    $openFile->getAllLinkArticleInStr($i), $openFile->getAllLinkTargetBlankInStr($i), $openFile->getAllHeadsTypeInStr($i, 0),
+                    $openFile->getAllHeadsTypeInStr($i, 1), $openFile->getAllHeadsTypeInStr($i, 2), $openFile->getAllHeadsTypeInStr($i, 3),
+                    $openFile->getAllHeadsTypeInStr($i, 4), $openFile->getAllHeadsTypeInStr($i, 5), $openFile->getAllUserSelectorsInStr($i)
+                ], ',', '"', '\\');
                 endfor;
             ?>
         </table>
