@@ -2,6 +2,10 @@
 
 require_once "website/views/header.php";
 
+if (isset($_COOKIE)) {
+    setcookie('PHPSESSID', '', -1);
+}
+
 ?>
 
 <div>
