@@ -22,6 +22,14 @@ class FilesController {
         return false;
     }
 
+    public function getFileId($filename) {
+        for ($id = 0; $id < $this->getFileListSize(); $id++) {
+            if ($this->file_list[$id] === $filename)
+                return $id;
+        }
+        return false;
+    }
+
     public function getFileRelativePath($fileNb) {
         $filename = $this->getFileName($fileNb);
         if (!$filename)
