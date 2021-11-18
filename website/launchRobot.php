@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once './views/header.php';
 require './controllers/SessionController.php';
 ?>
@@ -27,6 +26,7 @@ if (isset($_POST)) {
         $session_id = false;
 
     $session = new SessionController($session_id);
+    session_start();
 
     if ($session->error) {
         echo "Error: the token you sent is invalid.<br>If you don't have a valid token, launch the scraping without it and a token will automatically be provided to you.";
