@@ -50,7 +50,7 @@ if (isset($_FILES)):
     }
 
     $sheet = new SpreadsheetController('robotResults');
-    $stream = fopen($session->getSessionFolderPath() . '/allDetailsData.csv', 'w');
+    $stream = fopen($session->getSessionFolderPath() . '/' . str_replace('.json', '.csv', $_FILES['openFile']['name']), 'w');
 ?>
 
 <div id="tableBlock">
