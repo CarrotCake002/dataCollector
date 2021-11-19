@@ -16,7 +16,11 @@ if (isset($_COOKIE)) {
         <form action="/website/launchRobot.php" method="post" enctype="multipart/form-data">
                 <p>Token<br>
                 (if you have one)</p>
-                <input class="home_inputs" type="text" name="token" placeholder="">
+                <?php if (isset($_COOKIE['token'])):?>
+                    <input class="home_inputs" type="text" name="token" value="<?=$_COOKIE['token']?>">
+                <?php else: ?>
+                    <input class="home_inputs" type="text" name="token">
+                <?php endif; ?>
                 <p>Domain*<br>
                 (mandatory)</p>
                 <input class="home_inputs" type="text" name="domain" placeholder="https://example.com">
