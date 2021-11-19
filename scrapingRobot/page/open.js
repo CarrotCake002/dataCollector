@@ -20,19 +20,19 @@ async function startPage(params, formattedLink) {
     // connects puppeteer to the browser's new port
     const connection = await axios.get(`http://localhost:${chrome.port}/json/version`);
     const { webSocketDebuggerUrl } = connection.data;
-    var browser = await puppeteer.connect({ browserWSEndpoint: webSocketDebuggerUrl })
+    const browser = await puppeteer.connect({ browserWSEndpoint: webSocketDebuggerUrl })
 
     // opens a chrome page
     const page = await browser.newPage();
     await page.setViewport({ width: 1000, height: 926 });
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
-
     return [browser, page, response, time];
 }
 
 // closes browser and returns stopped timer
 function endPage(browser, time) {
     browser.close();
+    //chromeLauncher.killAll();
     return (Date.now() - time);
 }
 
