@@ -187,7 +187,7 @@ th, td {
 
 #tokenButtonsBox {
     margin: auto;
-    margin-top: 20px;   
+    margin-top: 20px;
 }
 
 .tokenButton {
@@ -195,4 +195,8 @@ th, td {
     height: 90px;
     font-size: 20px;
     margin: 10px;
+}
+
+.formBlock {
+    display: none;
 }
