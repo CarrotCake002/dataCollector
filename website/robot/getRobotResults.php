@@ -1,22 +1,31 @@
 <?php
 
+
 require_once './../views/header.php';
 require './../controllers/OpenFileController.php';
 require './../controllers/SessionController.php';
-require './../controllers/SpreadsheetController.php';
+//require './../controllers/SpreadsheetController.php';
 
 use classes\OpenFileController;
 use classes\SessionController;
-use classes\SpreadsheetController;
+//use classes\SpreadsheetController;
 
 set_time_limit(0);
 
 if (isset($_POST) && isset($_POST['token']) && $_POST['token'] != '') {
+    if (!isset($_COOKIE['token']))
+        setcookie('token', $_POST['token'], time() + 28800000, '/');
     $session = new SessionController($_POST['token']);
+    if ($session->error) {
+        echo 'Error: the token you sent is invalid';
+        return;
+    }
 } else {
     echo "Error: make sure you've set your personal token";
     return;
 }
+
+var_dump('die');die;
 
 session_start();
 
@@ -24,28 +33,28 @@ if (isset($_FILES)):
     $json_data = null;
     if (isset($_FILES['openFile']) && isset($_FILES['openFile']['tmp_name'])) {
         if (!$session->checkSessionFolderExists()) {
-            echo "Error: The token you sent is invalid.";
+            echo "Error: the token you sent is invalid.";
             return;
         }
         $filePath = $session->getSessionFolderPath() . '/' . basename($_FILES['openFile']['tmp_name']);
         $move = move_uploaded_file($_FILES['openFile']['tmp_name'], $filePath);
         if ($move === false) {
-            echo "There has been an error moving the file.";
+            echo "Error: there has been an error moving the file.";
             return;
         }
         @ $json_data = file_get_contents($filePath);
         if ($json_data === false) {
-            echo "The file you sent doesn't exist.";
+            echo "Error: the file you sent doesn't exist.";
             return;
         }
         $json_data = json_decode($json_data, true);
         if ($json_data === null) {
-            echo "The savefile format is not correct. Make sure there are no errors in the syntax.";
+            echo "Error: the savefile format is not correct. Make sure there are no errors in the syntax.";
             return;
         }
         $openFile = new OpenFileController($json_data);
     } else {
-        echo "There has been a problem with the file's name.";
+        echo "Error: there has been a problem with the file's name.";
         return;
     }
 
