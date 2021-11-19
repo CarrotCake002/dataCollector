@@ -16,6 +16,7 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/website/views/openFile.php">Open</a></li>
                 <li><a href="/website/views/getFiles.php">Files</a></li>
+                <li><a href="/website/token/tokenConfig.php">Token</a></li>
             </ul>
         </nav>
     </header>
