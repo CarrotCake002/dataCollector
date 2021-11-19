@@ -2,11 +2,12 @@
 require_once './../views/header.php';
 require '../controllers/SessionController.php';
 require '../controllers/FilesController.php';
+require_once '../views/header.php';
 
 use classes\SessionController;
 use classes\FilesController;
 
-if (isset($_POST) && isset($_POST['submit']) && isset($_POST['token'])) {
+if (isset($_POST) && isset($_POST['token'])) {
     $session = new SessionController($_POST['token']);
     if ($session->error) {
         echo "Error: the token you sent is invalid.<br>If you don't have a valid token, launch the scraping without it and a token will automatically be provided to you.";
