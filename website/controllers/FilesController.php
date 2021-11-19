@@ -22,6 +22,14 @@ class FilesController {
         return false;
     }
 
+    public function getFileId($filename) {
+        for ($id = 0; $id < $this->getFileListSize(); $id++) {
+            if ($this->file_list[$id] === $filename)
+                return $id;
+        }
+        return false;
+    }
+
     public function getFileRelativePath($fileNb) {
         $filename = $this->getFileName($fileNb);
         if (!$filename)
@@ -48,6 +56,8 @@ class FilesController {
     }
 
     private function isFileCorrect($fileNb) {
+        if (strpos($this->getFileName($fileNb), '.json') === false)
+            return null;
         $filePath = $this->getFileRelativePath($fileNb);
         @ $json_data = file_get_contents($filePath);
         if ($json_data === false) {
@@ -65,11 +75,11 @@ class FilesController {
         $dateInterval = date_diff(date_create(date("d-m-y G:i:s")), $fileDate);
         $fileCorrect = $this->isFileCorrect($fileNb);
         if ($fileCorrect === null)
-            return "Error";
+            return "-";
 
         if ($fileCorrect === true) {
             return "Finished";
-        } else if (($dateInterval->y > 0 || $dateInterval->m > 0 || $dateInterval->d > 0 || $dateInterval->h > 0 || $dateInterval->i > 1) && $fileCorrect === false) {
+        } else if (($dateInterval->y > 0 || $dateInterval->m > 0 || $dateInterval->d > 0 || $dateInterval->h > 0 || $dateInterval->i > 0) && $fileCorrect === false) {
             return "Stopped";
         } else {
             return "Active";
@@ -80,7 +90,7 @@ class FilesController {
         $listSize = $this->getFileListSize();
 
         for ($i = 0; $i < $listSize; $i++) {
-            if (strpos($this->file_list[$i], '.json') === false) {
+            if (strpos($this->file_list[$i], '.json') === false && strpos($this->file_list[$i], '.csv') === false) {
                 unlink($this->getFileRelativePath($i));
                 unset($this->file_list[$i]);
             }

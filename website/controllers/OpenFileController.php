@@ -352,8 +352,12 @@ class OpenFileController {
         return (count($this->getAllCanonicals($ObjectNb)));
     }
 
+    public function getSingleCanonicalRaw($ObjectNb, $canonicalNb) {
+        return $this->getAllCanonicals($ObjectNb)[$canonicalNb];
+    }
+
     public function getSingleCanonical($ObjectNb, $canonicalNb) {
-        return (htmlentities($this->getAllCanonicals($ObjectNb)[$canonicalNb]));
+        return htmlentities($this->getSingleCanonicalRaw($ObjectNb, $canonicalNb));
     }
 
     public function getSingleCanonicalCharSize($ObjectNb, $canonicalNb) {
@@ -375,7 +379,7 @@ class OpenFileController {
         if ($allCanonicalSize < 1)
             return $query;
         for ($i = 0; $i < $allCanonicalSize; $i++) {
-            $query = $query . $this->getSingleCanonical($ObjectNb, $i) . ',';
+            $query = $query . $this->getSingleCanonicalRaw($ObjectNb, $i) . ',';
         }
         $query = substr_replace($query, '', -1);
         return $query;
@@ -410,8 +414,14 @@ class OpenFileController {
         return (count($this->getTypeHead($ObjectNb, $typeNb)));
     }
 
+    public function getSingleHeadRaw($ObjectNb, $typeNb, $headNb) {
+        if (!$this->getTypeHead($ObjectNb, $typeNb))
+            return 'Error';
+        return ($this->getTypeHead($ObjectNb, $typeNb)[$headNb]);
+    }
+
     public function getSingleHead($ObjectNb, $typeNb, $headNb) {
-        return (htmlentities($this->getTypeHead($ObjectNb, $typeNb)[$headNb]));
+        return htmlentities($this->getSingleHeadRaw($ObjectNb, $typeNb, $headNb));
     }
 
     public function getSingleHeadSize($ObjectNb, $typeNb, $headNb) {
@@ -447,7 +457,7 @@ class OpenFileController {
         if ($allHeadsSize < 1)
             return $query;
         for ($i = 0; $i < $allHeadsSize; $i++) {
-            $query = $query . $this->getSingleHead($ObjectNb, $type, $i) . ',';
+            $query = $query . $this->getSingleHeadRaw($ObjectNb, $type, $i) . ',';
         }
         $query = substr_replace($query, '', -1);
         return $query;
@@ -471,12 +481,12 @@ class OpenFileController {
         return (count($this->getTypeUserSelectors($ObjectNb, $typeNb)));
     }
 
-    public function getSingleTypeUserSelector($ObjectNb, $typeNb, $selectorNb) {
-        return ($this->getAllHtml($ObjectNb)['userSelected'][$typeNb][$selectorNb]);
-    }
-
     public function getSingleTypeUserSelectorCharSize($ObjectNb, $typeNb, $selectorNb) {
         return (strlen($this->getSingleTypeUserSelector($ObjectNb, $typeNb, $selectorNb)));
+    }
+
+    public function getSingleTypeUserSelector($ObjectNb, $typeNb, $selectorNb) {
+        return ($this->getAllHtml($ObjectNb)['userSelected'][$typeNb][$selectorNb]);
     }
 
     public function displaySingleTypeUserSelector($ObjectNb, $typeNb, $selectorNb) {
