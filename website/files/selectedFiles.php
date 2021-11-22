@@ -11,7 +11,6 @@ use classes\SessionController;
 
 <script>
     function downloadFile(filepath) {
-        console.log('got here');
         $.ajax({
             method: "GET",
             type: "GET",

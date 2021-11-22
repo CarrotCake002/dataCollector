@@ -29,7 +29,6 @@ require_once './header.php';
     }
 
     function showForm() {
-        console.log('ola');
         $(".formBlock").css('display', 'block');
     }
 </script>

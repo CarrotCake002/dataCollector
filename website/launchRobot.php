@@ -118,7 +118,6 @@ if (isset($_POST)) {
     ?>
     <script>
         url = `<?=$url?><?=$params?>`;
-        console.log(url);
         const xhttp = new XMLHttpRequest();
         xhttp.open("GET", url, true);
         xhttp.send();
