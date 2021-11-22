@@ -12,6 +12,10 @@ class FilesController {
         $this->file_list = array_values(array_diff(scandir('../../savefiles/' . $folder_name), array('.', '..')));
     }
 
+    public function getFolderPath() {
+        return '/savefiles/' . $this->folder;
+    }
+
     public function getFileListSize() {
         return count($this->file_list);
     }
