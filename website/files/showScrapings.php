@@ -17,6 +17,8 @@ if (isset($_POST) && isset($_POST['token'])) {
     echo "Error: a problem occured while fetching the data, please try again.";
     return;
 }
+
+setcookie('token', $session->session_id, time() + 28800000, '/');
 session_start();
 $files = new FilesController($session->session_id);
 $files->deleteTemporalFiles();
@@ -74,11 +76,6 @@ $totalSize = 0;
         });
     }
 
-    function validateCheck(fileNb) {
-        if (document.getElementById('fileSelected' + fileNb).checked) {
-            console.log('file' + fileNb + ' checked');
-        }
-    }
 </script>
 
 <h1 style="text-align: center; font-size: 48px">Here you can see all your files</h1>
