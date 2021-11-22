@@ -38,7 +38,6 @@ function deleteSelectedFiles($files, $selectedFiles) {
         }
     }
     $files->updateFileList();
-    var_dump($files->getFileListSize());die;
     return true;
 }
 
