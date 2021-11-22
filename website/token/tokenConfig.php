@@ -4,6 +4,16 @@ require_once '../views/header.php';
 
 ?>
 
+<script>
+    function unsetToken() {
+        document.location.href = '/website/views/openFile.php';
+    }
+
+    function deleteToken() {
+        document.location.href = '/website/views/home.php';
+    }
+</script>
+
 <h1>Token settings</h1>
 
 <p>When you input a token for the first time it will be saved in your computer until it's automatically removed after 8h.</p>
@@ -15,8 +25,8 @@ but the token will still be active and no files will be deleted.</p>
 <?php if (isset($_COOKIE) && isset($_COOKIE['token'])): ?>
 
 <div class="tokenButtonsBox">
-    <button class="tokenButton">Change token</button>
-    <button class="tokenButton">Delete token</button>
+    <button class="tokenButton" onclick="unsetToken()">Unset token</button>
+    <button class="tokenButton" onclick="deleteToken()">Delete token data</button>
 </div>
 
 <?php else: ?>
