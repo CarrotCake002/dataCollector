@@ -22,10 +22,15 @@ for ($fileNb = 0; $fileNb < $files->getFileListSize(); $fileNb++) {
         echo 'Error: file could not be deleted.<br>';
     }
 }
-rmdir('../../savefiles/' . $files->folder);
-setcookie('token', '', -1, '/');
+$files->updateFileList();
 
-echo 'Your token has been successfully deleted!';
+if ($files->checkTokenFolderEmpty()) {
+    $files->deleteTokenFolder();
+    echo 'Your token has been successfully deleted!';
+} else {
+    echo 'Error: there are still files inside your token folder.';
+}
+
 
 
 require_once '../views/footer.php';
