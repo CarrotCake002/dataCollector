@@ -14,12 +14,12 @@ set_time_limit(0);
 
 if (isset($_POST) && isset($_POST['token']) && $_POST['token'] != '') {
     if (!isset($_COOKIE['token']))
-        setcookie('token', $_POST['token'], time() + 28800000, '/');
-    $session = new SessionController($_POST['token']);
+        $session = new SessionController($_POST['token']);
     if ($session->error) {
         echo 'Error: the token you sent is invalid';
         return;
     }
+    setcookie('token', $_POST['token'], time() + 28800000, '/');
 } else {
     echo "Error: make sure you've set your personal token";
     return;
@@ -31,7 +31,7 @@ if (isset($_FILES)):
     $json_data = null;
     if (isset($_FILES['openFile']) && isset($_FILES['openFile']['tmp_name'])) {
         if (!$session->checkSessionFolderExists()) {
-            echo "Error: the token you sent is invalid.";
+            echo "Error: the token you sent is invalid.<br>If you don't have a valid token, launch the scraping without it and a token will automatically be provided to you.";
             return;
         }
         $filePath = $session->getSessionFolderPath() . '/' . basename($_FILES['openFile']['tmp_name']);
