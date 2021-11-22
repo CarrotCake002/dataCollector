@@ -13,7 +13,11 @@ class SessionController {
             $this->session_id = session_id();
             if (!$this->checkSessionFolderExists())
                 $this->error = true;
-        } else
+        }
+    }
+
+    public function checkSessionId() {
+        if ($this->session_id === NULL)
             $this->session_id = session_id();
     }
 
