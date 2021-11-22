@@ -10,7 +10,7 @@ require_once '../views/header.php';
     }
 
     function deleteToken() {
-        document.location.href = '/website/views/deleteToken.php';
+        document.location.href = '/website/token/deleteToken.php';
     }
 </script>
 
