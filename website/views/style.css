@@ -185,7 +185,7 @@ th, td {
     margin-bottom: 10%;
 }
 
-#tokenButtonsBox {
+.tokenButtonsBox {
     margin: auto;
     margin-top: 20px;
 }
