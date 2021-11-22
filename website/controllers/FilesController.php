@@ -56,7 +56,18 @@ class FilesController {
     }
 
     public function deleteFile($fileNb) {
-        return unlink($this->getFileRelativePath($fileNb));
+        $error = unlink($this->getFileRelativePath($fileNb));
+        $this->updateFileList();
+        return $error;
+    }
+
+    public function checkTokenFolderEmpty() {
+        return $this->getFileListSize() < 1;
+    }
+
+    public function deleteTokenFolder() {
+        rmdir('../../savefiles/' . $this->folder);
+        setcookie('token', '', -1, '/');
     }
 
     private function isFileCorrect($fileNb) {
