@@ -18,20 +18,21 @@ use classes\SessionController;
 
 set_time_limit(0);
 
-
 if (isset($_POST)) {
-    if (isset($_POST['token']) && $_POST['token'] !== '')
+    if (isset($_POST['token']) && $_POST['token'] !== '') {
         $session_id = $_POST['token'];
-    else
+    } else
         $session_id = false;
 
     $session = new SessionController($session_id);
     session_start();
+    $session->checkSessionId();
 
     if ($session->error) {
         echo "Error: the token you sent is invalid.<br>If you don't have a valid token, launch the scraping without it and a token will automatically be provided to you.";
         return;
     }
+    setcookie('token', $session->session_id, time() + 28800000, '/');
 
     if (!$session->checkSessionFolderExists()) {
         if (!$session->createSessionFolder()) {
