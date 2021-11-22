@@ -9,7 +9,7 @@ class FilesController {
 
     public function __construct($folder_name) {
         $this->folder = $folder_name;
-        $this->file_list = array_values(array_diff(scandir('../../savefiles/' . $folder_name), array('.', '..')));
+        $this->file_list = array_values(array_diff(scandir('../../savefiles/' . $this->folder), array('.', '..')));
     }
 
     public function getFolderPath() {
@@ -96,10 +96,13 @@ class FilesController {
         for ($i = 0; $i < $listSize; $i++) {
             if (strpos($this->file_list[$i], '.json') === false && strpos($this->file_list[$i], '.csv') === false) {
                 unlink($this->getFileRelativePath($i));
-                unset($this->file_list[$i]);
             }
         }
-        $this->file_list = array_values($this->file_list);
+        $this->updateFileList();
+    }
+
+    public function updateFileList() {
+        $this->file_list = array_values(array_diff(scandir('../../savefiles/' . $this->folder), array('.', '..')));
     }
 
 }
