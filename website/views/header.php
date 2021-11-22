@@ -6,7 +6,7 @@
     <title>dataCollector</title>
     <link rel="stylesheet" type="text/css" href="/website/views/style.css">
     <link rel="stylesheet" type="text/css" href="/website/views/switch.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 </head>
 <body>
     <div id="header_space"><br></div>
