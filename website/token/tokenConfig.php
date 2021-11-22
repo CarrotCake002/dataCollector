@@ -6,11 +6,11 @@ require_once '../views/header.php';
 
 <script>
     function unsetToken() {
-        document.location.href = '/website/views/openFile.php';
+        document.location.href = '/website/token/unsetToken.php';
     }
 
     function deleteToken() {
-        document.location.href = '/website/views/home.php';
+        document.location.href = '/website/views/deleteToken.php';
     }
 </script>
 
