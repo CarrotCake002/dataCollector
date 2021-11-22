@@ -25,8 +25,6 @@ if (isset($_POST) && isset($_POST['token']) && $_POST['token'] != '') {
     return;
 }
 
-var_dump('die');die;
-
 session_start();
 
 if (isset($_FILES)):

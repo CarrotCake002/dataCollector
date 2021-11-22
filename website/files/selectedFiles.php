@@ -66,7 +66,6 @@ if (isset($_POST)) {
             array_push($concernedFiles, $_POST[$fileNb]);
         }
     }
-    //var_dump($concernedFiles);die;
     if (isset($_POST['selectedFilesOption'])) {
         if ($_POST['selectedFilesOption'] === 'download') {
             if (downloadSelectedFiles($files, $concernedFiles) === false)
