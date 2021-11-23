@@ -7,29 +7,6 @@ require_once '../views/header.php';
 use classes\FilesController;
 use classes\SessionController;
 
-?>
-
-<script>
-    function downloadFile(filepath) {
-        $.ajax({
-            method: "GET",
-            type: "GET",
-            url: 'downloadFILE.php',
-            data: {
-                'url': filepath
-            },
-            success: function (response) {
-                //location.reload();
-            },
-            error: function () {
-                alert("There was an error deleting the files. Please try again later.");
-            }
-        });
-    }
-</script>
-
-<?php
-
 function deleteSelectedFiles($files, $selectedFiles) {
     for ($fileNb = 0; $fileNb < count($selectedFiles); $fileNb++) {
         if ($files->deleteFile($files->getFileId($selectedFiles[$fileNb])) === false) {
@@ -38,6 +15,8 @@ function deleteSelectedFiles($files, $selectedFiles) {
         }
     }
     $files->updateFileList();
+    if ($files->checkTokenFolderEmpty())
+        $files->deleteTokenFolder();
     return true;
 }
 
