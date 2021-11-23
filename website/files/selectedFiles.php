@@ -42,9 +42,8 @@ if (isset($_POST)) {
     $concernedFiles = array();
 
     for ($fileNb = 0; $fileNb < $files->getFileListSize(); $fileNb++) {
-        if (isset($_POST[$fileNb])) {
+        if (isset($_POST[$fileNb]))
             array_push($concernedFiles, $_POST[$fileNb]);
-        }
     }
     if (isset($_POST['selectedFilesOption'])) {
         if ($_POST['selectedFilesOption'] === 'download') {
@@ -52,6 +51,7 @@ if (isset($_POST)) {
                 echo 'false'; return;
         } elseif ($_POST['selectedFilesOption'] === 'delete') {
             deleteSelectedFiles($files, $concernedFiles);
+            header("Location: /website/views/getFiles.php");
         } else {
             echo 'Error: please one of the options for the selected files.';
             return;
@@ -64,5 +64,3 @@ if (isset($_POST)) {
     echo 'Error: there has been a problem with your request. Please try again.';
     return;
 }
-
-header("Location: /website/views/getFiles.php");
