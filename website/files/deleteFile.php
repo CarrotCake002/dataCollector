@@ -10,7 +10,9 @@ if (isset($_POST) && isset($_POST['token']) && isset($_POST['fileNb'])) {
     $session = new SessionController($_POST['token']);
     $files = new FilesController($session->session_id);
 
-    if (unlink($files->getFileRelativePath($_POST['fileNb'])) === false) {
+    if (unlink($files->getFileRelativePath($_POST['fileNb']))) {
+        $files->updateFileList();
+    } else {
         echo 'Error: couldn\'t delete the file you specified.';
         return;
     }
