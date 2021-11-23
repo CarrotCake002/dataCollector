@@ -242,6 +242,7 @@ class OpenFileController {
 
     public function getAllMetaDataInCSV($ObjectNb) {
         $metaCount = $this->getAllMetaSize($ObjectNb);
+        $maxCount = $this->getBiggestMetaNb();
         $query = "";
 
         for ($i = 0; $i < $metaCount; $i++) {
@@ -251,6 +252,11 @@ class OpenFileController {
             $query = $query . "'" . $this->getSingleMetaSponsored($ObjectNb, $i) . "',";
             $query = $query . "'" . $this->getSingleMetaUgc($ObjectNb, $i) . "',";
             $query = $query . "'" . $this->getSingleMetaNoopener($ObjectNb, $i) . "',";
+        }
+        for ($i = $metaCount; $i < $maxCount ; $i++) {
+            for ($j = 0; $j < 6; $j++) {
+                $query = $query . "' ',";
+            }
         }
         return $query;
     }
@@ -271,6 +277,17 @@ class OpenFileController {
         return (strlen($this->getSingleHreflang($ObjectNb, $hreflangNb)));
     }
 
+    public function getBiggestHreflangNb() {
+        $objCount = $this->getObjectCount();
+        $biggestNb = 0;
+
+        for ($i = 1; $i <= $objCount; $i++) {
+            if ($this->getAllHreflangSize($i) > $biggestNb)
+                $biggestNb = $this->getAllHreflangSize($i);
+        }
+        return $biggestNb;
+    }
+
     public function displayAllHreflang($ObjectNb) {
         $hreflang_size = $this->getAllHreflangSize($ObjectNb);
         for ($i = 0; $i < $hreflang_size; $i++) {
@@ -283,6 +300,30 @@ class OpenFileController {
         for ($i = 0; $i < $hreflang_size; $i++) {
             echo  $this->getSingleHreflangCharSize($ObjectNb, $i) . '<br>';
         }
+    }
+
+    public function getAllHreflangTitlesInCSV() {
+        $hreflangCount = $this->getBiggestHreflangNb();
+        $query = "";
+
+        for ($i = 0; $i < $hreflangCount; $i++) {
+            $query = $query . "'Hreflang Nb" . $i + 1 . "',";
+        }
+        return $query;
+    }
+
+    public function getAllHreflangDataInCSV($ObjectNb) {
+        $hreflangCount = $this->getAllHreflangSize($ObjectNb);
+        $maxCount = $this->getBiggestHreflangNb();
+        $query = "";
+
+        for ($i = 0; $i < $hreflangCount; $i++) {
+            $query = $query . "'" . $this->getSingleHreflang($ObjectNb, $i) . "',";
+        }
+        for ($i = $hreflangCount; $i < $maxCount; $i++) {
+            $query = $query . "' ',";
+        }
+        return $query;
     }
 
     public function getAllCanonicals($ObjectNb) {
@@ -319,6 +360,14 @@ class OpenFileController {
         for ($i = 0; $i < $allCanonicalsSize; $i++) {
             echo $this->getSingleCanonicalCharSize($ObjectNb, $i) . '<br>';
         }
+    }
+
+    public function getAllCanonicalDataInCSV($ObjectNb) {
+        $query = "";
+
+        $query = $query . "'" . $this->getSingleCanonicalRaw($ObjectNb, 0) . "',";
+        $query = $query . "' ',";
+        return $query;
     }
 
     public function getAllHeads($ObjectNb) {
