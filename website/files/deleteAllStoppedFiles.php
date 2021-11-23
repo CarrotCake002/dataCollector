@@ -11,10 +11,15 @@ if (isset($_POST) && isset($_POST['token'])) {
     $files = new FilesController($session->session_id);
 
     for ($fileNb = 0; $fileNb < $files->getFileListSize(); $fileNb++) {
+        var_dump($fileNb);
+        var_dump($files->getFileStatus($fileNb));
         if ($files->getFileStatus($fileNb) === "Stopped") {
             unlink($files->getFileRelativePath($fileNb));
         }
     }
+    $files->updateFileList();
+    if ($files->checkTokenFolderEmpty())
+        $files->deleteTokenFolder();
 } else {
     echo 'Error: something happened when processing your request. Please try again.';
     return;
