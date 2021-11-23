@@ -41,7 +41,7 @@ $totalSize = 0;
 
     function deleteAllStoppedFiles(token) {
         if (!confirm("Are you sure you want to delete all stopped files?"))
-            return;
+            return false;
         $.ajax({
             method: "POST",
             type: "POST",
@@ -50,7 +50,7 @@ $totalSize = 0;
                 'token': token,
             },
             success: function (response) {
-                location.reload();
+                // success
             },
             error: function () {
                 alert("There was an error deleting the files. Please try again later.");
@@ -68,12 +68,17 @@ $totalSize = 0;
                 'token': token
             },
             success: function (response) {
-                location.reload();
+                // success
             },
             error: function () {
                 alert("There was an error deleting the file. Please try again later.");
             }
         });
+    }
+
+    function isTokenFolderEmpty() {
+        empty = "<?= $files->checkTokenFolderEmpty() ?>"
+        console.log(empty);
     }
 
 </script>
@@ -131,6 +136,11 @@ $totalSize = 0;
         </tr>
     </table>
 </form>
+
+<script>
+    isTokenFolderEmpty();
+</script>
+
 <?php
 
 require_once './../views/footer.php';
