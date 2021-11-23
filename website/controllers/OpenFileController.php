@@ -214,6 +214,47 @@ class OpenFileController {
         }
     }
 
+    public function getBiggestMetaNb() {
+        $objCount = $this->getObjectCount();
+        $biggestMetaNb = 0;
+
+        for ($i = 1; $i <= $objCount; $i++) {
+            if ($this->getAllMetaSize($i) > $biggestMetaNb)
+                $biggestMetaNb = $this->getAllMetaSize($i);
+        }
+        return $biggestMetaNb;
+    }
+
+    public function getAllMetaTitlesInCSV() {
+        $metaCount = $this->getBiggestMetaNb();
+        $query = "";
+
+        for ($i = 0; $i < $metaCount; $i++) {
+            $query = $query . "'Meta " . $i + 1 . "',";
+            $query = $query . "'Meta index " . $i + 1 . "',";
+            $query = $query . "'Meta follow " . $i + 1 . "',";
+            $query = $query . "'Meta sponsored " . $i + 1 . "',";
+            $query = $query . "'Meta UGC " . $i + 1 . "',";
+            $query = $query . "'Meta noopener " . $i + 1 . "',";
+        }
+        return $query;
+    }
+
+    public function getAllMetaDataInCSV($ObjectNb) {
+        $metaCount = $this->getAllMetaSize($ObjectNb);
+        $query = "";
+
+        for ($i = 0; $i < $metaCount; $i++) {
+            $query = $query . "'" . $this->getSingleMetaTag($ObjectNb, $i) . "',";
+            $query = $query . "'" . $this->getSingleMetaIndex($ObjectNb, $i) . "',";
+            $query = $query . "'" . $this->getSingleMetaFollow($ObjectNb, $i) . "',";
+            $query = $query . "'" . $this->getSingleMetaSponsored($ObjectNb, $i) . "',";
+            $query = $query . "'" . $this->getSingleMetaUgc($ObjectNb, $i) . "',";
+            $query = $query . "'" . $this->getSingleMetaNoopener($ObjectNb, $i) . "',";
+        }
+        return $query;
+    }
+
     public function getAllHreflang($ObjectNb) {
         return ($this->getAllHtml($ObjectNb)['hreflang']);
     }
