@@ -118,33 +118,11 @@ class OpenFileController {
         }
     }
 
-    public function getAllMetaInStr($ObjectNb) {
-        $metaSize = $this->getAllMetaSize($ObjectNb);
-        if ($metaSize < 1)
-            return '';
-        $query = $this->getSingleMetaTag($ObjectNb, 0);
-        for ($i = 1; $i < $metaSize; $i++) {
-            $query = $query . ',' . $this->getSingleMetaTag($ObjectNb, $i);
-        }
-        return $query;
-    }
-
     public function displayAllMetaCharSizes($ObjectNb) {
         $metaSize = $this->getAllMetaSize($ObjectNb);
         for ($i = 0; $i < $metaSize; $i++) {
             echo $this->getSingleMetaCharSize($ObjectNb, $i) . "<br>";
         }
-    }
-
-    public function getAllMetaSizesInStr($ObjectNb) {
-        $metaSize = $this->getAllMetaSize($ObjectNb);
-        if ($metaSize < 1)
-            return '';
-        $query = $this->getSingleMetaCharSize($ObjectNb, 0);
-        for ($i = 1; $i < $metaSize; $i++) {
-            $query = $query . ',' . $this->getSingleMetaCharSize($ObjectNb, $i);
-        }
-        return $query;
     }
 
     public function getMetaDescription($ObjectNb) {
@@ -176,19 +154,6 @@ class OpenFileController {
         }
     }
 
-    public function getMetaIndexInStr($ObjectNb) {
-        $allMetaSize = $this->getAllMetaSize($ObjectNb);
-
-        $query = '';
-        if ($allMetaSize < 1)
-            return $query;
-        for ($i = 0; $i < $allMetaSize; $i++) {
-            $query = $query . $this->getSingleMetaIndex($ObjectNb, $i) . ',';
-        }
-        $query = substr_replace($query, '', -1);
-        return $query;
-    }
-
     public function getSingleMetaFollow($ObjectNb, $metaNb) {
         if (strpos($this->getSingleMetaTag($ObjectNb, $metaNb), "nofollow") === false)
             return 'Y';
@@ -202,19 +167,6 @@ class OpenFileController {
             echo $this->getSingleMetaFollow($ObjectNb, $i);
             echo '<br>';
         }
-    }
-
-    public function getMetaFollowInStr($ObjectNb) {
-        $allMetaSize = $this->getAllMetaSize($ObjectNb);
-
-        $query = '';
-        if ($allMetaSize < 1)
-            return $query;
-        for ($i = 0; $i < $allMetaSize; $i++) {
-            $query = $query . $this->getSingleMetaFollow($ObjectNb, $i) . ',';
-        }
-        $query = substr_replace($query, '', -1);
-        return $query;
     }
 
     public function getSingleMetaSponsored($ObjectNb, $metaNb) {
@@ -232,19 +184,6 @@ class OpenFileController {
         }
     }
 
-    public function getMetaSponsoredInStr($ObjectNb) {
-        $allMetaSize = $this->getAllMetaSize($ObjectNb);
-
-        $query = '';
-        if ($allMetaSize < 1)
-            return $query;
-        for ($i = 0; $i < $allMetaSize; $i++) {
-            $query = $query . $this->getSingleMetaSponsored($ObjectNb, $i) . ',';
-        }
-        $query = substr_replace($query, '', -1);
-        return $query;
-    }
-
     public function getSingleMetaUgc($ObjectNb, $metaNb) {
         if (strpos($this->getSingleMetaTag($ObjectNb, $metaNb), "ugc") === false)
             return 'N';
@@ -258,19 +197,6 @@ class OpenFileController {
             echo $this->getSingleMetaUgc($ObjectNb, $i);
             echo '<br>';
         }
-    }
-
-    public function getMetaUgcInStr($ObjectNb) {
-        $allMetaSize = $this->getAllMetaSize($ObjectNb);
-
-        $query = '';
-        if ($allMetaSize < 1)
-            return $query;
-        for ($i = 0; $i < $allMetaSize; $i++) {
-            $query = $query . $this->getSingleMetaUgc($ObjectNb, $i) . ',';
-        }
-        $query = substr_replace($query, '', -1);
-        return $query;
     }
 
     public function getSingleMetaNoopener($ObjectNb, $metaNb) {
@@ -288,19 +214,6 @@ class OpenFileController {
         }
     }
 
-    public function getMetaNoopenerInStr($ObjectNb) {
-        $allMetaSize = $this->getAllMetaSize($ObjectNb);
-
-        $query = '';
-        if ($allMetaSize < 1)
-            return $query;
-        for ($i = 0; $i < $allMetaSize; $i++) {
-            $query = $query . $this->getSingleMetaNoopener($ObjectNb, $i) . ',';
-        }
-        $query = substr_replace($query, '', -1);
-        return $query;
-    }
-
     public function getAllHreflang($ObjectNb) {
         return ($this->getAllHtml($ObjectNb)['hreflang']);
     }
@@ -311,19 +224,6 @@ class OpenFileController {
 
     public function getSingleHreflang($ObjectNb, $hreflangNb) {
         return ($this->getAllHreflang($ObjectNb)[$hreflangNb]);
-    }
-
-    public function getAllHreflangInStr($ObjectNb) {
-        $allHreflangSize = $this->getAllHreflangSize($ObjectNb);
-
-        $query = '';
-        if ($allHreflangSize < 1)
-            return $query;
-        for ($i = 0; $i < $allHreflangSize; $i++) {
-            $query = $query . $this->getSingleHreflang($ObjectNb, $i) . ',';
-        }
-        $query = substr_replace($query, '', -1);
-        return $query;
     }
 
     public function getSingleHreflangCharSize($ObjectNb, $hreflangNb) {
@@ -370,19 +270,6 @@ class OpenFileController {
         for ($i = 0; $i < $allCanonicalsSize; $i++) {
             echo $this->getSingleCanonical($ObjectNb, $i) . '<br>';
         }
-    }
-
-    public function getAllCanonicalsInStr($ObjectNb) {
-        $allCanonicalSize = $this->getAllCanonicalsSize($ObjectNb);
-
-        $query = '';
-        if ($allCanonicalSize < 1)
-            return $query;
-        for ($i = 0; $i < $allCanonicalSize; $i++) {
-            $query = $query . $this->getSingleCanonicalRaw($ObjectNb, $i) . ',';
-        }
-        $query = substr_replace($query, '', -1);
-        return $query;
     }
 
     public function displayAllCanonicalSizes($ObjectNb) {
@@ -450,19 +337,6 @@ class OpenFileController {
         }
     }
 
-    public function getAllHeadsTypeInStr($ObjectNb, $type) {
-        $allHeadsSize = $this->getAllCanonicalsSize($ObjectNb);
-
-        $query = '';
-        if ($allHeadsSize < 1)
-            return $query;
-        for ($i = 0; $i < $allHeadsSize; $i++) {
-            $query = $query . $this->getSingleHeadRaw($ObjectNb, $type, $i) . ',';
-        }
-        $query = substr_replace($query, '', -1);
-        return $query;
-    }
-
     public function getAllUserSelectors($ObjectNb) {
         return ($this->getAllHtml($ObjectNb)['userSelected']);
     }
@@ -519,23 +393,6 @@ class OpenFileController {
         }
     }
 
-    public function getAllUserSelectorsInStr($ObjectNb) {
-        $allSelectorsSize = $this->getAllUserSelectorsSize($ObjectNb);
-        $query = '';
-        if ($allSelectorsSize < 1)
-            return $query;
-        for ($typeNb = 0; $typeNb < $allSelectorsSize; $typeNb++) {
-            $typeSize = $this->getTypeUserSelectorsSize($ObjectNb, $typeNb);
-            if ($typeSize < 1)
-                return $query;
-            for ($selectorNb = 0; $selectorNb < $typeSize; $selectorNb++) {
-                $query = $query . $this->getSingleTypeUserSelector($ObjectNb, $typeNb, $selectorNb) . ',';
-            }
-        }
-        $query = substr_replace($query, '', -1);
-        return $query;
-    }
-
     public function getAllLinks($ObjectNb) {
         return ($this->jsonData[$ObjectNb]['links']);
     }
@@ -564,19 +421,6 @@ class OpenFileController {
         for ($i = 0; $i < $link_size; $i++) {
             echo $this->getSingleLinkCharSize($ObjectNb, $i) . '<br>';
         }
-    }
-
-    public function getAllLinksInStr($ObjectNb) {
-        $allLinksSize = $this->getAllLinksSize($ObjectNb);
-
-        $query = '';
-        if ($allLinksSize < 1)
-            return $query;
-        for ($i = 0; $i < $allLinksSize; $i++) {
-            $query = $query . $this->getSingleLink($ObjectNb, $i) . ',';
-        }
-        $query = substr_replace($query, '', -1);
-        return $query;
     }
 
     public function getAllLinkArticles($ObjectNb) {
@@ -611,19 +455,6 @@ class OpenFileController {
         }
     }
 
-    public function getAllLinkArticleInStr($ObjectNb) {
-        $allLinkArticlesSize = $this->getAllLinkArticlesSize($ObjectNb);
-
-        $query = '';
-        if ($allLinkArticlesSize < 1)
-            return $query;
-        for ($i = 0; $i < $allLinkArticlesSize; $i++) {
-            $query = $query . $this->getSingleLinkArticle($ObjectNb, $i) . ',';
-        }
-        $query = substr_replace($query, '', -1);
-        return $query;
-    }
-
     public function getSingleLinkTargetBlank($ObjectNb, $linkNb) {
         if (strpos($this->getSingleLinkArticle($ObjectNb, $linkNb), "target=\"_blank\"") === false)
             return 'N';
@@ -641,19 +472,6 @@ class OpenFileController {
             echo $this->getSingleLinkTargetBlank($ObjectNb, $i);
             echo '<br>';
         }
-    }
-
-    public function getAllLinkTargetBlankInStr($ObjectNb) {
-        $allLinkArticlesSize = $this->getAllLinkArticlesSize($ObjectNb);
-
-        $query = '';
-        if ($allLinkArticlesSize < 1)
-            return $query;
-        for ($i = 0; $i < $allLinkArticlesSize; $i++) {
-            $query = $query . $this->getSingleLinkTargetBlank($ObjectNb, $i) . ',';
-        }
-        $query = substr_replace($query, '', -1);
-        return $query;
     }
 
     public function getAllImg($ObjectNb) {
