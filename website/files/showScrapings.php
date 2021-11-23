@@ -22,6 +22,12 @@ setcookie('token', $session->session_id, time() + 28800000, '/');
 session_start();
 $files = new FilesController($session->session_id);
 $files->deleteTemporalFiles();
+
+if ($files->checkTokenFolderEmpty()) {
+    $files->deleteTokenFolder();
+    header("Location: /website/views/getFiles.php");
+}
+
 $totalSize = 0;
 ?>
 
@@ -42,7 +48,7 @@ $totalSize = 0;
     function deleteAllStoppedFiles(token) {
         if (!confirm("Are you sure you want to delete all stopped files?"))
             return false;
-        $.ajax({
+        return $.ajax({
             method: "POST",
             type: "POST",
             url: 'deleteAllStoppedFiles.php',
@@ -50,7 +56,7 @@ $totalSize = 0;
                 'token': token,
             },
             success: function (response) {
-                // success
+                location.reload();
             },
             error: function () {
                 alert("There was an error deleting the files. Please try again later.");
@@ -68,17 +74,12 @@ $totalSize = 0;
                 'token': token
             },
             success: function (response) {
-                // success
+                location.reload();
             },
             error: function () {
                 alert("There was an error deleting the file. Please try again later.");
             }
         });
-    }
-
-    function isTokenFolderEmpty() {
-        empty = "<?= $files->checkTokenFolderEmpty() ?>"
-        console.log(empty);
     }
 
 </script>
@@ -136,10 +137,6 @@ $totalSize = 0;
         </tr>
     </table>
 </form>
-
-<script>
-    isTokenFolderEmpty();
-</script>
 
 <?php
 
