@@ -47,8 +47,10 @@ if (isset($_POST)) {
     }
     if (isset($_POST['selectedFilesOption'])) {
         if ($_POST['selectedFilesOption'] === 'download') {
-            if (downloadSelectedFiles($files, $concernedFiles) === false)
-                echo 'false'; return;
+            if (downloadSelectedFiles($files, $concernedFiles)) {
+                echo '<br><br>Your download will begin shortly...<br>If you downloaded multiple files, make sure to allow multiple downloads for this website.';
+            } else
+                return false;
         } elseif ($_POST['selectedFilesOption'] === 'delete') {
             deleteSelectedFiles($files, $concernedFiles);
             header("Location: /website/views/getFiles.php");
