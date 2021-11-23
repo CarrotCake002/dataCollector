@@ -83,7 +83,7 @@ if (isset($_FILES)):
                 "'Load time'," .
                 "'Title'," . "'Title size'," .
                 "'Meta description'," . "'Meta description size'," . "'Nb Meta tags'," . $openFile->getAllMetaTitlesInCSV() .
-                "'Nb hreflang'," . "'Hreflang'," .
+                "'Nb hreflang'," . $openFile->getAllHreflangTitlesInCSV() .
                 "'Canonical'," .
                 "'Nb links'," . "'Links'," . "'Link <a> tags'," . "'Link target=blank'," .
                 "'h1'," . "'h2'," . "'h3'," . "'h4'," . "'h5'," . "'h6'," .
@@ -117,9 +117,9 @@ if (isset($_FILES)):
                     $openFile->getResponseTime($i) . "','" .
                     $openFile->getTitle($i) . "','" . $openFile->getTitleSize($i) . "','" .
                     $openFile->getMetaDescription($i) . "','" . $openFile->getMetaDescriptionCharSize($i) . "','" . $openFile->getAllMetaSize($i) . "','" .
-                    $openFile->getAllMetaDataInCSV($i)/* . "','" .
-                    $openFile->getAllHreflangSize($i) . "','" .
-                    $openFile->getAllHreflangInStr($i) . "','" . $openFile->getAllCanonicalsInStr($i) . "','" . $openFile->getAllLinksSize($i) . "','" . $openFile->getAllLinksInStr($i) . "','" .
+                    $openFile->getAllMetaDataInCSV($i) .
+                    $openFile->getAllHreflangSize($i) . "," . $openFile->getAllHreflangDataInCSV($i) . $openFile->getAllCanonicalDataInCSV($i)
+                    /* . "," . $openFile->getAllLinksSize($i) . "','" . $openFile->getAllLinksInStr($i) . "','" .
                     $openFile->getAllLinkArticleInStr($i) . "','" . $openFile->getAllLinkTargetBlankInStr($i) . "','" . $openFile->getAllHeadsTypeInStr($i, 0) . "','" .
                     $openFile->getAllHeadsTypeInStr($i, 1) . "','" . $openFile->getAllHeadsTypeInStr($i, 2) . "','" . $openFile->getAllHeadsTypeInStr($i, 3) . "','" .
                     $openFile->getAllHeadsTypeInStr($i, 4) . "','" . $openFile->getAllHeadsTypeInStr($i, 5) . "','" . $openFile->getAllUserSelectorsInStr($i) . "'"
