@@ -36,10 +36,10 @@ if (isset($_GET)) :
         <button class="copyTableButton" onclick="copyDetailsTable()">Copy Table contents</button>
         <table id="details_table">
             <tr>
-                <th>Id<th>
+                <th>Id</th>
                 <th>Iteration</th>
-                <th>URL<th>
-                <th>Depth<th>
+                <th>URL</th>
+                <th>Depth</th>
                 <th>Times URL found</th>
                 <th>Predecessor</th>
                 <th>Status</th>
