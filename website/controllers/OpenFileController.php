@@ -84,7 +84,8 @@ class OpenFileController {
     }
 
     public function getAllHtmlSize($ObjectNb) {
-        return (count($this->getAllHtml($ObjectNb)));
+        $count = count($this->getAllHtml($ObjectNb));
+        return ($count ? $count : 0);
     }
 
     public function getTitle($ObjectNb) {
@@ -100,7 +101,8 @@ class OpenFileController {
     }
 
     public function getAllMetaSize($ObjectNb) {
-        return (count($this->getAllMeta($ObjectNb)));
+        $count = count($this->getAllMeta($ObjectNb));
+        return ($count ? $count : 0);
     }
 
     public function getSingleMetaTag($ObjectNb, $MetaNb) {
@@ -266,7 +268,8 @@ class OpenFileController {
     }
 
     public function getAllHreflangSize($ObjectNb) {
-        return (count($this->getAllHreflang($ObjectNb)));
+        $count = count($this->getAllHreflang($ObjectNb));
+        return ($count ? $count : 0);
     }
 
     public function getSingleHreflang($ObjectNb, $hreflangNb) {
@@ -331,7 +334,8 @@ class OpenFileController {
     }
 
     public function getAllCanonicalsSize($ObjectNb) {
-        return (count($this->getAllCanonicals($ObjectNb)));
+        $count = count($this->getAllCanonicals($ObjectNb));
+        return ($count ? $count : 0);
     }
 
     public function getSingleCanonicalRaw($ObjectNb, $canonicalNb) {
@@ -402,9 +406,10 @@ class OpenFileController {
     }
 
     public function getAllHeadsSize($ObjectNb) {
-        return (count($this->getAllHeads($ObjectNb)));
+        $count = count($this->getAllHeads($ObjectNb));
+        return ($count ? $count : 0);
     }
-
+    
     public function getTypeHead($ObjectNb, $typeNb) {
         if ($this->getAllHeadsSize($ObjectNb) === 0)
             return null;
@@ -412,6 +417,8 @@ class OpenFileController {
     }
 
     public function getTypeHeadSize($ObjectNb, $typeNb) {
+        if (!$this->getTypeHead($ObjectNb, $typeNb))
+            return 0;
         $count = count($this->getTypeHead($ObjectNb, $typeNb));
         return ($count ? $count : 0);
     }
@@ -497,7 +504,8 @@ class OpenFileController {
     }
 
     public function getAllUserSelectorsSize($ObjectNb) {
-        return (count($this->getAllUserSelectors($ObjectNb)));
+        $count = count($this->getAllUserSelectors($ObjectNb));
+        return ($count ? $count : 0);
     }
 
     public function getTypeUserSelectors($ObjectNb, $typeNb) {
@@ -507,7 +515,8 @@ class OpenFileController {
     }
 
     public function getTypeUserSelectorsSize($ObjectNb, $typeNb) {
-        return (count($this->getTypeUserSelectors($ObjectNb, $typeNb)));
+        $count = count($this->getTypeUserSelectors($ObjectNb, $typeNb));
+        return ($count ? $count : 0);
     }
 
     public function getSingleTypeUserSelectorCharSize($ObjectNb, $typeNb, $selectorNb) {
@@ -560,13 +569,13 @@ class OpenFileController {
     }
 
     public function getAllUserSelectorTitlesInCSV() {
-        $typeSize = 1;//$this->getAllUserSelectorsSize(1);
+        $typeSize = $this->getAllUserSelectorsSize(1);
         $query = "";
 
         for ($type = 0; $type < $typeSize; $type++) {
-            $headCount = $this->getBiggestUserSelectorInTypeNb($type);
-            $query = $query . "Custom selector " . $type + 1 . " Nb',";
-            for ($i = 0; $i < $headCount; $i++) {
+            $selectorCount = $this->getBiggestUserSelectorInTypeNb($type);
+            $query = $query . "'Custom selector " . $type + 1 . " Nb',";
+            for ($i = 0; $i < $selectorCount; $i++) {
                 $query = $query . "'CS " . $type + 1 . " - " . $i + 1 . "',";
             }
         }
@@ -574,18 +583,18 @@ class OpenFileController {
     }
 
     public function getAllUserSelectorDataInCSV($ObjectNb) {
-        $typeSize = 1;//$this->getAllUserSelectorsSize(1);
+        $typeSize = $this->getAllUserSelectorsSize(1);
         $query = "";
 
         for ($type = 0; $type < $typeSize; $type++) {
-            $headCount = $this->getTypeUserSelectorsSize($ObjectNb, $type);
+            $selectorCount = $this->getTypeUserSelectorsSize($ObjectNb, $type);
             $maxCount = $this->getBiggestUserSelectorInTypeNb($type);
 
-            $query = $query . "'" . $headCount . "',";
-            for ($i = 0; $i < $headCount; $i++) {
+            $query = $query . "'" . $selectorCount . "',";
+            for ($i = 0; $i < $selectorCount; $i++) {
                 $query = $query . "'" . $this->getSingleTypeUserSelector($ObjectNb, $type, $i) . "',";
             }
-            for ($i = $headCount; $i < $maxCount ; $i++) {
+            for ($i = $selectorCount; $i < $maxCount ; $i++) {
                 $query = $query . ",";
             }
         }
@@ -597,7 +606,8 @@ class OpenFileController {
     }
 
     public function getAllLinksSize($ObjectNb) {
-        return (count($this->getAllLinks($ObjectNb)));
+        $count = count($this->getAllLinks($ObjectNb));
+        return ($count ? $count : 0);
     }
 
     public function getSingleLink($ObjectNb, $LinkNb) {
@@ -627,7 +637,8 @@ class OpenFileController {
     }
 
     public function getAllLinkArticlesSize($ObjectNb) {
-        return (count($this->getAllLinkArticles($ObjectNb)));
+        $count = count($this->getAllLinkArticles($ObjectNb));
+        return ($count ? $count : 0);
     }
 
     public function getSingleLinkArticle($ObjectNb, $articleNb) {
@@ -673,19 +684,19 @@ class OpenFileController {
         }
     }
 
-    public function getBiggestLinkNb() {
+    public function getBiggestLinkArticleNb() {
         $objCount = $this->getObjectCount();
         $biggestNb = 0;
 
         for ($i = 1; $i <= $objCount; $i++) {
-            if ($this->getAllLinksSize($i) > $biggestNb)
-                $biggestNb = $this->getAllLinksSize($i);
+            if ($this->getAllLinkArticlesSize($i) > $biggestNb)
+                $biggestNb = $this->getAllLinkArticlesSize($i);
         }
         return $biggestNb;
     }
 
     public function getAllLinksTitlesInCSV() {
-        $linkCount = $this->getBiggestLinkNb();
+        $linkCount = $this->getBiggestLinkArticleNb();
         $query = "";
 
         for ($i = 0; $i < $linkCount; $i++) {
@@ -696,8 +707,8 @@ class OpenFileController {
     }
 
     public function getAllLinksDataInCSV($ObjectNb) {
-        $linkCount = $this->getAllLinksSize($ObjectNb);
-        $maxCount = $this->getBiggestLinkNb();
+        $linkCount = $this->getAllLinkArticlesSize($ObjectNb);
+        $maxCount = $this->getBiggestLinkArticleNb();
         $query = "";
 
         for ($i = 0; $i < $linkCount; $i++) {
