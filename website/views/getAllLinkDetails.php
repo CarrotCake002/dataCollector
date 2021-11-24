@@ -15,7 +15,7 @@ $session = new SessionController();
 
 if (isset($_GET)) :
     if (isset($_GET['filename'])) {
-        @$json = file_get_contents($_GET['filename']);
+        @ $json = file_get_contents($_GET['filename']);
         if ($json === false) {
             echo "The file you sent doesn't exist";
             return;
@@ -29,7 +29,6 @@ if (isset($_GET)) :
     } else {
         echo "The program encountered an error while opening the data file. Make sure you didn't delete the saved data.";
     }
-
 ?>
 
     <div id="table_container">
