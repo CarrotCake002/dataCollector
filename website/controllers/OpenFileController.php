@@ -255,7 +255,7 @@ class OpenFileController {
         }
         for ($i = $metaCount; $i < $maxCount ; $i++) {
             for ($j = 0; $j < 6; $j++) {
-                $query = $query . "' ',";
+                $query = $query . ",";
             }
         }
         return $query;
@@ -321,7 +321,7 @@ class OpenFileController {
             $query = $query . "'" . $this->getSingleHreflang($ObjectNb, $i) . "',";
         }
         for ($i = $hreflangCount; $i < $maxCount; $i++) {
-            $query = $query . "' ',";
+            $query = $query . ",";
         }
         return $query;
     }
@@ -346,6 +346,17 @@ class OpenFileController {
         return (strlen($this->getSingleCanonical($ObjectNb, $canonicalNb)));
     }
 
+    public function getBiggestCanonicalNb() {
+        $objCount = $this->getObjectCount();
+        $biggestNb = 0;
+
+        for ($i = 1; $i <= $objCount; $i++) {
+            if ($this->getAllCanonicalsSize($i) > $biggestNb)
+                $biggestNb = $this->getAllCanonicalsSize($i);
+        }
+        return $biggestNb;
+    }
+
     public function displayAllCanonicals($ObjectNb) {
         $allCanonicalsSize = $this->getAllCanonicalsSize($ObjectNb);
 
@@ -362,11 +373,27 @@ class OpenFileController {
         }
     }
 
-    public function getAllCanonicalDataInCSV($ObjectNb) {
+    public function getAllCanonicalTitlesInCSV() {
+        $canoncialCount = $this->getBiggestCanonicalNb();
         $query = "";
 
-        $query = $query . "'" . $this->getSingleCanonicalRaw($ObjectNb, 0) . "',";
-        $query = $query . "' ',";
+        for ($i = 0; $i < $canoncialCount; $i++) {
+            $query = $query . "'Canonical " . $i + 1 . "',";
+        }
+        return $query;
+    }
+
+    public function getAllCanonicalDataInCSV($ObjectNb) {
+        $canonicalNb = $this->getAllCanonicalsSize($ObjectNb);
+        $maxCount = $this->getBiggestCanonicalNb();
+        $query = "";
+
+        for ($i = 0; $i < $canonicalNb; $i++) {
+            $query = $query . "'" . $this->getSingleCanonicalRaw($ObjectNb, $i) . "',";
+        }
+        for ($i = $canonicalNb; $i < $maxCount; $i++) {
+            $query = $query . ",";
+        }
         return $query;
     }
 
@@ -385,10 +412,8 @@ class OpenFileController {
     }
 
     public function getTypeHeadSize($ObjectNb, $typeNb) {
-        $count = $this->getTypeHead($ObjectNb, $typeNb);
-        if ($count === null)
-            return 0;
-        return (count($this->getTypeHead($ObjectNb, $typeNb)));
+        $count = count($this->getTypeHead($ObjectNb, $typeNb));
+        return ($count ? $count : 0);
     }
 
     public function getSingleHeadRaw($ObjectNb, $typeNb, $headNb) {
@@ -425,6 +450,46 @@ class OpenFileController {
         for ($i = 0; $i < $sizeTypeHead; $i++) {
             echo $this->getSingleHeadSize($ObjectNb, $typeNb, $i) . '<br>';
         }
+    }
+
+    public function getBiggestHeadInTypeNb($type) {
+        $objCount = $this->getObjectCount();
+        $biggestNb = 0;
+
+        for ($i = 1; $i <= $objCount; $i++) {
+            if ($this->getTypeHeadSize($i, $type) > $biggestNb)
+                $biggestNb = $this->getTypeHeadSize($i, $type);
+        }
+        return $biggestNb;
+    }
+
+    public function getAllHeadTitlesInCSV() {
+        $query = "";
+        for ($type = 0; $type < 6; $type++) {
+            $headCount = $this->getBiggestHeadInTypeNb($type);
+            $query = $query . "'h" . $type + 1 . " Nb',";
+            for ($i = 0; $i < $headCount; $i++) {
+                $query = $query . "'h" . $type + 1 . " - " . $i + 1 . "',";
+            }
+        }
+        return $query;
+    }
+
+    public function getAllHeadDataInCSV($ObjectNb) {
+        $query = "";
+        for ($headType = 0; $headType < 6; $headType++) {
+            $headCount = $this->getTypeHeadSize($ObjectNb, $headType);
+            $maxCount = $this->getBiggestHeadInTypeNb($headType);
+
+            $query = $query . "'" . $headCount . "',";
+            for ($i = 0; $i < $headCount; $i++) {
+                $query = $query . "'" . $this->getSingleHeadRaw($ObjectNb, $headType, $i) . "',";
+            }
+            for ($i = $headCount; $i < $maxCount ; $i++) {
+                $query = $query . ",";
+            }
+        }
+        return $query;
     }
 
     public function getAllUserSelectors($ObjectNb) {
@@ -481,6 +546,50 @@ class OpenFileController {
         for ($i = 0; $i < $allUserSelectorSize; $i++) {
             $this->displayTypeUserSelectors($ObjectNb, $i);
         }
+    }
+
+    public function getBiggestUserSelectorInTypeNb($type) {
+        $objCount = $this->getObjectCount();
+        $biggestNb = 0;
+
+        for ($i = 1; $i <= $objCount; $i++) {
+            if ($this->getTypeUserSelectorsSize($i, $type) > $biggestNb)
+                $biggestNb = $this->getTypeUserSelectorsSize($i, $type);
+        }
+        return $biggestNb;
+    }
+
+    public function getAllUserSelectorTitlesInCSV() {
+        $typeSize = 1;//$this->getAllUserSelectorsSize(1);
+        $query = "";
+
+        for ($type = 0; $type < $typeSize; $type++) {
+            $headCount = $this->getBiggestUserSelectorInTypeNb($type);
+            $query = $query . "Custom selector " . $type + 1 . " Nb',";
+            for ($i = 0; $i < $headCount; $i++) {
+                $query = $query . "'CS " . $type + 1 . " - " . $i + 1 . "',";
+            }
+        }
+        return $query;
+    }
+
+    public function getAllUserSelectorDataInCSV($ObjectNb) {
+        $typeSize = 1;//$this->getAllUserSelectorsSize(1);
+        $query = "";
+
+        for ($type = 0; $type < $typeSize; $type++) {
+            $headCount = $this->getTypeUserSelectorsSize($ObjectNb, $type);
+            $maxCount = $this->getBiggestUserSelectorInTypeNb($type);
+
+            $query = $query . "'" . $headCount . "',";
+            for ($i = 0; $i < $headCount; $i++) {
+                $query = $query . "'" . $this->getSingleTypeUserSelector($ObjectNb, $type, $i) . "',";
+            }
+            for ($i = $headCount; $i < $maxCount ; $i++) {
+                $query = $query . ",";
+            }
+        }
+        return $query;
     }
 
     public function getAllLinks($ObjectNb) {
@@ -564,26 +673,45 @@ class OpenFileController {
         }
     }
 
-    public function getAllImg($ObjectNb) {
-        return ($this->getAllHtml($ObjectNb)['img']);
-    }
+    public function getBiggestLinkNb() {
+        $objCount = $this->getObjectCount();
+        $biggestNb = 0;
 
-    public function getAllImgSize($ObjectNb) {
-        return (count($this->getAllImg($ObjectNb)));
-    }
-
-    public function getSingleImg($ObjectNb, $imgNb) {
-        return ($this->getAllImg($ObjectNb)[$imgNb]);
-    }
-
-    public function displayAllImgOuterHtml($ObjectNb) {
-        $allImgSize = $this->getAllImgSize($ObjectNb);
-
-        for ($i = 0; $i < $allImgSize; $i++) {
-            echo htmlentities($this->getSingleImg($ObjectNb, $i));
-            echo '<br>';
+        for ($i = 1; $i <= $objCount; $i++) {
+            if ($this->getAllLinksSize($i) > $biggestNb)
+                $biggestNb = $this->getAllLinksSize($i);
         }
+        return $biggestNb;
     }
+
+    public function getAllLinksTitlesInCSV() {
+        $linkCount = $this->getBiggestLinkNb();
+        $query = "";
+
+        for ($i = 0; $i < $linkCount; $i++) {
+            $query = $query . "'Link <a> tag" . $i + 1 . "',";
+            $query = $query . "'Link target=blank" . $i + 1 . "',";
+        }
+        return $query;
+    }
+
+    public function getAllLinksDataInCSV($ObjectNb) {
+        $linkCount = $this->getAllLinksSize($ObjectNb);
+        $maxCount = $this->getBiggestLinkNb();
+        $query = "";
+
+        for ($i = 0; $i < $linkCount; $i++) {
+            $query = $query . "'" . $this->getSingleLinkArticle($ObjectNb, $i) . "',";
+            $query = $query . "'" . $this->getSingleLinkTargetBlank($ObjectNb, $i) . "',";
+        }
+        for ($i = $linkCount; $i < $maxCount ; $i++) {
+            for ($j = 0; $j < 2; $j++) {
+                $query = $query . ",";
+            }
+        }
+        return $query;
+    }
+
 
     public function addSpacesToSizeCols($spacesNb) {
         for ($i = 0; $i < $spacesNb; $i++) {
