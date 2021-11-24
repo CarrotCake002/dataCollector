@@ -2,7 +2,7 @@
 function help() {
     console.log(
         `\n
-    Welcome to DataCollector!\n
+    Welcome to Robopol!\n
     This program was made by Pol Siles\n
     You can check me up on GitHub: https://github.com/CarrotCake002\n
     Read the description carefully to acknowledge all the options you can use.\n\n\n
@@ -34,6 +34,17 @@ function help() {
                 block example: [...] -s "div"   -->     will get the first <div> block.\n
                 class example: [...] -s ".class-name"   -->    will get the first element with the class 'class-name'.\n
                 id example: [...] -s "#selectorId"   -->    will get the first element with the id 'selectorId'.\n\n\n
+    -sX:        represents a mouse scroll in the horizontal axis of the page. If no first argument is provided, no mouse scroll will be applied.\n
+                The first argument corresponds to the total number of scrolls.\n
+                The second argument is the size of each scroll in pixels (default: 500px).\n
+                The last argument will be the time, in milliseconds, to wait before the next scroll (default: 250ms).\n
+                View examples of the syntaxis below:\n
+                default values      -->    -sX "10" (10 scrolls, 500px per scroll, 250ms between scrolls)\n
+                change scroll size  -->    -sX "5, 250" (5 scrolls, 250px per scroll, 250ms between scroll)\n
+                change await time   -->    -sX "20, 100, 150" (20 scrolls, 100px per scroll, 150ms between scroll)\n\n\n
+    -sY:        represents a mouse scroll in the vertical axis of the page. If no first argument is provided, no mouse scroll will be applied.\n
+                The arguments as well as the syntaxis work exctly the same way as for -sX.\n
+                This flag is compatible with the -sX flag, but horizontal scrolls will always take place before vertical scrolls.\n\n\n
     -c:         define JavaScript elements that you wish to click during navigation. This applies to every url, but if no element is found the robot won't do anything.\n
                 You will need to provide the JS path which you can obtain by inspecting the element in any browser.\n
                 You can also provide multiple elements to click, separating them with comas.\n\n\n
