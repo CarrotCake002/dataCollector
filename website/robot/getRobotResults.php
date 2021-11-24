@@ -62,7 +62,7 @@ if (isset($_FILES)):
             <input type="submit" name="submit" value="Get all link details">
         </form>
         <button class="copyTableButton" onclick="copyLinksTable()">Copy Table contents</button>
-        <a href="<?= '/savefiles/' . $session->getSessionFolderName() . '/' . $csvName  ?>" download="<?= $csvName ?>" class="downloadDataExcel" ><br><br>Download a CSV with all data here!</a>
+        <a href="<?= '/savefiles/' . $session->getSessionFolderName() . '/' . $csvName  ?>" download="<?= $csvName ?>" ><br><br>Download a CSV with all data here!</a>
         <table id="allLinksTable">
             <tr>
                 <th>Id</th>
