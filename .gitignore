@@ -17,7 +17,7 @@ website/vendor
 *.xlsx
 
 # tests and others
-demoExcel.php
+*test*
 
 
 # keep the configuration .json files
