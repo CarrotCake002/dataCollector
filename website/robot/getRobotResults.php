@@ -52,7 +52,8 @@ if (isset($_FILES)):
         echo "Error: there has been a problem with the file's name.";
         return;
     }
-    $stream = fopen($session->getSessionFolderPath() . '/' . str_replace('.json', '.csv', $_FILES['openFile']['name']), 'w');
+    $csvName = str_replace('.json', '.csv', $_FILES['openFile']['name']);
+    $stream = fopen($session->getSessionFolderPath() . '/' . $csvName, 'w');
 ?>
 
 <div id="tableBlock">
@@ -61,6 +62,7 @@ if (isset($_FILES)):
             <input type="submit" name="submit" value="Get all link details">
         </form>
         <button class="copyTableButton" onclick="copyLinksTable()">Copy Table contents</button>
+        <a href="<?= '/savefiles/' . $session->getSessionFolderName() . '/' . $csvName  ?>" download="<?= $csvName ?>" class="downloadDataExcel" ><br><br>Download a CSV with all data here!</a>
         <table id="allLinksTable">
             <tr>
                 <th>Id</th>
