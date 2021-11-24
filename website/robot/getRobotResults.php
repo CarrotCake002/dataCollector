@@ -73,21 +73,23 @@ if (isset($_FILES)):
             </tr>
 
             <?php
-                fwrite($stream, "'Id'," .
-                "'Iteration'," .
-                "'URL'," .
-                "'Depth'," .
-                "'Times URL found'," .
-                "'Predecessor'," .
-                "'Status'," .
-                "'Load time'," .
-                "'Title'," . "'Title size'," .
-                "'Meta description'," . "'Meta description size'," . "'Nb Meta tags'," . $openFile->getAllMetaTitlesInCSV() .
-                "'Nb hreflang'," . $openFile->getAllHreflangTitlesInCSV() .
-                "'Canonical'," .
-                "'Nb links'," . "'Links'," . "'Link <a> tags'," . "'Link target=blank'," .
-                "'h1'," . "'h2'," . "'h3'," . "'h4'," . "'h5'," . "'h6'," .
-                "'Custom selectors'" . "\n");
+                fwrite($stream,
+                    "'Id'," .
+                    "'Iteration'," .
+                    "'URL'," .
+                    "'Depth'," .
+                    "'Times URL found'," .
+                    "'Predecessor'," .
+                    "'Status'," .
+                    "'Load time'," .
+                    "'Title'," . "'Title size'," .
+                    "'Meta description'," . "'Meta description size'," . "'Nb Meta tags'," . $openFile->getAllMetaTitlesInCSV() .
+                    "'Nb hreflang'," . $openFile->getAllHreflangTitlesInCSV() . "'Nb canonicals'," .
+                    $openFile->getAllCanonicalTitlesInCSV() .
+                    "'Nb links'," . $openFile->getAllLinksTitlesInCSV() .
+                    $openFile->getAllHeadTitlesInCSV() .
+                    $openFile->getAllUserSelectorTitlesInCSV() .
+                "\n");
                 $objectCount = $openFile->getObjectCount();
 
                 if ($objectCount < 1) {
@@ -116,14 +118,14 @@ if (isset($_FILES)):
                     $openFile->getStatus($i) . "','" .
                     $openFile->getResponseTime($i) . "','" .
                     $openFile->getTitle($i) . "','" . $openFile->getTitleSize($i) . "','" .
-                    $openFile->getMetaDescription($i) . "','" . $openFile->getMetaDescriptionCharSize($i) . "','" . $openFile->getAllMetaSize($i) . "','" .
-                    $openFile->getAllMetaDataInCSV($i) .
-                    $openFile->getAllHreflangSize($i) . "," . $openFile->getAllHreflangDataInCSV($i) . $openFile->getAllCanonicalDataInCSV($i)
-                    /* . "," . $openFile->getAllLinksSize($i) . "','" . $openFile->getAllLinksInStr($i) . "','" .
-                    $openFile->getAllLinkArticleInStr($i) . "','" . $openFile->getAllLinkTargetBlankInStr($i) . "','" . $openFile->getAllHeadsTypeInStr($i, 0) . "','" .
-                    $openFile->getAllHeadsTypeInStr($i, 1) . "','" . $openFile->getAllHeadsTypeInStr($i, 2) . "','" . $openFile->getAllHeadsTypeInStr($i, 3) . "','" .
-                    $openFile->getAllHeadsTypeInStr($i, 4) . "','" . $openFile->getAllHeadsTypeInStr($i, 5) . "','" . $openFile->getAllUserSelectorsInStr($i) . "'"
-                */ . "\n");
+                    $openFile->getMetaDescription($i) . "','" . $openFile->getMetaDescriptionCharSize($i) . "','" .
+                    $openFile->getAllMetaSize($i) . "'," . $openFile->getAllMetaDataInCSV($i) .
+                    $openFile->getAllHreflangSize($i) . "," . $openFile->getAllHreflangDataInCSV($i) . "'" .
+                    $openFile->getAllCanonicalsSize($i) . "'," . $openFile->getAllCanonicalDataInCSV($i) . "'" .
+                    $openFile->getAllLinksSize($i) . "'," . $openFile->getAllLinksDataInCSV($i) .
+                    $openFile->getAllHeadDataInCSV($i) .
+                    $openFile->getAllUserSelectorDataInCSV($i) .
+                "\n");
                 endfor;
                 fclose($stream);
             ?>
