@@ -252,9 +252,6 @@ class OpenFileController {
             $query = $query . "'M.r. " . $i + 1 . "',";
             $query = $query . "'M.r. index " . $i + 1 . "',";
             $query = $query . "'M.r. follow " . $i + 1 . "',";
-            $query = $query . "'M.r. sponsored " . $i + 1 . "',";
-            $query = $query . "'M.r. UGC " . $i + 1 . "',";
-            $query = $query . "'M.r. noopener " . $i + 1 . "',";
         }
         return $query;
     }
@@ -270,13 +267,10 @@ class OpenFileController {
                 $query = $query . "'" . $this->getSingleMetaTag($ObjectNb, $i) . "',";
                 $query = $query . "'" . $this->getSingleMetaIndex($ObjectNb, $i) . "',";
                 $query = $query . "'" . $this->getSingleMetaFollow($ObjectNb, $i) . "',";
-                $query = $query . "'" . $this->getSingleMetaSponsored($ObjectNb, $i) . "',";
-                $query = $query . "'" . $this->getSingleMetaUgc($ObjectNb, $i) . "',";
-                $query = $query . "'" . $this->getSingleMetaNoopener($ObjectNb, $i) . "',";
             }
         }
         for ($i = $metaRobotCount; $i < $maxRobotCount; $i++) {
-            for ($j = 0; $j < 6; $j++) {
+            for ($j = 0; $j < 3; $j++) {
                 $query = $query . ",";
             }
         }
