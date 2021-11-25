@@ -216,44 +216,61 @@ class OpenFileController {
         }
     }
 
-    public function getBiggestMetaNb() {
-        $objCount = $this->getObjectCount();
-        $biggestMetaNb = 0;
-
-        for ($i = 1; $i <= $objCount; $i++) {
-            if ($this->getAllMetaSize($i) > $biggestMetaNb)
-                $biggestMetaNb = $this->getAllMetaSize($i);
-        }
-        return $biggestMetaNb;
+    public function isMetaRobots($ObjectNb, $metaNb) {
+        return strpos($this->getSingleMetaTag($ObjectNb, $j), 'name="robots"') >= 0 ? true : false;
     }
 
-    public function getAllMetaTitlesInCSV() {
-        $metaCount = $this->getBiggestMetaNb();
+    public function getAllMetaRobotsSize($ObjectNb) {
+        $metaRobotsCount = 0;
+        for ($j = 0; $j < $this->getAllMetaSize($ObjectNb); $j++) {
+            if ($this->isMetaRobots($ObjectNb, $j))
+                $metaRobotsCount++;
+        }
+        return $metaRobotsCount;
+    }
+
+    public function getBiggestMetaRobotsNb() {
+        $objCount = $this->getObjectCount();
+        $biggestMetaRobotsNb = 0;
+
+        for ($i = 1; $i <= $objCount; $i++) {
+            for ($j = 0; $j < $this->getAllMetaSize($i); $j++) {
+                if ($this->isMetaRobots($i, $j) && $this->getSingleMetaCharSize($i, $j) > $biggestMetaRobotsNb)
+                    $biggestMetaRobotsNb = $this->getSingleMetaCharSize($i, $j);
+            }
+        }
+        return $biggestMetaRobotsNb;
+    }
+
+    public function getAllMetaRobotsTitlesInCSV() {
+        $metaRobotsCount = $this->getBiggestMetaRobotsNb();
         $query = "";
 
-        for ($i = 0; $i < $metaCount; $i++) {
-            $query = $query . "'Meta " . $i + 1 . "',";
-            $query = $query . "'Meta index " . $i + 1 . "',";
-            $query = $query . "'Meta follow " . $i + 1 . "',";
-            $query = $query . "'Meta sponsored " . $i + 1 . "',";
-            $query = $query . "'Meta UGC " . $i + 1 . "',";
-            $query = $query . "'Meta noopener " . $i + 1 . "',";
+        for ($i = 0; $i < $metaRobotsCount; $i++) {
+            $query = $query . "'M.r. " . $i + 1 . "',";
+            $query = $query . "'M.r. index " . $i + 1 . "',";
+            $query = $query . "'M.r. follow " . $i + 1 . "',";
+            $query = $query . "'M.r. sponsored " . $i + 1 . "',";
+            $query = $query . "'M.r. UGC " . $i + 1 . "',";
+            $query = $query . "'M.r. noopener " . $i + 1 . "',";
         }
         return $query;
     }
 
-    public function getAllMetaDataInCSV($ObjectNb) {
+    public function getAllMetaRobotsDataInCSV($ObjectNb) {
         $metaCount = $this->getAllMetaSize($ObjectNb);
-        $maxCount = $this->getBiggestMetaNb();
+        $maxCount = $this->getBiggestMetaRobotsNb();
         $query = "";
 
         for ($i = 0; $i < $metaCount; $i++) {
-            $query = $query . "'" . $this->getSingleMetaTag($ObjectNb, $i) . "',";
-            $query = $query . "'" . $this->getSingleMetaIndex($ObjectNb, $i) . "',";
-            $query = $query . "'" . $this->getSingleMetaFollow($ObjectNb, $i) . "',";
-            $query = $query . "'" . $this->getSingleMetaSponsored($ObjectNb, $i) . "',";
-            $query = $query . "'" . $this->getSingleMetaUgc($ObjectNb, $i) . "',";
-            $query = $query . "'" . $this->getSingleMetaNoopener($ObjectNb, $i) . "',";
+            if ($this->isMetaRobots($ObjectNb, $i)) {
+                $query = $query . "'" . $this->getSingleMetaTag($ObjectNb, $i) . "',";
+                $query = $query . "'" . $this->getSingleMetaIndex($ObjectNb, $i) . "',";
+                $query = $query . "'" . $this->getSingleMetaFollow($ObjectNb, $i) . "',";
+                $query = $query . "'" . $this->getSingleMetaSponsored($ObjectNb, $i) . "',";
+                $query = $query . "'" . $this->getSingleMetaUgc($ObjectNb, $i) . "',";
+                $query = $query . "'" . $this->getSingleMetaNoopener($ObjectNb, $i) . "',";
+            }
         }
         for ($i = $metaCount; $i < $maxCount ; $i++) {
             for ($j = 0; $j < 6; $j++) {
