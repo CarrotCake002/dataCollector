@@ -90,12 +90,17 @@ async function evaluate(linkList, params, iList, page) {
         function getMetaArray() {
             if (!params['getMeta'])
                 return [];
-            var metaArray = Array.from(document.querySelectorAll(params['querySelector'][0]));
-            metaArray = metaArray.map(element => {
+            var metaArray = [];
+            var allMetaArray = Array.from(document.querySelectorAll(params['querySelector'][0]));
+            allMetaArray = allMetaArray.map(element => {
                 return element.outerHTML;
             });
-            if (metaArray === null || metaArray === undefined) {
+            if (allMetaArray === null || allMetaArray === undefined) {
                 console.log("Error: something unexpected happened when getting the <meta> selectors from the current url.")
+            }
+            for (i = 0; i < allMetaArray.length; i++) {
+                if (allMetaArray[i].includes('name="description"') || allMetaArray[i].includes('name="robots"'))
+                    metaArray.push(allMetaArray[i]);
             }
             return metaArray;
         }
