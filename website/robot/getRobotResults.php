@@ -81,11 +81,11 @@ if (isset($_FILES)):
                     "'URL'," .
                     "'Depth'," .
                     "'Times URL found'," .
-                    "'Predecessor'," .
+                    "'Inlink'," .
                     "'Status'," .
                     "'Load time'," .
                     "'Title'," . "'Title size'," .
-                    "'Meta description'," . "'Meta description size'," . "'Nb Meta tags'," . $openFile->getAllMetaTitlesInCSV() .
+                    "'Meta description (M.d.)'," . "'M.d. outerHTML characters'," . "'Nb Meta tags'," . $openFile->getAllMetaTitlesInCSV() .
                     "'Nb hreflang'," . $openFile->getAllHreflangTitlesInCSV() . "'Nb canonicals'," .
                     $openFile->getAllCanonicalTitlesInCSV() .
                     "'Nb links'," . $openFile->getAllLinksTitlesInCSV() .
