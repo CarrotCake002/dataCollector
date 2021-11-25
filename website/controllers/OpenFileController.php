@@ -261,7 +261,8 @@ class OpenFileController {
 
     public function getAllMetaRobotsDataInCSV($ObjectNb) {
         $metaCount = $this->getAllMetaSize($ObjectNb);
-        $maxCount = $this->getBiggestMetaRobotsNb();
+        $metaRobotCount = $this->getAllMetaRobotsSize($ObjectNb);
+        $maxRobotCount = $this->getBiggestMetaRobotsNb();
         $query = "";
 
         for ($i = 0; $i < $metaCount; $i++) {
@@ -274,7 +275,7 @@ class OpenFileController {
                 $query = $query . "'" . $this->getSingleMetaNoopener($ObjectNb, $i) . "',";
             }
         }
-        for ($i = $metaCount; $i <= $maxCount ; $i++) {
+        for ($i = $metaRobotCount; $i < $maxRobotCount; $i++) {
             for ($j = 0; $j < 6; $j++) {
                 $query = $query . ",";
             }
@@ -314,24 +315,25 @@ class OpenFileController {
 
         for ($i = 0; $i < $metaDescriptionCount; $i++) {
             $query = $query . "'M.d. " . $i + 1 . "',";
-            $query = $query . "'M.d. outerHTML characters" . $i + 1 . "',";
+            $query = $query . "'M.d. outerHTML characters " . $i + 1 . "',";
         }
         return $query;
     }
 
     public function getAllMetaDescriptionDataInCSV($ObjectNb) {
-        $metaCount = $this->getAllMetaSize($ObjectNb);
-        $maxCount = $this->getBiggestMetaDescriptionNb();
+        $allMetaSize = $this->getAllMetaSize($ObjectNb);
+        $metaDescCount = $this->getAllMetaDescriptionSize($ObjectNb);
+        $maxDescCount = $this->getBiggestMetaDescriptionNb();
         $query = "";
 
-        for ($i = 0; $i < $metaCount; $i++) {
+        for ($i = 0; $i < $allMetaSize; $i++) {
             if ($this->isMetaDescription($ObjectNb, $i)) {
                 $query = $query . "'" . $this->getSingleMetaTag($ObjectNb, $i) . "',";
                 $query = $query . "'" . $this->getSingleMetaCharSize($ObjectNb, $i) . "',";
             }
         }
-        for ($i = $metaCount; $i <= $maxCount ; $i++) {
-            for ($j = 0; $j < 6; $j++) {
+        for ($i = $metaDescCount; $i < $maxDescCount; $i++) {
+            for ($j = 0; $j < 2; $j++) {
                 $query = $query . ",";
             }
         }
