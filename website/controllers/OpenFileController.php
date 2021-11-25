@@ -101,6 +101,8 @@ class OpenFileController {
     }
 
     public function getAllMetaSize($ObjectNb) {
+        if (!$this->getAllMeta($ObjectNb))
+            return 0;
         $count = count($this->getAllMeta($ObjectNb));
         return ($count ? $count : 0);
     }
@@ -130,7 +132,7 @@ class OpenFileController {
     public function getMetaDescription($ObjectNb) {
         $metaSize = $this->getAllMetaSize($ObjectNb);
         for ($i = 0; $i < $metaSize; $i++) {
-            if (strpos($this->getSingleMetaTag($ObjectNb, $i), "name=\"description\"") !== false) {
+            if ($this->isMetaDescription($ObjectNb, $i)) {
                 return $this->getSingleMetaTag($ObjectNb, $i);
             }
         }
@@ -217,7 +219,9 @@ class OpenFileController {
     }
 
     public function isMetaRobots($ObjectNb, $metaNb) {
-        return strpos($this->getSingleMetaTag($ObjectNb, $j), 'name="robots"') >= 0 ? true : false;
+        if (strpos($this->getSingleMetaTag($ObjectNb, $metaNb), 'name="robots"') === false)
+            return false;
+        return true;
     }
 
     public function getAllMetaRobotsSize($ObjectNb) {
@@ -234,10 +238,8 @@ class OpenFileController {
         $biggestMetaRobotsNb = 0;
 
         for ($i = 1; $i <= $objCount; $i++) {
-            for ($j = 0; $j < $this->getAllMetaSize($i); $j++) {
-                if ($this->isMetaRobots($i, $j) && $this->getSingleMetaCharSize($i, $j) > $biggestMetaRobotsNb)
-                    $biggestMetaRobotsNb = $this->getSingleMetaCharSize($i, $j);
-            }
+            if ($this->getAllMetaRobotsSize($i) > $biggestMetaRobotsNb)
+                $biggestMetaRobotsNb = $this->getAllMetaRobotsSize($i);
         }
         return $biggestMetaRobotsNb;
     }
@@ -272,7 +274,63 @@ class OpenFileController {
                 $query = $query . "'" . $this->getSingleMetaNoopener($ObjectNb, $i) . "',";
             }
         }
-        for ($i = $metaCount; $i < $maxCount ; $i++) {
+        for ($i = $metaCount; $i <= $maxCount ; $i++) {
+            for ($j = 0; $j < 6; $j++) {
+                $query = $query . ",";
+            }
+        }
+        return $query;
+    }
+
+    public function isMetaDescription($ObjectNb, $metaNb) {
+        if (strpos($this->getSingleMetaTag($ObjectNb, $metaNb), 'name="description"') === false)
+            return false;
+        return true;
+    }
+
+    public function getAllMetaDescriptionSize($ObjectNb) {
+        $metaDescriptionCount = 0;
+        for ($j = 0; $j < $this->getAllMetaSize($ObjectNb); $j++) {
+            if ($this->isMetaDescription($ObjectNb, $j))
+            $metaDescriptionCount++;
+        }
+        return $metaDescriptionCount;
+    }
+
+    public function getBiggestMetaDescriptionNb() {
+        $objCount = $this->getObjectCount();
+        $biggestMetaRobotsNb = 0;
+
+        for ($i = 1; $i <= $objCount; $i++) {
+            if ($this->getAllMetaDescriptionSize($i) > $biggestMetaRobotsNb)
+                $biggestMetaRobotsNb = $this->getAllMetaDescriptionSize($i);
+        }
+        return $biggestMetaRobotsNb;
+    }
+
+    public function getAllMetaDescriptionTitlesInCSV() {
+        $metaDescriptionCount = $this->getBiggestMetaDescriptionNb();
+        $query = "";
+
+        for ($i = 0; $i < $metaDescriptionCount; $i++) {
+            $query = $query . "'M.d. " . $i + 1 . "',";
+            $query = $query . "'M.d. outerHTML characters" . $i + 1 . "',";
+        }
+        return $query;
+    }
+
+    public function getAllMetaDescriptionDataInCSV($ObjectNb) {
+        $metaCount = $this->getAllMetaSize($ObjectNb);
+        $maxCount = $this->getBiggestMetaDescriptionNb();
+        $query = "";
+
+        for ($i = 0; $i < $metaCount; $i++) {
+            if ($this->isMetaDescription($ObjectNb, $i)) {
+                $query = $query . "'" . $this->getSingleMetaTag($ObjectNb, $i) . "',";
+                $query = $query . "'" . $this->getSingleMetaCharSize($ObjectNb, $i) . "',";
+            }
+        }
+        for ($i = $metaCount; $i <= $maxCount ; $i++) {
             for ($j = 0; $j < 6; $j++) {
                 $query = $query . ",";
             }
