@@ -700,8 +700,8 @@ class OpenFileController {
         $query = "";
 
         for ($i = 0; $i < $linkCount; $i++) {
-            $query = $query . "'Link <a> tag" . $i + 1 . "',";
-            $query = $query . "'Link target=blank" . $i + 1 . "',";
+            $query = $query . "'Outlink" . $i + 1 . "',";
+            $query = $query . "'Outlink target=blank" . $i + 1 . "',";
         }
         return $query;
     }
