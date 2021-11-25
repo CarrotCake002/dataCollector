@@ -84,7 +84,7 @@ if (isset($_FILES)):
                     "'Inlink'," .
                     "'Status'," .
                     "'Load time'," .
-                    "'Title'," . "'Title size'," .
+                    "'Title'," . "'Title size'," . "'Nb Meta description (M.d.)'," .
                     $openFile->getAllMetaDescriptionTitlesInCSV() . "'Nb Meta robots (M.r.)'," . $openFile->getAllMetaRobotsTitlesInCSV() .
                     "'Nb hreflang'," . $openFile->getAllHreflangTitlesInCSV() . "'Nb canonicals'," .
                     $openFile->getAllCanonicalTitlesInCSV() .
@@ -119,9 +119,10 @@ if (isset($_FILES)):
                     $openFile->getUrlPredecessor($i) . "','" .
                     $openFile->getStatus($i) . "','" .
                     $openFile->getResponseTime($i) . "','" .
-                    $openFile->getTitle($i) . "','" . $openFile->getTitleSize($i) . "','" .
-                    /*$openFile->getMetaDescription($i) . "','" . $openFile->getMetaDescriptionCharSize($i) . "','" .*/
-                    $openFile->getAllMetaRobotsSize($i) . "'," . $openFile->getAllMetaRobotsDataInCSV($i) .
+                    $openFile->getTitle($i) . "','" . $openFile->getTitleSize($i) . "'," .
+                    $openFile->getAllMetaDescriptionSize($i) . "," .
+                    $openFile->getAllMetaDescriptionDataInCSV($i) .
+                    $openFile->getAllMetaRobotsSize($i) . "," . $openFile->getAllMetaRobotsDataInCSV($i) .
                     $openFile->getAllHreflangSize($i) . "," . $openFile->getAllHreflangDataInCSV($i) . "'" .
                     $openFile->getAllCanonicalsSize($i) . "'," . $openFile->getAllCanonicalDataInCSV($i) . "'" .
                     $openFile->getAllLinksSize($i) . "'," . $openFile->getAllLinksDataInCSV($i) .

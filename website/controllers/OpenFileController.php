@@ -698,7 +698,7 @@ class OpenFileController {
     public function displayAllLinks($ObjectNb) {
         $link_size = $this->getAllLinksSize($ObjectNb);
         for ($i = 0; $i < $link_size; $i++) {
-            echo '<a href="' . $this->getSingleLink($ObjectNb, $i) . '">' . $this->getSingleLink($ObjectNb, $i) . '</a><br>';
+            echo '<a href="' . $this->getSingleLink($ObjectNb, $i) . '">' . $this->getSingleLink($ObjectNb, $i) . '<    a><br>';
         }
     }
 
