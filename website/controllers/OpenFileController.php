@@ -173,33 +173,6 @@ class OpenFileController {
         }
     }
 
-    public function getMetaSponsored($ObjectNb) {
-        $allMetaSize = $this->getAllMetaSize($ObjectNb);
-
-        for ($i = 0; $i < $allMetaSize; $i++) {
-            echo $this->getSingleMetaSponsored($ObjectNb, $i);
-            echo '<br>';
-        }
-    }
-
-    public function getMetaUgc($ObjectNb) {
-        $allMetaSize = $this->getAllMetaSize($ObjectNb);
-
-        for ($i = 0; $i < $allMetaSize; $i++) {
-            echo $this->getSingleMetaUgc($ObjectNb, $i);
-            echo '<br>';
-        }
-    }
-
-    public function getMetaNoopener($ObjectNb) {
-        $allMetaSize = $this->getAllMetaSize($ObjectNb);
-
-        for ($i = 0; $i < $allMetaSize; $i++) {
-            echo $this->getSingleMetaNoopener($ObjectNb, $i);
-            echo '<br>';
-        }
-    }
-
     public function isMetaRobots($ObjectNb, $metaNb) {
         if (strpos($this->getSingleMetaTag($ObjectNb, $metaNb), 'name="robots"') === false)
             return false;
