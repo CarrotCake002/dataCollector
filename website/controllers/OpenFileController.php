@@ -173,12 +173,6 @@ class OpenFileController {
         }
     }
 
-    public function getSingleMetaSponsored($ObjectNb, $metaNb) {
-        if (strpos($this->getSingleMetaTag($ObjectNb, $metaNb), "sponsored") === false)
-            return 'N';
-        return 'Y';
-    }
-
     public function getMetaSponsored($ObjectNb) {
         $allMetaSize = $this->getAllMetaSize($ObjectNb);
 
@@ -188,12 +182,6 @@ class OpenFileController {
         }
     }
 
-    public function getSingleMetaUgc($ObjectNb, $metaNb) {
-        if (strpos($this->getSingleMetaTag($ObjectNb, $metaNb), "ugc") === false)
-            return 'N';
-        return 'Y';
-    }
-
     public function getMetaUgc($ObjectNb) {
         $allMetaSize = $this->getAllMetaSize($ObjectNb);
 
@@ -201,12 +189,6 @@ class OpenFileController {
             echo $this->getSingleMetaUgc($ObjectNb, $i);
             echo '<br>';
         }
-    }
-
-    public function getSingleMetaNoopener($ObjectNb, $metaNb) {
-        if (strpos($this->getSingleMetaTag($ObjectNb, $metaNb), "noopener") === false)
-            return 'N';
-        return 'Y';
     }
 
     public function getMetaNoopener($ObjectNb) {
@@ -381,7 +363,7 @@ class OpenFileController {
         $query = "";
 
         for ($i = 0; $i < $hreflangCount; $i++) {
-            $query = $query . "'Hreflang Nb" . $i + 1 . "',";
+            $query = $query . "'Hreflang Nb " . $i + 1 . "',";
         }
         return $query;
     }
@@ -755,6 +737,24 @@ class OpenFileController {
         }
     }
 
+    public function getSingleLinkUgc($ObjectNb, $articleNb) {
+        if (strpos($this->getSingleLinkArticle($ObjectNb, $articleNb), "ugc") === false)
+            return 'N';
+        return 'Y';
+    }
+
+    public function getSingleLinkSponsored($ObjectNb, $articleNb) {
+        if (strpos($this->getSingleLinkArticle($ObjectNb, $articleNb), "sponsored") === false)
+            return 'N';
+        return 'Y';
+    }
+
+    public function getSingleLinkNoopener($ObjectNb, $articleNb) {
+        if (strpos($this->getSingleLinkArticle($ObjectNb, $articleNb), "noopener") === false)
+            return 'N';
+        return 'Y';
+    }
+
     public function getBiggestLinkArticleNb() {
         $objCount = $this->getObjectCount();
         $biggestNb = 0;
@@ -771,8 +771,11 @@ class OpenFileController {
         $query = "";
 
         for ($i = 0; $i < $linkCount; $i++) {
-            $query = $query . "'Outlink" . $i + 1 . "',";
-            $query = $query . "'Outlink target=blank" . $i + 1 . "',";
+            $query = $query . "'Outlink " . $i + 1 . "',";
+            $query = $query . "'Outlink Target=blank " . $i + 1 . "',";
+            $query = $query . "'Outlink Ugc " . $i + 1 . "',";
+            $query = $query . "'Outlink Sponsored " . $i + 1 . "',";
+            $query = $query . "'Outlink Noopener " . $i + 1 . "',";
         }
         return $query;
     }
@@ -785,15 +788,17 @@ class OpenFileController {
         for ($i = 0; $i < $linkCount; $i++) {
             $query = $query . "'" . $this->getSingleLinkArticle($ObjectNb, $i) . "',";
             $query = $query . "'" . $this->getSingleLinkTargetBlank($ObjectNb, $i) . "',";
+            $query = $query . "'" . $this->getSingleLinkUgc($ObjectNb, $i) . "',";
+            $query = $query . "'" . $this->getSingleLinkSponsored($ObjectNb, $i) . "',";
+            $query = $query . "'" . $this->getSingleLinkNoopener($ObjectNb, $i) . "',";
         }
         for ($i = $linkCount; $i < $maxCount ; $i++) {
-            for ($j = 0; $j < 2; $j++) {
+            for ($j = 0; $j < 5; $j++) {
                 $query = $query . ",";
             }
         }
         return $query;
     }
-
 
     public function addSpacesToSizeCols($spacesNb) {
         for ($i = 0; $i < $spacesNb; $i++) {
