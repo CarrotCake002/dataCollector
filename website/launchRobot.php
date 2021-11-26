@@ -1,6 +1,8 @@
 <?php
 require_once './views/header.php';
 require './controllers/SessionController.php';
+require './controllers/FilesController.php';
+require './controllers/ExecController.php';
 ?>
 
 <script>
@@ -14,6 +16,7 @@ require './controllers/SessionController.php';
 
 <?php
 
+use classes\ExecController;
 use classes\SessionController;
 
 set_time_limit(0);
@@ -58,8 +61,15 @@ if (isset($_POST)) {
         return true;
     }
 
+    $exec = new ExecController();
+    if ($exec->isRobotLimitReached()) {
+        return $exec->isRobotLimitReached();
+    }
+
+    var_dump('exec done');die;
+
     if (isset($_POST['domain']) && $_POST['domain'] !== '') {
-    $query = 'node ../scrapingRobot/main/main.js -D "' . $_POST['domain'] . '"';
+        $query = 'node ../scrapingRobot/main/main.js -D "' . $_POST['domain'] . '"';
     } else {
         echo "Error: you need to specify a domain to scrape.";
         return;
