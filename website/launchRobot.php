@@ -61,9 +61,9 @@ if (isset($_POST)) {
         return true;
     }
 
-    $exec = new ExecController();
+    $exec = new ExecController($session->session_id);
     if ($exec->isRobotLimitReached()) {
-        return $exec->isRobotLimitReached();
+        return;
     }
 
     var_dump('exec done');die;
