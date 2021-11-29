@@ -85,6 +85,7 @@ $totalSize = 0;
 </script>
 
 <h1 style="text-align: center; font-size: 48px">Here you can see all your files</h1>
+<p>If you delete all the files from this token, the token will be deleted and will become useless.</p>
 <form action="selectedFiles.php" method="post">
     <input type="hidden" name="token" value="<?=$session->session_id?>">
     <table>
