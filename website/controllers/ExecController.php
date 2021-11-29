@@ -55,8 +55,6 @@ class ExecController extends FilesController {
     }
 
     private function isFileActive($filepath) {
-        // problem here with getFileId, the function is not constructed as expected when creating this.
-        // it needs to be modified or a new one needs to be created in this controller
         return $this->getStatusFromFilepath($filepath) === 'Active';
     }
 
