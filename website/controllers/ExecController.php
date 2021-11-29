@@ -11,18 +11,53 @@ class ExecController extends FilesController {
 
     public function __construct($token) {
         $this->tokenFolder = $token;
-        $this->folderList = array_values(array_diff(scandir('../savefiles/'), array('.', '..')));
+        $this->folderList = array_values(array_diff(scandir('../savefiles/'), array('.', '..','.gitkeep')));
     }
 
     private function getFileListFromFolder($folder) {
-        return array_values(array_diff(scandir('../savefiles/' . $folder), array('.', '..')));
+        return array_values(array_diff(scandir('../savefiles/' . $folder), array('.', '..', '.gitkeep')));
+    }
+
+    private function isFileCorrectFromFilepath($filepath) {
+        if (strpos($filepath, '.json') === false)
+            return null;
+        @ $json_data = file_get_contents($filepath);
+        if ($json_data === false) {
+            return null;
+        }
+        $json_data = json_decode($json_data, true);
+        if ($json_data === null) {
+            return false;
+        }
+        return true;
+    }
+
+    private function getStatusFromData($fileCorrect, $dateInterval) {
+        if ($fileCorrect === null)
+            return "-";
+
+        if ($fileCorrect === true) {
+            return "Finished";
+        } else if (($dateInterval->y > 0 || $dateInterval->m > 0 || $dateInterval->d > 0
+        || $dateInterval->h > 0 || $dateInterval->i > 0) && $fileCorrect === false) {
+            return "Stopped";
+        } else {
+            return "Active";
+        }
+    }
+
+    private function getStatusFromFilepath($filepath) {
+        $fileDate = date_create(date("d-m-y G:i:s", filemtime($filepath)));
+        $dateInterval = date_diff(date_create(date("d-m-y G:i:s")), $fileDate);
+        $fileCorrect = $this->isFileCorrectFromFilepath($filepath);
+
+        return $this->getStatusFromData($fileCorrect, $dateInterval);
     }
 
     private function isFileActive($filepath) {
-        var_dump('Read text in isFileActive in the ExecController my duude');die;
         // problem here with getFileId, the function is not constructed as expected when creating this.
         // it needs to be modified or a new one needs to be created in this controller
-        return $this->getFileStatus($this->getFileId($filepath)) === 'Active';
+        return $this->getStatusFromFilepath($filepath) === 'Active';
     }
 
     private function increaseActiveRobotsCount($counter, $filepath) {
@@ -56,7 +91,7 @@ class ExecController extends FilesController {
     }
 
     private function isTotalRobotLimitReached() {
-        return $this->getTotalRobotExecutions() > 3;
+        return $this->getTotalRobotExecutions() > 2;
     }
 
     private function totalRobotLimitReached() {
@@ -77,7 +112,6 @@ class ExecController extends FilesController {
 
     public function isRobotLimitReached() {
         if ($this->isUserRobotLimitReached())
-        var_dump('die');die;
             return $this->userRobotLimitReached();
         if ($this->isTotalRobotLimitReached())
             return $this->totalRobotLimitReached();
