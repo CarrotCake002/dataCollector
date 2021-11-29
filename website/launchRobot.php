@@ -142,8 +142,7 @@ if (isset($_POST)) {
 <br>
 <h3>The robot started scraping the site you specified!</h3><br>
 <p>You can now check your data anytime with this token: <b style="font-size: 20px;"><?= $session->getSessionFolderName() ?></b><br><br>
-Remember: If you lose your token you will lose all your data, so keep it safe!</p>
-
+Make sure to checkout the Token page to know how the token system works.</p>
 </div>
 
 <?php
