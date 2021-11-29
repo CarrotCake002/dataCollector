@@ -14,16 +14,19 @@ require_once '../views/header.php';
     }
 </script>
 
-<h1>Token settings</h1>
+<h1 style="text-align: center">Token settings</h1>
 
-<p>When you input a token for the first time it will be saved in your computer until it's automatically removed after 8h.</p>
+<p>When you input a token for the first time it will be saved in your computer.</p>
 <p>If you delete your token, all data associated to it will be deleted.</p>
-<p>Alternatively you can choose to change your token. This will simply ask you for your token next time you go to another page,
-but the token will still be active and no files will be deleted.</p>
+<p>Alternatively you can choose to unset your token. This will simply ask you for your token next time you navigate to a different page,
+but the token data will not be deleted and can be recovered as long as you save your token.</p>
+<p>The token will be automatically unset after 8h of its last use.</p>
+<p>It will also be unset if you use a different token or manually unset it form this page</p>
 <br><br>
 
 <?php if (isset($_COOKIE) && isset($_COOKIE['token'])): ?>
 
+<p id="settingsTokenDisplay">Your token is: <b><?= $_COOKIE['token'] ?></b></p>
 <div class="tokenButtonsBox">
     <button class="tokenButton" onclick="unsetToken()">Unset token</button>
     <button class="tokenButton" onclick="deleteToken()">Delete token data</button>
