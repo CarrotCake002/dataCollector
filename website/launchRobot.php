@@ -66,8 +66,6 @@ if (isset($_POST)) {
         return;
     }
 
-    var_dump('exec done');die;
-
     if (isset($_POST['domain']) && $_POST['domain'] !== '') {
         $query = 'node ../scrapingRobot/main/main.js -D "' . $_POST['domain'] . '"';
     } else {
