@@ -3,7 +3,7 @@ const axios = require('axios');
 const puppeteer = require('puppeteer-core');
 
 // starts the timer, opens new browser and page with the specified parameters and returns all these values
-async function startPage(params, formattedLink) {
+async function startPage(formattedLink) {
     const time = Date.now();
 
     // opens new chrome browser
@@ -16,7 +16,6 @@ async function startPage(params, formattedLink) {
             '--no-sandbox'
         ],
     });
-
     // connects puppeteer to the browser's new port
     const connection = await axios.get(`http://localhost:${chrome.port}/json/version`);
     const { webSocketDebuggerUrl } = connection.data;
@@ -26,13 +25,13 @@ async function startPage(params, formattedLink) {
     const page = await browser.newPage();
     await page.setViewport({ width: 1000, height: 926 });
     const response = await page.goto(formattedLink, { waitUntil: 'networkidle0', timeout: 0 });
-    return [browser, page, response, time];
+    return [browser, page, response, time, chrome];
 }
 
 // closes browser and returns stopped timer
-function endPage(browser, time) {
+function endPage(browser, time, chrome) {
     browser.close();
-    //chromeLauncher.killAll();
+    chrome.kill();
     return (Date.now() - time);
 }
 
