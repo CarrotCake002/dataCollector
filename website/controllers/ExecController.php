@@ -99,7 +99,7 @@ class ExecController extends FilesController {
     }
 
     private function isUserRobotLimitReached() {
-        return $this->getNbExecutingRobotsInFolder($this->tokenFolder) > 1;
+        return $this->getNbExecutingRobotsInFolder($this->tokenFolder) > 0;
     }
 
     private function userRobotLimitReached() {
