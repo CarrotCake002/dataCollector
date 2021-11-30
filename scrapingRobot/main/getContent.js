@@ -18,15 +18,15 @@ async function getContent(linkList, iList, linkEnteredCount) {
     const formattedLink = imports.link.getFormattedLink(iList, linkList[iList][0], imports.configStart.params['domain']);
     linkEnteredCount++;
 
-    var openPage = await imports.open.startPage(imports.configStart.params, formattedLink);
-    const [browser, page, response, startTime] = [openPage[0], openPage[1], openPage[2], openPage[3]];
+    var openPage = await imports.open.startPage(formattedLink);
+    const [browser, page, response, startTime, chrome] = [openPage[0], openPage[1], openPage[2], openPage[3], openPage[4]];
     openPage = null;
 
     if (returnArray = await getPageData(linkList, iList, page, response), returnArray === null)
         return null;
     returnArray = returnArray.concat(response.status());
     linkList = returnArray[0];
-    const endTime = imports.open.endPage(browser, startTime);
+    const endTime = imports.open.endPage(browser, startTime, chrome);
     await imports.save.saveFormData(returnArray, iList, endTime, linkEnteredCount, imports.configStart.params);
     if (iList = imports.link.getNext(iList, linkList, imports.configStart.params), iList === true) {
         imports.save.end(returnArray, linkEnteredCount, imports.configStart.params);
