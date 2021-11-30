@@ -61,6 +61,18 @@ if (isset($_POST)) {
         return true;
     }
 
+    function getSavefile($folder, $savefile) {
+        $filepath = '../savefiles/' . $folder . '/' . $savefile . '.json';
+        $cpyCount = 0;
+
+        while (file_exists($filepath)) {
+            $cpyCount += 1;
+            $filepath = '../savefiles/' . $folder . '/' . $savefile . '(' . $cpyCount . ').json';
+            echo $filepath . '<br>';
+        }
+        return (str_replace(['.json', '../savefiles/'], '', $filepath));
+    }
+
     $exec = new ExecController($session->session_id);
     if ($exec->isRobotLimitReached()) {
         return;
@@ -78,7 +90,7 @@ if (isset($_POST)) {
         $query = $query . ' -uf "' . $session->getSessionFolderPath() . '/' . basename($_FILES['startingUrlFile']['tmp_name']) . '"';
     }
     if (isset($_POST['savefile']) && $_POST['savefile'] !== '')
-        $query = $query . ' -f "' . $session->getSessionFolderName() . '/' . $_POST['savefile'] . '"';
+        $query = $query . ' -f "' . getSavefile($session->session_id, $_POST['savefile']) . '"';
     else
         $query = $query . ' -f "' . $session->getSessionFolderName() . '/default"';
     if (isset($_POST['includeEntering']) && $_POST['includeEntering'] !== '')
