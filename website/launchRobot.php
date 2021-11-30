@@ -68,7 +68,6 @@ if (isset($_POST)) {
         while (file_exists($filepath)) {
             $cpyCount += 1;
             $filepath = '../savefiles/' . $folder . '/' . $savefile . '(' . $cpyCount . ').json';
-            echo $filepath . '<br>';
         }
         return (str_replace(['.json', '../savefiles/'], '', $filepath));
     }
@@ -135,6 +134,8 @@ if (isset($_POST)) {
         $query = $query . ' -gTitle';
     $params = "?query=" . $query;
     $params = str_replace(' ', '%20', $params);
+    $params = str_replace('#', '%23', $params);
+    $params = str_replace('&', '%26', $params);
     $url = "execRobotQuery.php";
     ?>
     <script>
