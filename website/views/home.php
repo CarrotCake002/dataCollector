@@ -13,6 +13,7 @@ if (isset($_COOKIE)) {
         <h1>Scrape a new site!</h1>
     </div>
     <div>
+        <a href="/website/views/topCommand.php">Top command</a>
         <form action="/website/launchRobot.php" method="post" enctype="multipart/form-data">
                 <p>Token<br>
                 (if you have one)</p>
