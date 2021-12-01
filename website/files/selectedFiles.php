@@ -66,3 +66,5 @@ if (isset($_POST)) {
     echo 'Error: there has been a problem with your request. Please try again.';
     return;
 }
+
+session_destroy();
