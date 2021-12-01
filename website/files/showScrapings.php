@@ -18,8 +18,8 @@ if (isset($_POST) && isset($_POST['token'])) {
     return;
 }
 
-setcookie('token', $session->session_id, time() + 28800000, '/');
 session_start();
+setcookie('token', $session->session_id, time() + 28800000, '/');
 $files = new FilesController($session->session_id);
 $files->deleteTemporalFiles();
 
