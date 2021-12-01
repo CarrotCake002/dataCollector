@@ -130,10 +130,8 @@ if (isset($_POST)) {
         $query = $query . ' -gCanonical';
     if (isset($_POST['getTitle']) && $_POST['getTitle'] === 'on')
         $query = $query . ' -gTitle';
+    $query = urlencode($query);
     $params = "?query=" . $query;
-    $params = str_replace(' ', '%20', $params);
-    $params = str_replace('#', '%23', $params);
-    $params = str_replace('&', '%26', $params);
     $url = "execRobotQuery.php";
     ?>
     <script>
