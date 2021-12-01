@@ -31,7 +31,6 @@ if (isset($_FILES)):
             echo "Error: the token you sent is invalid.<br>If you don't have a valid token, launch the scraping without it and a token will automatically be provided to you.";
             return;
         }
-        //var_dump(file_exists($_FILES['openFile']['tmp_name']));die;
         $filePath = '../../savefiles/' . $session->getSessionFolderName() . '/' . basename($_FILES['openFile']['tmp_name']);
         $move = move_uploaded_file($_FILES['openFile']['tmp_name'], $filePath);
         if ($move === false) {
