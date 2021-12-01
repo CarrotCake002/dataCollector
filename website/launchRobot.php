@@ -52,7 +52,7 @@ if (isset($_POST)) {
                     return false;
                 }
             }
-            $filePath = $session->getSessionFolderPath() . '/' . basename($_FILES['startingUrlFile']['tmp_name']);
+            $filePath = '../savefiles/' . $session->getSessionFolderName() . '/' . basename($_FILES['startingUrlFile']['tmp_name']);
             if (move_uploaded_file($_FILES['startingUrlFile']['tmp_name'], $filePath) === false) {
                 echo "There has been an error moving the file.";
                 return false;
@@ -86,7 +86,7 @@ if (isset($_POST)) {
     if (isset($_FILES) && isset($_FILES['startingUrlFile']) && $_FILES['startingUrlFile']['size'] !== 0) {
         if (!getStartingUrlFile($session))
             return;
-        $query = $query . ' -uf "' . $session->getSessionFolderPath() . '/' . basename($_FILES['startingUrlFile']['tmp_name']) . '"';
+        $query = $query . ' -uf "' . '../savefiles/' . $session->getSessionFolderName() . '/' . basename($_FILES['startingUrlFile']['tmp_name']) . '"';
     }
     if (isset($_POST['savefile']) && $_POST['savefile'] !== '')
         $query = $query . ' -f "' . getSavefile($session->session_id, $_POST['savefile']) . '"';
