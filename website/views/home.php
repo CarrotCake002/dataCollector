@@ -102,11 +102,6 @@ if (isset($_COOKIE)) {
                     <input type="checkbox" name="allSelectors">
                     <div class="slider round"></div>
                 </label>
-                <p class="home_p">Headless browser</p>
-                <label class="switch">
-                    <input type="checkbox" name="headless">
-                    <div class="slider round"></div>
-                </label>
             <button type="submit">Submit</button>
         </form>
     </div>
