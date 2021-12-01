@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 require_once './header.php';
 require './../controllers/OpenFileController.php';
 require './../controllers/SessionController.php';
@@ -12,6 +10,7 @@ use classes\SessionController;
 set_time_limit(0);
 
 $session = new SessionController();
+session_start();
 
 if (isset($_GET)) :
     if (isset($_GET['filename'])) {
