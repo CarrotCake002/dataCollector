@@ -61,6 +61,15 @@ if (isset($_POST)) {
         return true;
     }
 
+    function createFile($filename) {
+        $fd = fopen($filename, 'w');
+        if (!$fd)
+            return false;
+        if (!fclose($fd))
+            return false;
+        return true;
+    }
+
     function getSavefile($folder, $savefile) {
         $filepath = '../savefiles/' . $folder . '/' . $savefile . '.json';
         $cpyCount = 0;
@@ -69,7 +78,10 @@ if (isset($_POST)) {
             $cpyCount += 1;
             $filepath = '../savefiles/' . $folder . '/' . $savefile . '(' . $cpyCount . ').json';
         }
-        return (str_replace(['.json', '../savefiles/'], '', $filepath));
+        if (!createFile($filepath))
+            echo "Error: something happened while creating the savefile.";
+        $filepath = str_replace(['.json', '../savefiles/'], '', $filepath);
+        return $filepath;
     }
 
     $exec = new ExecController($session->session_id);
