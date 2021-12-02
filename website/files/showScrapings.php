@@ -1,3 +1,5 @@
+<script src="../js/filesSorting.js"></script>
+
 <?php
 
 require_once './../views/header.php';
@@ -88,10 +90,28 @@ $totalSize = 0;
 <h1 style="text-align: center; font-size: 48px">Here you can see all your files</h1>
 <p style="margin-left: 40px">If you delete all the files from this token, the token will be deleted and will become useless.</p>
 <form action="selectedFiles.php" method="post">
+    <div>
+        <p style="float: left; margin: 22px; margin-left: 40px; vertical-align:middle">Filter by: </p>
+        <ul id="filter_files_type">
+            <li>
+                <input class="filterCheckbox" type="checkbox" id="filterAll" name="filter" value="all" onclick="showAll()" checked>
+                <label for="filterAll" class="file_filters_label">All</label>
+            </li>
+            <li>
+                <input class="filterCheckbox" type="checkbox" id="filterJson" name="filter" value="json" onclick="showJson()">
+                <label for="filterJson" class="file_filters_label">Json</label>
+            </li>
+            <li>
+                <input class="filterCheckbox" type="checkbox" id="filterCsv" name="filter" value="csv" onclick="showCsv()">
+                <label for="filterCsv" class="file_filters_label">CSV</label>
+            </li>
+        </ul>
+    </div>
     <input type="hidden" name="token" value="<?=$session->session_id?>">
     <table style="margin-top: 20px">
         <tr>
             <th>File name</th>
+            <th>Type</th>
             <th>Size (kB)</th>
             <th>Last updated</th>
             <th>Status</th>
@@ -103,6 +123,16 @@ $totalSize = 0;
         <?php for ($fileNb = 0; $fileNb < $files->getFileListSize(); $fileNb++): ?>
         <tr>
             <td><?= $files->getFileName($fileNb) ?></td>
+            <td>
+                <?php
+                    if ($files->getFileType($fileNb) === 'json')
+                        echo '<img src="../../assets/json_file_icon.png" alt="download" style="width: 45px">';
+                    else if ($files->getFileType($fileNb) === 'csv')
+                        echo '<img src="../../assets/csv_file_icon.png" alt="download" style="width: 40px">';
+                    else
+                        echo '<b>-</b>';
+                ?>
+            </td>
             <td><?php echo $files->getFileSize($fileNb); $totalSize += $files->getFileSize($fileNb) ?></td>
             <td><?= $files->getFileLastUpdate($fileNb) ?></td>
             <td id="fileStatus<?= $fileNb?>"><?= $files->getFileStatus($fileNb) ?><script>changeStatusColor(<?=$fileNb?>, "<?=$files->getFileStatus($fileNb)?>");</script></td>
@@ -113,11 +143,12 @@ $totalSize = 0;
                 </a>
             </td>
             <td><img class="deleteFile" src="../../assets/delete_red_bin.png" alt="delete" onclick='deleteFile(<?=$fileNb?>,"<?=$files->folder?>")' style="width: 25px;"></td>
-            <td><input class="fileCheckSelector" type="checkbox" id="fileSelected<?=$fileNb?>" name="<?=$fileNb?>" value="<?=$files->getFileName($fileNb)?>"></td>    
+            <td><input class="fileCheckSelector" type="checkbox" id="fileSelected<?=$fileNb?>" name="<?=$fileNb?>" value="<?=$files->getFileName($fileNb)?>"></td>
         </tr>
         <?php endfor; ?>
         <tr>
             <td class="filesTableCell"><b>Total</b></td>
+            <td class="filesTableCell"><b>-</b></td>
             <td class="filesTableCell"><b><?= $totalSize ?> kB</b></td>
             <td class="filesTableCell"><b>-</b></td>
             <td class="filesTableCell"><b>-</b></td>
