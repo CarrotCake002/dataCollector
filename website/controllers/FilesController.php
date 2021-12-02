@@ -120,4 +120,13 @@ class FilesController {
         $this->file_list = array_values(array_diff(scandir('../../savefiles/' . $this->folder), array('.', '..')));
     }
 
+    public function getFilenamesInStr() {
+        $result = "'" . $this->file_list[0];
+
+        for ($i = 1; $i < count($this->file_list); $i++)
+            $result .= "', '" . $this->file_list[$i];
+        $result .= "'";
+        return $result;
+    }
+
 }
