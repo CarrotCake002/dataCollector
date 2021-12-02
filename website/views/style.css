@@ -38,6 +38,29 @@ ul li a {
     padding: 0px 0px 0px 20px;
 }
 
+#filter_files_type {
+    float: left;
+    position: absolute;
+    right: initial;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-left: 80px
+}
+
+.file_filters_label {
+    margin-top: 7px;
+    margin-bottom: 7px;
+    margin-left: 30px;
+    margin-right: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 15px;
+    width: 40px;
+    list-style: none;
+}
+
 h1 {
     text-transform: uppercase;
     font-size: 48px;
@@ -148,6 +171,14 @@ th, td {
 .fileCheckSelector {
     margin: auto;
     width: 30px;
+    box-shadow: none;
+}
+
+.filterCheckbox {
+    margin: 0px;
+    clear: none;
+    width: 30px;
+    float: left ;
     box-shadow: none;
 }
 
