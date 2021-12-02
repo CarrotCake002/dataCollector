@@ -26,6 +26,10 @@ class FilesController {
         return false;
     }
 
+    public function getFileType($fileNb) {
+        return pathinfo($this->getFileName($fileNb), PATHINFO_EXTENSION);
+    }
+
     public function getFileId($filename) {
         for ($id = 0; $id < $this->getFileListSize(); $id++) {
             if ($this->file_list[$id] === $filename)
