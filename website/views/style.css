@@ -38,22 +38,6 @@ ul li a {
     padding: 0px 0px 0px 20px;
 }
 
-footer {
-    bottom: 0;
-    position: fixed;
-    width: 100%;
-    height: 60px;
-    background-color: #f2f2f2;
-    box-shadow: 0 0 10px #000;
-    text-align: center;
-    margin: 0 auto;
-    z-index: 15;
-}
-
-footer p {
-    text-transform: uppercase;
-}
-
 h1 {
     text-transform: uppercase;
     font-size: 48px;
@@ -134,7 +118,7 @@ th, td {
 
 #footer_space {
     bottom: 0;
-    margin-top: 70px;
+    margin-top: 40px;
 }
 
 .home_inputs {

@@ -1,4 +1,5 @@
 <?php
+
 require_once './../views/header.php';
 require '../controllers/SessionController.php';
 require '../controllers/FilesController.php';
@@ -88,7 +89,7 @@ $totalSize = 0;
 <p style="margin-left: 40px">If you delete all the files from this token, the token will be deleted and will become useless.</p>
 <form action="selectedFiles.php" method="post">
     <input type="hidden" name="token" value="<?=$session->session_id?>">
-    <table style="margin-top: 20px;">
+    <table style="margin-top: 20px">
         <tr>
             <th>File name</th>
             <th>Size (kB)</th>
