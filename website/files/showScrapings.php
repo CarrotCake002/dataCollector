@@ -94,15 +94,15 @@ $totalSize = 0;
         <p style="float: left; margin: 22px; margin-left: 40px; vertical-align:middle">Filter by: </p>
         <ul id="filter_files_type">
             <li>
-                <input class="filterCheckbox" type="checkbox" id="filterAll" name="filter" value="all" onclick="showAll()" checked>
+                <input class="filterCheckbox" type="checkbox" id="filterAll" name="filter" value="all" onclick="showAll([<?=$files->getFilenamesInStr()?>])" checked>
                 <label for="filterAll" class="file_filters_label">All</label>
             </li>
             <li>
-                <input class="filterCheckbox" type="checkbox" id="filterJson" name="filter" value="json" onclick="showJson()">
+                <input class="filterCheckbox" type="checkbox" id="filterJson" name="filter" value="json" onclick="showJson([<?=$files->getFilenamesInStr()?>])">
                 <label for="filterJson" class="file_filters_label">Json</label>
             </li>
             <li>
-                <input class="filterCheckbox" type="checkbox" id="filterCsv" name="filter" value="csv" onclick="showCsv()">
+                <input class="filterCheckbox" type="checkbox" id="filterCsv" name="filter" value="csv" onclick="showCsv([<?=$files->getFilenamesInStr()?>])">
                 <label for="filterCsv" class="file_filters_label">CSV</label>
             </li>
         </ul>
@@ -121,7 +121,7 @@ $totalSize = 0;
             <th>Select files to...</th>
         </tr>
         <?php for ($fileNb = 0; $fileNb < $files->getFileListSize(); $fileNb++): ?>
-        <tr>
+        <tr id="rowFile<?= $files->getFileName($fileNb) ?>">
             <td><?= $files->getFileName($fileNb) ?></td>
             <td>
                 <?php
