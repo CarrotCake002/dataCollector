@@ -1,3 +1,59 @@
+function changeStatusColor(fileNb, status) {
+    if (status === "Active") {
+        document.getElementById("fileStatus" + fileNb).style.color = "blue";
+    } else if (status === "Stopped") {
+        document.getElementById("fileStatus" + fileNb).style.color = "red";
+    } else if (status === "Finished") {
+        document.getElementById("fileStatus" + fileNb).style.color = "#31d313";
+    } else {
+        document.getElementById("fileStatus" + fileNb).style.color = "black";
+    }
+}
+
+function deleteAllStoppedFiles(token, filetype = "") {
+    if (!confirm("Are you sure you want to delete all stopped files?"))
+        return false;
+    return $.ajax({
+        method: "POST",
+        type: "POST",
+        url: 'deleteAllStoppedFiles.php',
+        data: {
+            'token': token,
+            'filetype': filetype
+        },
+        success: function (response) {
+            location.reload();
+        },
+        error: function () {
+            alert("There was an error deleting the files. Please try again later.");
+        }
+    });
+}
+
+function deleteFile(fileNb, token) {
+    $.ajax({
+        method: "POST",
+        type: "POST",
+        url: 'deleteFile.php',
+        data: {
+            'fileNb' : fileNb,
+            'token': token
+        },
+        success: function (response) {
+            location.reload();
+        },
+        error: function () {
+            alert("There was an error deleting the file. Please try again later.");
+        }
+    });
+}
+
+function getCurrentFilter() {
+    if (document.getElementById('filter_json').checked === true)
+        return "json";
+    else if (document.getElementById('filter_csv').checked === true)
+        return "csv";
+}
 
 function unclickAll() {
     document.getElementById('filterAll').checked = false;
