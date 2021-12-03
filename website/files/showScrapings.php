@@ -94,15 +94,15 @@ $totalSize = 0;
         <p style="float: left; margin: 22px; margin-left: 40px; vertical-align:middle">Filter by: </p>
         <ul id="filter_files_type">
             <li>
-                <input class="filterCheckbox" type="checkbox" id="filterAll" name="filter" value="all" onclick="showAll([<?=$files->getFilenamesInStr()?>])" checked>
+                <input class="filterCheckbox" type="checkbox" id="filterAll" name="filter" value="all" onclick="showAll([<?=$files->getFilenamesInStr()?>], [<?=$files->getFileSizesInStr()?>])" checked>
                 <label for="filterAll" class="file_filters_label">All</label>
             </li>
             <li>
-                <input class="filterCheckbox" type="checkbox" id="filter_json" name="filter" value="json" onclick="showFiletype('json', [<?=$files->getFilenamesInStr()?>])">
+                <input class="filterCheckbox" type="checkbox" id="filter_json" name="filter" value="json" onclick="showFiletype('json', [<?=$files->getFilenamesInStr()?>], [<?=$files->getFileSizesInStr()?>])">
                 <label for="filter_json" class="file_filters_label">Json</label>
             </li>
             <li>
-                <input class="filterCheckbox" type="checkbox" id="filter_csv" name="filter" value="csv" onclick="showFiletype('csv', [<?=$files->getFilenamesInStr()?>])">
+                <input class="filterCheckbox" type="checkbox" id="filter_csv" name="filter" value="csv" onclick="showFiletype('csv', [<?=$files->getFilenamesInStr()?>], [<?=$files->getFileSizesInStr()?>])">
                 <label for="filter_csv" class="file_filters_label">CSV</label>
             </li>
         </ul>
@@ -149,7 +149,7 @@ $totalSize = 0;
         <tr>
             <td class="filesTableCell"><b>Total</b></td>
             <td class="filesTableCell"><b>-</b></td>
-            <td class="filesTableCell"><b><?= $totalSize ?> kB</b></td>
+            <td class="filesTableCell" id="totalFileSize"><b><?= $totalSize ?> kB</b></td>
             <td class="filesTableCell"><b>-</b></td>
             <td class="filesTableCell"><b>-</b></td>
             <td class="filesTableCell">Stop all active</td>
