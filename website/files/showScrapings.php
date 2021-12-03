@@ -102,7 +102,7 @@ $totalSize = 0;
                 <label for="filter_json" class="file_filters_label">Json</label>
             </li>
             <li>
-                <input class="filterCheckbox" type="checkbox" id="filter_csv" name="filter" value="csv" onclick="showCsv('csv', [<?=$files->getFilenamesInStr()?>])">
+                <input class="filterCheckbox" type="checkbox" id="filter_csv" name="filter" value="csv" onclick="showFiletype('csv', [<?=$files->getFilenamesInStr()?>])">
                 <label for="filter_csv" class="file_filters_label">CSV</label>
             </li>
         </ul>
