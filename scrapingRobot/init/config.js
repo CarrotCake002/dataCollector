@@ -279,11 +279,6 @@ function configHeadBrowser(args) {
     return args.includes("-H") ? true : false;
 }
 
-// config if the program should get only the first of every custom selector instead of all of them
-function configGetAllHtml(args) {
-    return args.includes("-o") ? true : false;
-}
-
 // config if the program should get the <a> tag for every found url in each page
 function configGetLinkArticle(args) {
     return args.includes("-gArticle") ? true : false;
@@ -346,7 +341,6 @@ function configParams(args, defaultParams) {
     } if (defaultParams['scrollY'] = configScrollY(args), defaultParams['scrollY'] === false) {
         return false;
     }
-    defaultParams['getOneSelector'] = configGetAllHtml(args);
     defaultParams['headlessBrowser'] = configHeadBrowser(args);
     defaultParams['formattedSavefile'] = configSaveFormat(args);
     defaultParams['getLinkArticle'] = configGetLinkArticle(args);
