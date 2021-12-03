@@ -166,23 +166,11 @@ async function evaluate(linkList, params, iList, page) {
         // get all the html the user asked for
         function getHtmlList() {
             var htmlList = [];
-            if (params['getOneSelector'] === false) {
-                for (var i = 9; i < params['querySelector'].length; i++) {
-                    var html = Array.from(document.querySelectorAll(params['querySelector'][i]));
-                    htmlList.push(html.map(element => {
-                        return element.outerHTML;
-                    }));
-                }
-            } else {
-                for (var i = 9; i < params['querySelector'].length; i++) {
-                    htmlList[i - 9] = [];
-                    var elem = Array.from(document.querySelectorAll(params['querySelector'][i]));
-                    if (elem !== undefined && elem !== null) {
-                        htmlList[i - 9].push(elem.map(element => {
-                            return element.outerHTML;
-                        })[0]);
-                    }
-                }
+            for (var i = 9; i < params['querySelector'].length; i++) {
+                var html = Array.from(document.querySelectorAll(params['querySelector'][i]));
+                htmlList.push(html.map(element => {
+                    return element.outerHTML;
+                }));
             }
             return htmlList;
         }
