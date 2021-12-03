@@ -7,7 +7,6 @@ var defaultParams = {
     onlySaveLinksWith: null,
     savefile: "default",
     querySelector: ['meta', 'title', 'link', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
-    getOneSelector: false,
     formattedSavefile: false,
     headlessBrowser: false,
     args: process.argv,
