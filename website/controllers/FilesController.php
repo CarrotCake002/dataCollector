@@ -6,10 +6,12 @@ class FilesController {
 
     public $folder;
     public $file_list;
+    public $filesize_list;
 
     public function __construct($folder_name) {
         $this->folder = $folder_name;
         $this->file_list = array_values(array_diff(scandir('../../savefiles/' . $this->folder), array('.', '..')));
+        $this->filesize_list = $this->getFilesizeList();
     }
 
     public function getFolderPath() {
@@ -43,6 +45,15 @@ class FilesController {
         if (!$filename)
             return false;
         return '../../savefiles/' . $this->folder . '/' . $filename;
+    }
+
+    public function getFilesizeList() {
+        $filesize_list = [];
+
+        for ($i = 0; $i < $this->getFileListSize(); $i++) {
+            array_push($filesize_list, $this->getFileSize($i));
+        }
+        return $filesize_list;
     }
 
     public function getFileSize($fileNb) {
@@ -125,6 +136,15 @@ class FilesController {
 
         for ($i = 1; $i < count($this->file_list); $i++)
             $result .= "', '" . $this->file_list[$i];
+        $result .= "'";
+        return $result;
+    }
+
+    public function getFileSizesInStr() {
+        $result = "'" . $this->filesize_list[0];
+
+        for ($i = 1; $i < count($this->filesize_list); $i++)
+            $result .= "', '" . $this->filesize_list[$i];
         $result .= "'";
         return $result;
     }
