@@ -97,12 +97,6 @@ if (isset($_COOKIE)) {
                     <input type="checkbox" name="getTitle">
                     <div class="slider round"></div>
                 </label>
-                <p class="home_p" >Get first selector only<br>
-                (for all custom selectors)</p>
-                <label class="switch">
-                    <input type="checkbox" name="allSelectors">
-                    <div class="slider round"></div>
-                </label>
             <button type="submit">Submit</button>
         </form>
     </div>
