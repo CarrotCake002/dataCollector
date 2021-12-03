@@ -98,12 +98,12 @@ $totalSize = 0;
                 <label for="filterAll" class="file_filters_label">All</label>
             </li>
             <li>
-                <input class="filterCheckbox" type="checkbox" id="filterJson" name="filter" value="json" onclick="showJson([<?=$files->getFilenamesInStr()?>])">
-                <label for="filterJson" class="file_filters_label">Json</label>
+                <input class="filterCheckbox" type="checkbox" id="filter_json" name="filter" value="json" onclick="showFiletype('json', [<?=$files->getFilenamesInStr()?>])">
+                <label for="filter_json" class="file_filters_label">Json</label>
             </li>
             <li>
-                <input class="filterCheckbox" type="checkbox" id="filterCsv" name="filter" value="csv" onclick="showCsv([<?=$files->getFilenamesInStr()?>])">
-                <label for="filterCsv" class="file_filters_label">CSV</label>
+                <input class="filterCheckbox" type="checkbox" id="filter_csv" name="filter" value="csv" onclick="showCsv('csv', [<?=$files->getFilenamesInStr()?>])">
+                <label for="filter_csv" class="file_filters_label">CSV</label>
             </li>
         </ul>
     </div>
