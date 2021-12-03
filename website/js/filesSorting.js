@@ -1,8 +1,8 @@
 
 function unclickAll() {
     document.getElementById('filterAll').checked = false;
-    document.getElementById('filterJson').checked = false;
-    document.getElementById('filterCsv').checked = false;
+    document.getElementById('filter_json').checked = false;
+    document.getElementById('filter_csv').checked = false;
 }
 
 function showAll(fileList) {
@@ -12,22 +12,11 @@ function showAll(fileList) {
         document.getElementById('rowFile' + fileList[i]).setAttribute("style", "display: table-row;");
 }
 
-function showJson(fileList) {
+function showFiletype(filetype, fileList) {
     unclickAll();
-    document.getElementById('filterJson').checked = true;
+    document.getElementById('filter_' + filetype).checked = true;
     for (i = 0; i < fileList.length; i++) {
-        if (fileList[i].includes('.json'))
-            document.getElementById('rowFile' + fileList[i]).setAttribute("style", "display: table-row;");
-        else
-            document.getElementById('rowFile' + fileList[i]).setAttribute("style", "display: none");
-    }
-}
-
-function showCsv(fileList) {
-    unclickAll();
-    document.getElementById('filterCsv').checked = true;
-    for (i = 0; i < fileList.length; i++) {
-        if (fileList[i].includes('.csv'))
+        if (fileList[i].includes('.' + filetype))
             document.getElementById('rowFile' + fileList[i]).setAttribute("style", "display: table-row;");
         else
             document.getElementById('rowFile' + fileList[i]).setAttribute("style", "display: none");
