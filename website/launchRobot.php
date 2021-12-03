@@ -128,8 +128,6 @@ if (isset($_POST)) {
         $query = $query . ' -u "' . $_POST['startingUrl'] . '"';
     if (isset($_POST['formSavefile']) && $_POST['formSavefile'] === 'on')
         $query = $query . ' -F';
-    if (isset($_POST['allSelectors']) && $_POST['allSelectors'] === 'on')
-        $query = $query . ' -o';
     if (isset($_POST['getLinkArticle']) && $_POST['getLinkArticle'] === 'on')
         $query = $query . ' -gArticle';
     if (isset($_POST['getMeta']) && $_POST['getMeta'] === 'on')
