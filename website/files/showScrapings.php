@@ -48,7 +48,7 @@ $totalSize = 0;
         }
     }
 
-    function deleteAllStoppedFiles(token) {
+    function deleteAllStoppedFiles(token, filetype = null) {
         if (!confirm("Are you sure you want to delete all stopped files?"))
             return false;
         return $.ajax({
@@ -57,6 +57,7 @@ $totalSize = 0;
             url: 'deleteAllStoppedFiles.php',
             data: {
                 'token': token,
+                'filetype': filetype
             },
             success: function (response) {
                 location.reload();
