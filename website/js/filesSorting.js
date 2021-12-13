@@ -70,8 +70,8 @@ function showAll(fileList, fileSizeList) {
         document.getElementById('rowFile' + fileList[i]).setAttribute("style", "display: table-row;");
         totalSize += parseFloat(fileSizeList[i]);
     }
-    console.log(totalSize.toString() + ' kB');
-    document.getElementById('totalFileSize').value = totalSize.toString() + ' kB';
+    totalSize = totalSize.toFixed(3);
+    document.getElementById('totalFileSize').innerHTML = '<b>' + totalSize.toString() + ' kB</b>';
 }
 
 function showFiletype(filetype, fileList, fileSizeList) {
@@ -87,6 +87,6 @@ function showFiletype(filetype, fileList, fileSizeList) {
         else
             document.getElementById('rowFile' + fileList[i]).setAttribute("style", "display: none");
     }
-    console.log(totalSize.toString() + ' kB');
-    document.getElementById('totalFileSize').innerHTML = totalSize.toString() + ' kB';
+    totalSize = totalSize.toFixed(3);
+    document.getElementById('totalFileSize').innerHTML = '<b>' + totalSize.toString() + ' kB</b>';
 }
