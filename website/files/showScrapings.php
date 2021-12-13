@@ -83,7 +83,7 @@ $totalSize = 0;
             <td><?php echo $files->getFileSize($fileNb); $totalSize += $files->getFileSize($fileNb) ?></td>
             <td><?= $files->getFileLastUpdate($fileNb) ?></td>
             <td id="fileStatus<?= $fileNb?>"><?= $files->getFileStatus($fileNb) ?><script>changeStatusColor(<?=$fileNb?>, "<?=$files->getFileStatus($fileNb)?>");</script></td>
-            <td>Stop</td>
+            <td><a href="../views/topCommand.php?filename=<?= $files->getFileName($fileNb) ?>">Stop</a></td>
             <td>
                 <a href="<?=$files->getFileRelativePath($fileNb)?>" download="<?=$files->file_list[$fileNb]?>">
                     <img src="../../assets/download_button.png" alt="download" style="width: 25px;">
