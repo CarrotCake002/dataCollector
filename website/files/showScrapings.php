@@ -55,7 +55,7 @@ $totalSize = 0;
         </ul>
     </div>
     <input type="hidden" name="token" value="<?=$session->session_id?>">
-    <table id="showScrapings_table" style="margin-top: 20px">
+    <table id="showScrapings_table">
         <tr>
             <th>File name</th>
             <th>Type</th>
@@ -93,7 +93,7 @@ $totalSize = 0;
                     <img src="../../assets/download_button.png" alt="download" style="width: 25px;">
                 </a>
             </td>
-            <td><img class="deleteFile" src="../../assets/delete_red_bin.png" alt="delete" onclick='deleteFile(<?=$fileNb?>,"<?=$files->folder?>")' style="width: 25px;"></td>
+            <td><img class="deleteFile" src="../../assets/delete_red_bin.png" alt="delete" onclick='deleteFile(<?=$fileNb?>,"<?=$files->folder?>")'></td>
             <td><input class="fileCheckSelector" type="checkbox" id="fileSelected<?=$fileNb?>" name="<?=$fileNb?>" value="<?=$files->getFileName($fileNb)?>"></td>
         </tr>
         <?php endfor; ?>
@@ -106,14 +106,16 @@ $totalSize = 0;
             <td class="filesTableCell"><b>Stop all active</b></td>
             <td class="filesTableCell"><b>-</b></td>
             <td class="filesTableCell" style="text-align: center">
+            <a href="">
                 <div>
                     <b>Delete all Stopped</b>
-                </div>
-                <img class="deleteFile" id="deleteAllStopped" src="../../assets/delete_red_bin.png" alt="delete all" onclick='deleteAllStoppedFiles("<?=$files->folder?>", getCurrentFilter())' style="width: 25px; margin-top: 2px">
+                    </div>
+                    <img class="deleteFile" id="deleteAllStopped" src="../../assets/delete_red_bin.png" alt="delete all" onclick='deleteAllStoppedFiles("<?=$files->folder?>", getCurrentFilter())'>
+                </a>
             </td>
             <td>
                 <select name="selectedFilesOption" id="selectedFilesOption">
-                    <option value="download">download</option>
+                <option value="download">download</option>
                     <option value="delete">delete</option>
                 </select>
                 <button id="sendSelectedFiles">GO</button>
