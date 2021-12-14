@@ -71,6 +71,8 @@ if (isset($_POST)) {
     }
 
     function getSavefile($folder, $savefile) {
+        if ($savefile === '')
+            $savefile = "default";
         $filepath = '../savefiles/' . $folder . '/' . $savefile . '.json';
         $cpyCount = 0;
 
@@ -100,10 +102,12 @@ if (isset($_POST)) {
             return;
         $query = $query . ' -uf "' . '../savefiles/' . $session->getSessionFolderName() . '/' . basename($_FILES['startingUrlFile']['tmp_name']) . '"';
     }
-    if (isset($_POST['savefile']) && $_POST['savefile'] !== '')
+    if (isset($_POST['savefile']))
         $query = $query . ' -f "' . getSavefile($session->session_id, $_POST['savefile']) . '"';
-    else
-        $query = $query . ' -f "' . $session->getSessionFolderName() . '/default"';
+    else {
+        echo "Error: post savefile doesn't exist";
+        die;
+    }
     if (isset($_POST['includeEntering']) && $_POST['includeEntering'] !== '')
         $query = $query . ' -i "' . $_POST['includeEntering'] . '"';
     if (isset($_POST['excludeEntering']) && $_POST['excludeEntering'] !== '')
