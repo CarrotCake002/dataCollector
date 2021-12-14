@@ -1,6 +1,6 @@
 <?php
 
-require './header.php';
+require './../views/header.php';
 
 exec('ps faux | grep -e node -e chromium', $output);
 
