@@ -35,7 +35,7 @@ if (isset($_POST)) {
         echo "Error: the token you sent is invalid.<br>If you don't have a valid token, launch the scraping without it and a token will automatically be provided to you.";
         return;
     }
-    setcookie('token', $session->session_id, time() + 28800000, '/');
+    setcookie('token', $session->session_id, time() + 60 * 60 * 24 * 30, '/');
 
     if (!$session->checkSessionFolderExists()) {
         if (!$session->createSessionFolder()) {

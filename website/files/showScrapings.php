@@ -21,7 +21,7 @@ if (isset($_POST) && isset($_POST['token'])) {
 }
 
 session_start();
-setcookie('token', $session->session_id, time() + 28800000, '/');
+setcookie('token', $session->session_id, time() + 60 * 60 * 24 * 30, '/');
 $files = new FilesController($session->session_id);
 $files->deleteTemporalFiles();
 

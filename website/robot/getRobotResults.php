@@ -11,7 +11,7 @@ set_time_limit(0);
 
 if (isset($_POST) && isset($_POST['token']) && $_POST['token'] != '') {
     if (!isset($_COOKIE['token']))
-    setcookie('token', $_POST['token'], time() + 28800000, '/');
+    setcookie('token', $_POST['token'], time() + 60 * 60 * 24 * 30, '/');
     $session = new SessionController($_POST['token']);
     if ($session === NULL || $session->error) {
         echo 'Error: the token you sent is invalid';

@@ -2,7 +2,7 @@
 
 require_once "website/views/header.php";
 
-if (isset($_COOKIE)) {
+if (isset($_COOKIE) && isset($_COOKIE['PHPSESSID'])) {
     setcookie('PHPSESSID', '', -1);
 }
 
