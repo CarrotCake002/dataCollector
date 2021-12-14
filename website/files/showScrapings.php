@@ -67,8 +67,12 @@ $totalSize = 0;
             <th>Delete</th>
             <th>Select files to...</th>
         </tr>
-        <?php for ($fileNb = 0; $fileNb < $files->getFileListSize(); $fileNb++): ?>
-        <tr id="rowFile<?= $files->getFileName($fileNb) ?>">
+        <?php for ($fileNb = 0; $fileNb < $files->getFileListSize(); $fileNb++):
+            if ($fileNb % 2 !== 0):?>
+                <tr id="rowFile<?= $files->getFileName($fileNb) ?>">
+            <?php else: ?>
+                <tr id="rowFile<?= $files->getFileName($fileNb) ?>" bgcolor="#E3E3E3">
+            <?php endif; ?>
             <td><?= $files->getFileName($fileNb) ?></td>
             <td>
                 <?php
