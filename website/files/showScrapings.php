@@ -84,7 +84,7 @@ $totalSize = 0;
             <td><?= $files->getFileLastUpdate($fileNb) ?></td>
             <td id="fileStatus<?= $fileNb?>"><?= $files->getFileStatus($fileNb) ?><script>changeStatusColor(<?=$fileNb?>, "<?=$files->getFileStatus($fileNb)?>");</script></td>
             <?php if ($files->getFileStatus($fileNb) === 'Active'): ?>
-                <td><a href="topCommand.php?filename=<?= $files->getFileName($fileNb) ?>"><img class="stopRobotImg" src="../../assets/stop_icon.png" alt="Stop"></a></td>
+                <td><a href="stopRobot.php?filename=<?= $files->getFileName($fileNb) ?>"><img class="stopRobotImg" src="../../assets/stop_icon.png" alt="Stop"></a></td>
             <?php else: ?>
                 <td><b>-</b></td>
             <?php endif; ?>
