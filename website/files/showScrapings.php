@@ -62,7 +62,7 @@ $totalSize = 0;
             <th>Size (kB)</th>
             <th>Last updated</th>
             <th>Status</th>
-            <th>Force stop</th>
+            <th>Stop active Robot</th>
             <th>Download</th>
             <th>Delete</th>
             <th>Select files to...</th>
@@ -107,7 +107,7 @@ $totalSize = 0;
             <td class="filesTableCell" id="totalFileSize"><b><?= $totalSize ?> kB</b></td>
             <td class="filesTableCell"><b>-</b></td>
             <td class="filesTableCell"><b>-</b></td>
-            <td class="filesTableCell"><b>Stop all active</b></td>
+            <td class="filesTableCell"><b>-</b></td>
             <td class="filesTableCell"><b>-</b></td>
             <td class="filesTableCell" style="text-align: center">
             <a>
