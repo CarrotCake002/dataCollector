@@ -106,7 +106,7 @@ $totalSize = 0;
             <td class="filesTableCell"><b>Stop all active</b></td>
             <td class="filesTableCell"><b>-</b></td>
             <td class="filesTableCell" style="text-align: center">
-            <a href="">
+            <a>
                 <div>
                     <b>Delete all Stopped</b>
                     </div>
