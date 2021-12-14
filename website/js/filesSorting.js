@@ -55,19 +55,28 @@ function getCurrentFilter() {
         return "csv";
 }
 
-function unclickAll() {
+function unclickAll(fileList) {
     document.getElementById('filterAll').checked = false;
     document.getElementById('filter_json').checked = false;
     document.getElementById('filter_csv').checked = false;
+    for (i = 0; i < fileList.length; i++) {
+        document.getElementById('rowFile' + fileList[i]).setAttribute("bgcolor", "#FFFFFF");
+    }
 }
 
 function showAll(fileList, fileSizeList) {
     totalSize = 0;
+    pair = false;
 
-    unclickAll();
+    unclickAll(fileList);
     document.getElementById('filterAll').checked = true;
     for (i = 0; i < fileList.length; i++) {
         document.getElementById('rowFile' + fileList[i]).setAttribute("style", "display: table-row;");
+        if (pair === false) {
+            document.getElementById('rowFile' + fileList[i]).setAttribute("bgcolor", "#E3E3E3");
+            pair = true;
+        } else
+            pair = false;
         totalSize += parseFloat(fileSizeList[i]);
     }
     totalSize = totalSize.toFixed(3);
@@ -76,13 +85,19 @@ function showAll(fileList, fileSizeList) {
 
 function showFiletype(filetype, fileList, fileSizeList) {
     totalSize = 0;
+    pair = false;
 
-    unclickAll();    
+    unclickAll(fileList);    
     document.getElementById('filter_' + filetype).checked = true;
     for (i = 0; i < fileList.length; i++) {
         if (fileList[i].includes('.' + filetype)) {
             document.getElementById('rowFile' + fileList[i]).setAttribute("style", "display: table-row;");
             totalSize += parseFloat(fileSizeList[i]);
+            if (pair === false) {
+                document.getElementById('rowFile' + fileList[i]).setAttribute("bgcolor", "#E3E3E3");
+                pair = true;
+            } else
+                pair = false;
         }
         else
             document.getElementById('rowFile' + fileList[i]).setAttribute("style", "display: none");
