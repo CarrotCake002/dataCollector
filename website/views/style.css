@@ -158,10 +158,16 @@ th, td {
 
 #deleteAllStopped {
     clear: both;
+    width: 25px;
+    margin-top: 2px
 }
 
 .filesTableCell {
     vertical-align: middle;
+}
+
+.deleteFile {
+    width: 25px;
 }
 
 .deleteFile:hover {
@@ -227,6 +233,10 @@ th, td {
 
 .stopRobotImg {
     width: 33px;
+}
+
+#showScrapings_table {
+    margin-top: 20px;
 }
 
 #showScrapings_table td {
