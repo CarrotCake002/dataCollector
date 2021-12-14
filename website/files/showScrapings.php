@@ -55,7 +55,7 @@ $totalSize = 0;
         </ul>
     </div>
     <input type="hidden" name="token" value="<?=$session->session_id?>">
-    <table style="margin-top: 20px">
+    <table id="showScrapings_table" style="margin-top: 20px">
         <tr>
             <th>File name</th>
             <th>Type</th>
@@ -84,7 +84,7 @@ $totalSize = 0;
             <td><?= $files->getFileLastUpdate($fileNb) ?></td>
             <td id="fileStatus<?= $fileNb?>"><?= $files->getFileStatus($fileNb) ?><script>changeStatusColor(<?=$fileNb?>, "<?=$files->getFileStatus($fileNb)?>");</script></td>
             <?php if ($files->getFileStatus($fileNb) === 'Active'): ?>
-                <td><a href="../views/topCommand.php?filename=<?= $files->getFileName($fileNb) ?>">Stop</a></td>
+                <td><a href="../views/topCommand.php?filename=<?= $files->getFileName($fileNb) ?>"><img class="stopRobotImg" src="../../assets/stop_icon.png" alt="Stop"></a></td>
             <?php else: ?>
                 <td><b>-</b></td>
             <?php endif; ?>

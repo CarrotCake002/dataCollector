@@ -224,3 +224,11 @@ th, td {
 #nav_list {
     margin-top: 0px;
 }
+
+.stopRobotImg {
+    width: 33px;
+}
+
+#showScrapings_table td {
+    vertical-align: middle;
+}
