@@ -1,3 +1,5 @@
+<script src="../js/getAllLinkDetails.js"></script>
+
 <?php
 
 require_once './header.php';
@@ -76,15 +78,6 @@ if (isset($_GET)) :
                 <?php endfor; ?>
         </table>
     </div>
-
-    <script>
-        function copyDetailsTable() {
-            var copy = document.getElementById('details_table');
-
-            window.getSelection().selectAllChildren(copy);
-            document.execCommand('Copy');
-        }
-    </script>
 
 <?php
 
