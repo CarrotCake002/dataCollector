@@ -1,3 +1,5 @@
+<script src="../js/getLinkDetails.js"></script>
+
 <?php
 
     require_once './header.php';
@@ -50,9 +52,6 @@
                     <th>Meta tags sizes</th>
                     <th>Meta index</th>
                     <th>Meta follow</th>
-                    <th>Meta sponsored</th>
-                    <th>Meta ugc</th>
-                    <th>Meta noopener</th>
                     <th>Nb hreflang</th>
                     <th>hreflang</th>
                     <th>Canonical</th>
@@ -97,9 +96,6 @@
                     <td><?= $openFile->displayAllMetaCharSizes($objectNb) ?></td>
                     <td><?= $openFile->getMetaIndex($objectNb) ?></td>
                     <td><?= $openFile->getMetaFollow($objectNb) ?></td>
-                    <td><?= $openFile->getMetaSponsored($objectNb) ?></td>
-                    <td><?= $openFile->getMetaUgc($objectNb) ?></td>
-                    <td><?= $openFile->getMetaNoopener($objectNb) ?></td>
                     <td><?= $openFile->getAllHreflangSize($objectNb) ?></td>
                     <td class="array_display"><?= $openFile->displayAllHreflang($objectNb) ?></td>
                     <td><?= $openFile->displayAllCanonicals($objectNb) ?></td>
@@ -126,15 +122,6 @@
                 </tr>
             </table>
         </div>
-
-        <script>
-            function copyDetailsTable() {
-                var copy = document.getElementById('details_table');
-
-                window.getSelection().selectAllChildren(copy);
-                document.execCommand('Copy');
-            }
-        </script>
 
 <?php
     else:
