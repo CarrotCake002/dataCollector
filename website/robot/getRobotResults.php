@@ -56,13 +56,6 @@ if (isset($_FILES)):
     $csvName = str_replace('.json', '.csv', $_FILES['openFile']['name']);
 ?>
 
-<form action="../files/createCsvFile.php" method="POST">
-    <input type="text" value="<?= $session->session_id ?>" name="token">
-    <input type="text" value="<?= $csvName ?>" name="filename">
-    <input type="text" value=<?= basename($_FILES['openFile']['tmp_name']) ?> id="dataFile" name="dataFile">
-    <input type="submit" name="submit">
-</form>
-
 <div id="tableBlock">
         <form action="/website/views/getAllLinkDetails.php" method="GET">
             <input type="text" name="filename" id="filename" value="<?= $filePath ?>">
@@ -111,6 +104,28 @@ if (isset($_FILES)):
             window.getSelection().selectAllChildren(copy);
             document.execCommand('Copy');
         }
+
+        function createCsvFile() {
+            $.ajax({
+                method: "POST",
+                type: "POST",
+                url: '../files/createCsvFile.php',
+                data: {
+                    'token': "<?= $session->session_id ?>",
+                    'filename': "<?= $csvName ?>",
+                    'dataFile': "<?= basename($_FILES['openFile']['tmp_name']) ?>"
+                },
+                success: function (response) {
+                    //location.reload();
+                    console.log(response);
+                },
+                error: function (err) {
+                    alert("Error: couldn't create the CSV file.");
+                    console.log(err);
+                }
+            });
+        }
+        createCsvFile();
     </script>
 
 <?php
