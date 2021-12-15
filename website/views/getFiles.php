@@ -1,3 +1,5 @@
+<script src="../js/getFiles.js"></script>
+
 <?php
 
 require_once './header.php';
@@ -23,26 +25,12 @@ require_once './header.php';
     </div>
 </div>
 
-<script>
-    function submitForm() {
-        document.getElementById('getFilesForm').click();
-    }
-
-    function showForm() {
-        $(".formBlock").css('display', 'block');
-    }
-</script>
-
 <?php
 
 if (isset($_COOKIE) && isset($_COOKIE['token'])):?>
-    <script>
-        submitForm();
-    </script>
+    <script> submitForm(); </script>
 <?php else: ?>
-    <script>
-        showForm();
-    </script>
+    <script> showForm(); </script>
 <?php endif;
 
 require_once './footer.php';
