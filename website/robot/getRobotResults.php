@@ -9,29 +9,30 @@ use classes\SessionController;
 
 set_time_limit(0);
 
-if (isset($_POST) && isset($_POST['token']) && $_POST['token'] != '') {
-    if (!isset($_COOKIE['token']))
-    setcookie('token', $_POST['token'], time() + 60 * 60 * 24 * 30, '/');
-    $session = new SessionController($_POST['token']);
-    if ($session === NULL || $session->error) {
-        echo 'Error: the token you sent is invalid';
+if (isset($_FILES)):
+
+    if (isset($_POST) && isset($_POST['token']) && $_POST['token'] != '') {
+        if (!isset($_COOKIE['token']))
+        setcookie('token', $_POST['token'], time() + 60 * 60 * 24 * 30, '/');
+        $session = new SessionController($_POST['token']);
+        if ($session === NULL || $session->error) {
+            echo 'Error: the token you sent is invalid';
+            return;
+        }
+        session_start();
+    } else {
+        echo "Error: make sure you've set your personal token";
         return;
     }
-} else {
-    echo "Error: make sure you've set your personal token";
-    return;
-}
 
-session_start();
-
-if (isset($_FILES)):
     $json_data = null;
     if (isset($_FILES['openFile']) && isset($_FILES['openFile']['tmp_name'])) {
         if (!$session->checkSessionFolderExists()) {
             echo "Error: the token you sent is invalid.<br>If you don't have a valid token, launch the scraping without it and a token will automatically be provided to you.";
             return;
         }
-        $filePath = '../../savefiles/' . $session->getSessionFolderName() . '/' . basename($_FILES['openFile']['tmp_name']);
+        // should look for possible errors here with big files
+        $filePath = '../../savefiles/' . $session->getSessionFolderName() . '/' . basename($_FILES['openFile']['tmp_name']) . '.tmp';
         $move = move_uploaded_file($_FILES['openFile']['tmp_name'], $filePath);
         if ($move === false) {
             echo "Error: there has been an error moving the file.";
@@ -53,8 +54,14 @@ if (isset($_FILES)):
         return;
     }
     $csvName = str_replace('.json', '.csv', $_FILES['openFile']['name']);
-    $stream = fopen('../../savefiles/' . $session->getSessionFolderName() . '/' . $csvName, 'w');
 ?>
+
+<form action="../files/createCsvFile.php" method="POST">
+    <input type="text" value="<?= $session->session_id ?>" name="token">
+    <input type="text" value="<?= $csvName ?>" name="filename">
+    <input type="text" value=<?= basename($_FILES['openFile']['tmp_name']) ?> id="dataFile" name="dataFile">
+    <input type="submit" name="submit">
+</form>
 
 <div id="tableBlock">
         <form action="/website/views/getAllLinkDetails.php" method="GET">
@@ -75,23 +82,6 @@ if (isset($_FILES)):
             </tr>
 
             <?php
-                fwrite($stream,
-                    "'Id'," .
-                    "'Iteration'," .
-                    "'URL'," .
-                    "'Depth'," .
-                    "'Times URL found'," .
-                    "'Inlink'," .
-                    "'Status'," .
-                    "'Load time'," .
-                    "'Title'," . "'Title size'," . "'Nb Meta description (M.d.)'," .
-                    $openFile->getAllMetaDescriptionTitlesInCSV() . "'Nb Meta robots (M.r.)'," . $openFile->getAllMetaRobotsTitlesInCSV() .
-                    "'Nb hreflang'," . $openFile->getAllHreflangTitlesInCSV() . "'Nb canonicals'," .
-                    $openFile->getAllCanonicalTitlesInCSV() .
-                    "'Nb outlinks'," . $openFile->getAllLinksTitlesInCSV() .
-                    $openFile->getAllHeadTitlesInCSV() .
-                    $openFile->getAllUserSelectorTitlesInCSV() .
-                "\n");
                 $objectCount = $openFile->getObjectCount();
 
                 if ($objectCount < 1) {
@@ -100,38 +90,17 @@ if (isset($_FILES)):
                 }
                 for ($i = 1; $i <= $objectCount; $i++): ?>
 
-            <tr>
-                <td><?= $i ?></td>
-                <td><?= $openFile->getIteration($i) ?></td>
-                <td><a href="<?= $openFile->getURl($i) ?>"><?= $openFile->getUrl($i) ?></a></td>
-                <td><?= $openFile->getUrlDepth($i) ?></td>
-                <td><?= $openFile->getStatus($i) ?></td>
-                <td><?= $openFile->getAllLinksSize($i) ?></td>
-                <td><a href="<?= '/website/views/getLinkDetails.php/?object=' . $i . '&filename=' . $filePath ?>">Click for more details</a></td>
-            </tr>
-            <?php                                                                     
-                fwrite($stream,
-                    "'" . $i . "','" .
-                    $openFile->getIteration($i) . "','" .
-                    $openFile->getUrl($i) . "','" .
-                    $openFile->getUrlDepth($i) . "','" .
-                    $openFile->getTimesUrlFound($i) . "','" .
-                    $openFile->getUrlPredecessor($i) . "','" .
-                    $openFile->getStatus($i) . "','" .
-                    $openFile->getResponseTime($i) . "','" .
-                    $openFile->getTitle($i) . "','" . $openFile->getTitleSize($i) . "'," .
-                    $openFile->getAllMetaDescriptionSize($i) . "," .
-                    $openFile->getAllMetaDescriptionDataInCSV($i) .
-                    $openFile->getAllMetaRobotsSize($i) . "," . $openFile->getAllMetaRobotsDataInCSV($i) .
-                    $openFile->getAllHreflangSize($i) . "," . $openFile->getAllHreflangDataInCSV($i) . "'" .
-                    $openFile->getAllCanonicalsSize($i) . "'," . $openFile->getAllCanonicalDataInCSV($i) . "'" .
-                    $openFile->getAllLinksSize($i) . "'," . $openFile->getAllLinksDataInCSV($i) .
-                    $openFile->getAllHeadDataInCSV($i) .
-                    $openFile->getAllUserSelectorDataInCSV($i) .
-                "\n");
-                endfor;
-                fclose($stream);
-            ?>
+                <tr>
+                    <td><?= $i ?></td>
+                    <td><?= $openFile->getIteration($i) ?></td>
+                    <td><a href="<?= $openFile->getURl($i) ?>"><?= $openFile->getUrl($i) ?></a></td>
+                    <td><?= $openFile->getUrlDepth($i) ?></td>
+                    <td><?= $openFile->getStatus($i) ?></td>
+                    <td><?= $openFile->getAllLinksSize($i) ?></td>
+                    <td><a href="<?= '/website/views/getLinkDetails.php/?object=' . $i . '&filename=' . $filePath ?>">Click for more details</a></td>
+                </tr>
+
+            <?php endfor; ?>
         </table>
     </div>
 
@@ -145,6 +114,8 @@ if (isset($_FILES)):
     </script>
 
 <?php
+else:
+    echo "Error: there was an error collecting the file data.";
 endif;
 
 require_once './../views/footer.php';
