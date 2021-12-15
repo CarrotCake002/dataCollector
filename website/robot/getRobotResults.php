@@ -32,7 +32,7 @@ if (isset($_FILES)):
             return;
         }
         // should look for possible errors here with big files
-        $filePath = '../../savefiles/' . $session->getSessionFolderName() . '/' . basename($_FILES['openFile']['tmp_name']) . '.tmp';
+        $filePath = '../../savefiles/' . $session->getSessionFolderName() . '/' . basename($_FILES['openFile']['tmp_name']);
         $move = move_uploaded_file($_FILES['openFile']['tmp_name'], $filePath);
         if ($move === false) {
             echo "Error: there has been an error moving the file.";
