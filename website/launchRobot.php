@@ -1,3 +1,5 @@
+<script src="./js/launchRobot.js"></script>
+
 <?php
 require_once './views/header.php';
 require './controllers/SessionController.php';
@@ -5,12 +7,7 @@ require './controllers/FilesController.php';
 require './controllers/ExecController.php';
 ?>
 
-<script>
-    window.addEventListener('beforeunload', function (e) {
-        e.preventDefault();
-        e.returnValue = '';
-    });
-</script>
+<script> preventPageClose(); </script>
 
 <div style="text-align: left;" onunload="beforeClose()">
 
