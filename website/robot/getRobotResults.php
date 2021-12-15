@@ -116,12 +116,9 @@ if (isset($_FILES)):
                     'dataFile': "<?= basename($_FILES['openFile']['tmp_name']) ?>"
                 },
                 success: function (response) {
-                    //location.reload();
-                    console.log(response);
                 },
                 error: function (err) {
                     alert("Error: couldn't create the CSV file.");
-                    console.log(err);
                 }
             });
         }
