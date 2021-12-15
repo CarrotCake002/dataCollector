@@ -1,4 +1,4 @@
-<script src="../js/filesSorting.js"></script>
+<script src="../js/showScrapings.js"></script>
 
 <?php
 
@@ -36,6 +36,7 @@ $totalSize = 0;
 
 <h1 style="text-align: center; font-size: 48px">Here you can see all your files</h1>
 <p style="margin-left: 40px">If you delete all the files from this token, the token will be deleted and will become useless.</p>
+<button id="createCsvFilesButton" onclick="generateAllCsvFiles()">Generate all CSV files</button>
 <form action="selectedFiles.php" method="post">
     <div>
         <p style="float: left; margin: 22px; margin-left: 40px; vertical-align:middle">Filter by: </p>
