@@ -29,7 +29,7 @@ if (isset($_POST) && isset($_POST['filename']) && $_POST['filename'] !== '' && i
         echo "Error: the token you sent is invalid.<br>If you don't have a valid token, launch the scraping without it and a token will automatically be provided to you.";
         return;
     }
-    $filePath = '../../savefiles/' . $session->getSessionFolderName() . '/' . $_POST['dataFile'] . '.tmp';
+    $filePath = '../../savefiles/' . $session->getSessionFolderName() . '/' . $_POST['dataFile'];
     @ $json_data = file_get_contents($filePath);
     if ($json_data === false) {
         echo "Error: the file you sent doesn't exist.";
