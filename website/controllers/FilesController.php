@@ -158,7 +158,7 @@ class FilesController {
     public function isFileOld($filepath) {
         $fileAge = $this->getFileAge($filepath);
 
-        if ($fileAge->y > 0 || $fileAge->m > 0 || $fileAge->d > 14)
+        if ($fileAge->y > 0 || $fileAge->m > 0 || $fileAge->d > 6)
             return true;
         return false;
     }
@@ -175,5 +175,12 @@ class FilesController {
             }
         }
         return $filesDeleted;
+    }
+
+    public function getFileDeletionTimeLeft($fileNb) {
+        $filepath = $this->getFileRelativePath($fileNb);
+        $fileAge = $this->getFileAge($filepath);
+
+        return 6 - $fileAge->d . "d " . 23 - $fileAge->h . "h " . 59 - $fileAge->i . "min";
     }
 }
