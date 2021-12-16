@@ -18,7 +18,7 @@
                     <a href="https://github.com/CarrotCake002">CarrotCake002</a>
                     <a>🥕</a>
                 </div>
-                <div style="margin-right: auto; width: 450px; float: right; right: 3%">
+                <div style="margin-right: auto; width: 500px; float: right; right: 3%">
                     <ul id="nav_list">
                         <li><a href="/">🏠 Home</a></li>
                         <li><a href="/website/views/openFile.php">📊 Get data</a></li>
