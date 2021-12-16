@@ -64,6 +64,7 @@ $totalSize = 0;
             <th>Type</th>
             <th>Size (kB)</th>
             <th>Last updated</th>
+            <th>Time left until deletion</th>
             <th>Status</th>
             <th>Stop active Robot</th>
             <th>Download</th>
@@ -89,6 +90,7 @@ $totalSize = 0;
             </td>
             <td><?php echo $files->getFileSize($fileNb); $totalSize += $files->getFileSize($fileNb) ?></td>
             <td><?= $files->getFileLastUpdate($fileNb) ?></td>
+            <td><?= $files->getFileDeletionTimeLeft($fileNb) ?></td>
             <td id="fileStatus<?= $fileNb?>"><?= $files->getFileStatus($fileNb) ?><script>changeStatusColor(<?=$fileNb?>, "<?=$files->getFileStatus($fileNb)?>");</script></td>
             <?php if ($files->getFileStatus($fileNb) === 'Active'): ?>
                 <td><a href="stopRobot.php?filename=<?= $files->getFileName($fileNb) ?>"><img class="stopRobotImg" src="../../assets/stop_icon.png" alt="Stop"></a></td>
@@ -108,6 +110,7 @@ $totalSize = 0;
             <td class="filesTableCell"><b>Total</b></td>
             <td class="filesTableCell"><b>-</b></td>
             <td class="filesTableCell" id="totalFileSize"><b><?= $totalSize ?> kB</b></td>
+            <td class="filesTableCell"><b>-</b></td>
             <td class="filesTableCell"><b>-</b></td>
             <td class="filesTableCell"><b>-</b></td>
             <td class="filesTableCell"><b>-</b></td>
