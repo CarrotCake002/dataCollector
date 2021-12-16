@@ -149,4 +149,31 @@ class FilesController {
         return $result;
     }
 
+    public function getFileAge($filepath) {
+        $fileLastUpdate = date_create(date("d-m-y G:i:s", filemtime($filepath)));
+        $currentTime = date_create(date("d-m-y G:i:s"));
+        return date_diff($fileLastUpdate, $currentTime);
+    }
+
+    public function isFileOld($filepath) {
+        $fileAge = $this->getFileAge($filepath);
+
+        if ($fileAge->y > 0 || $fileAge->m > 0 || $fileAge->d > 14)
+            return true;
+        return false;
+    }
+
+    public function deleteOldFiles() {
+        $filesDeleted = false;
+
+        for ($i = 0; $i < count($this->file_list); $i++) {
+            $filepath = './../..' . $this->getFolderPath() . '/' . $this->file_list[$i];
+
+            if ($this->isFileOld($filepath)) {
+                $this->deleteFile($i);
+                $filesDeleted = true;
+            }
+        }
+        return $filesDeleted;
+    }
 }
