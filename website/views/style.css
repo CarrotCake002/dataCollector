@@ -301,7 +301,6 @@ th, td {
 
 #createCsvFilesButton {
     margin-left: 40px;
-    animation-name: appear; 
     animation-duration: 0.7s;
 }
 
