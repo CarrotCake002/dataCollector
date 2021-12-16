@@ -115,7 +115,7 @@ function generateAllCsvFiles(token, fileList) {
             createCsvFromFile(token, csvFilename, fileList[i]);
         }
     }
-    location.reload();
+    //location.reload();
 }
 
 function createCsvFromFile(token, filename, dataFile) {
