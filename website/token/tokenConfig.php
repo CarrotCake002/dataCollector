@@ -1,18 +1,10 @@
+<script src="../js/tokenConfig.js"></script>
+
 <?php
 
 require_once '../views/header.php';
 
 ?>
-
-<script>
-    function unsetToken() {
-        document.location.href = '/website/token/unsetToken.php';
-    }
-
-    function deleteToken() {
-        document.location.href = '/website/token/deleteToken.php';
-    }
-</script>
 
 <h1 style="text-align: center">Token settings</h1>
 
