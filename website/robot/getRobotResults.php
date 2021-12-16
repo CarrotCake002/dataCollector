@@ -61,10 +61,14 @@ if (isset($_FILES)):
 <div id="tableBlock">
         <form action="/website/views/getAllLinkDetails.php" method="GET">
             <input type="text" name="filename" id="filename" value="<?= $filePath ?>">
-            <input type="submit" name="submit" value="Get all link details">
+            <input type="submit" name="submit" value="Get all link details" style="margin-bottom: 0px;">
         </form>
-        <button class="copyTableButton" onclick="copyLinksTable()">Copy Table contents</button>
-        <a href="<?= '/savefiles/' . $session->getSessionFolderName() . '/' . $csvName  ?>" download="<?= $csvName ?>" ><br><br>Download a CSV with all data here!</a>
+        <button class="copyTableButton" onclick="copyLinksTable()" style="margin-bottom: 0px">Copy Table contents</button>
+        <div style="margin: auto; clear: both">
+            <a href="<?= '/savefiles/' . $session->getSessionFolderName() . '/' . $csvName  ?>" download="<?= $csvName ?>" style="clear: both" >
+                <button>Download a CSV with all data here!</button>
+            </a>
+        </div>
         <table id="allLinksTable">
             <tr>
                 <th>Id</th>
