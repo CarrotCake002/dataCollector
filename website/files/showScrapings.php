@@ -3,8 +3,9 @@
 <?php
 
 require_once './../views/header.php';
-require '../controllers/SessionController.php';
-require '../controllers/FilesController.php';
+require_once '../controllers/SessionController.php';
+require_once '../controllers/FilesController.php';
+require_once './deleteOldFiles.php';
 
 use classes\SessionController;
 use classes\FilesController;
@@ -15,15 +16,18 @@ if (isset($_POST) && isset($_POST['token'])) {
         echo "Error: the token you sent is invalid.<br>If you don't have a valid token, launch the scraping without it and a token will automatically be provided to you.";
         return;
     }
+    session_start();
+    setcookie('token', $session->session_id, time() + 60 * 60 * 24 * 30, '/');
 } else {
     echo "Error: a problem occured while fetching the data, please try again.";
     return;
 }
 
-session_start();
-setcookie('token', $session->session_id, time() + 60 * 60 * 24 * 30, '/');
 $files = new FilesController($session->session_id);
 $files->deleteTemporalFiles();
+
+// check old files to be deleted
+$filesDeleted = $files->deleteOldFiles();
 
 if ($files->checkTokenFolderEmpty()) {
     $files->deleteTokenFolder();
@@ -134,3 +138,7 @@ $totalSize = 0;
 require_once './../views/footer.php';
 
 session_destroy();
+
+if ($filesDeleted):?>
+    <script>alert("Some files have been deleted because they hadn't been updated in over 2 weeks.");</script>
+<?php endif;
