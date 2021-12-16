@@ -5,7 +5,6 @@
 require_once './../views/header.php';
 require_once '../controllers/SessionController.php';
 require_once '../controllers/FilesController.php';
-require_once './deleteOldFiles.php';
 
 use classes\SessionController;
 use classes\FilesController;
@@ -26,7 +25,6 @@ if (isset($_POST) && isset($_POST['token'])) {
 $files = new FilesController($session->session_id);
 $files->deleteTemporalFiles();
 
-// check old files to be deleted
 $filesDeleted = $files->deleteOldFiles();
 
 if ($files->checkTokenFolderEmpty()) {
