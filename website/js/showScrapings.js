@@ -107,19 +107,15 @@ function showFiletype(filetype, fileList, fileSizeList) {
 }
 
 function generateAllCsvFiles(token, fileList) {
-    document.body.style.cursor = 'wait';
     var csvFilename = "";
+    
     for (i = 0; i < fileList.length; i++) {
-        if (fileList[i].includes(".json") === true) { // also need to check if the file is Finished
+        if (fileList[i].includes(".json") === true) { // also need to check if the file is Finished, or do I?
             csvFilename = fileList[i].replace(".json", ".csv")
             createCsvFromFile(token, csvFilename, fileList[i]);
         }
     }
-    //sleep(10000).then(location.reload());
-}
-
-async function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    location.reload();
 }
 
 function createCsvFromFile(token, filename, dataFile) {
