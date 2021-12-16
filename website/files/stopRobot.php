@@ -11,7 +11,7 @@ if (isset($_GET) && isset($_GET['filename'])) {
         for ($i = 0; $i < count($output); $i++) {
             if (strpos($output[$i], $token) !== false && strpos($output[$i], $filename) !== false) {
                 exec('kill -9 ' . intval(str_replace('www ', '', $output[$i]))); 
-                exec('kill -9 ' . intval(str_replace('www ', '', $output[$i + 1])));         
+                exec('kill -9 ' . intval(str_replace('www ', '', $output[$i + 1])));
             }
         }
     } else {
@@ -24,3 +24,8 @@ if (isset($_GET) && isset($_GET['filename'])) {
 }
 
 echo "Info: the selected robot has successfully been stopped. The changes may take a while to save in the files page.";
+?>
+<script>
+    alert("File successfully stopped. However, it may take a while for it to change the status to 'Stopped'.");
+    window.location.href = "/website/views/getFiles.php";
+</script>
