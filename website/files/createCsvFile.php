@@ -92,7 +92,9 @@ if (isset($_POST) && isset($_POST['filename']) && $_POST['filename'] !== '' && i
             $openFile->getAllUserSelectorDataInCSV($i) .
         "\n");
     endfor;
-    fclose($stream);
 
+    fclose($stream);
     session_destroy();
+} else {
+    echo "Error: something happened while fetching your data.";
 }
