@@ -1,4 +1,4 @@
-<script src="../js/getRobotResults.js"></script>
+<script type="text/javascript" src="../js/getRobotResults.js"></script>
 
 <?php
 
@@ -58,10 +58,6 @@ if (isset($_FILES)):
 ?>
 
 <div id="tableBlock">
-        <form action="/website/views/getAllLinkDetails.php" method="GET">
-            <input type="text" name="filename" id="filename" value="<?= $filePath ?>">
-            <input type="submit" name="submit" value="Get all link details" style="margin-bottom: 0px;">
-        </form>
         <button class="copyTableButton" onclick="copyLinksTable()" style="margin-bottom: 0px">Copy Table contents</button>
         <div style="margin: auto; clear: both">
             <a href="<?= '/savefiles/' . $session->getSessionFolderName() . '/' . $csvName  ?>" download="<?= $csvName ?>" style="clear: both" >
@@ -101,7 +97,7 @@ if (isset($_FILES)):
             <?php endfor; ?>
         </table>
     </div>
-    <script> createCsvFile(); </script>
+    <script type="text/javascript"> createCsvFile("<?=$session->getSessionFolderName()?>", "<?=$csvName?>", "<?=basename($_FILES['openFile']['tmp_name'])?>"); </script>
 
 <?php
 else:
