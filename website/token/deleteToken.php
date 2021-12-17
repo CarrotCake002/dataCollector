@@ -1,3 +1,5 @@
+<script type="text/javascript" src="../js/deleteToken.js"></script>
+
 <?php
 
 use classes\FilesController;
@@ -18,6 +20,10 @@ if (!$session_id)
 $files = new FilesController($session_id);
 
 for ($fileNb = 0; $fileNb < $files->getFileListSize(); $fileNb++) {
+
+    if ($files->getFileStatus($fileNb) === 'Active'): ?>
+        <script type="text/javascript"> stopRobot("<?=$files->getFileName($fileNb)?>") </script>
+    <?php endif;
     if (unlink($files->getFileRelativePath($fileNb)) === false) {
         echo 'Error: file could not be deleted.<br>';
     }
