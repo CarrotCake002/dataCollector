@@ -37,7 +37,8 @@ $totalSize = 0;
 ?>
 
 <h1 style="text-align: center; font-size: 48px">Here you can see all your files</h1>
-<p style="margin-left: 40px">If you delete all the files from this token, the token will be deleted and will become useless.</p>
+<p style="margin-left: 40px">If you <b>delete all the files</b> from this token, the <b>token will be deleted</b> and will become useless.</p>
+<p style="margin-left: 40px">Every file will be deleted <b>7 days</b> after being created to avoid a server disk memory overflow.</p>
 <button id="createCsvFilesButton" onclick="generateAllCsvFiles('<?=$session->getSessionFolderName()?>', [<?=$files->getFilenamesInStr()?>])">Generate all CSV files</button>
 <form action="selectedFiles.php" method="post">
     <div>
