@@ -5,15 +5,15 @@ function copyLinksTable() {
     document.execCommand('Copy');
 }
 
-function createCsvFile() {
+function createCsvFile(token, filename, dataFile) {
     $.ajax({
         method: "POST",
         type: "POST",
         url: '../files/createCsvFile.php',
         data: {
-            'token': "<?= $session->session_id ?>",
-            'filename': "<?= $csvName ?>",
-            'dataFile': "<?= basename($_FILES['openFile']['tmp_name']) ?>"
+            'token': token,
+            'filename': filename,
+            'dataFile': dataFile
         },
         success: function (response) {
         },
