@@ -150,9 +150,15 @@ class FilesController {
     }
 
     public function getFileAge($filepath) {
-        $fileLastUpdate = date_create(date("d-m-y G:i:s", filemtime($filepath)));
-        $currentTime = date_create(date("d-m-y G:i:s"));
-        return date_diff($fileLastUpdate, $currentTime);
+        $fileLastUpdate = date_create(date("y-m-d G:i:s", filemtime($filepath)));
+        $currentTime = date_create(date("y-m-d G:i:s"));
+        /*var_dump($fileLastUpdate);
+        echo '<br>';
+        var_dump($currentTime);
+        echo '<br>';
+        var_dump(date_diff($currentTime, $fileLastUpdate));
+        echo '<br>';*/
+        return date_diff($currentTime, $fileLastUpdate);
     }
 
     public function isFileOld($filepath) {
