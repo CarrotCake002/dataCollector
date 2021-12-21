@@ -2,9 +2,7 @@
 
 namespace classes;
 
-use classes\FilesController;
-
-class ExecController extends FilesController {
+class ExecController {
 
     private $folderList;
     private $tokenFolder;

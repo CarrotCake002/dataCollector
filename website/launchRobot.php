@@ -3,7 +3,6 @@
 <?php
 require_once './views/header.php';
 require './controllers/SessionController.php';
-require './controllers/FilesController.php';
 require './controllers/ExecController.php';
 ?>
 
